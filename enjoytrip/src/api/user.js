@@ -17,9 +17,9 @@ async function findById(userid, success, fail) {
 //   await api.post(`/user/refresh`, user).then(success).catch(fail);
 // }
 
-// async function logout(userid, success, fail) {
-//   await api.get(`/user/logout/${userid}`).then(success).catch(fail);
-// }
+async function logout(userid, success, fail) {
+  await api.get(`/user/logout/${userid}`).then(success).catch(fail);
+}
 
-export { login, findById };
+export { login, findById, logout };
 // export { login, findById, tokenRegeneration, logout };

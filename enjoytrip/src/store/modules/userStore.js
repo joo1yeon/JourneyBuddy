@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 // import router from "@/router";
 // import { login, findById, tokenRegeneration, logout } from "@/api/user";
-import { login, findById } from "@/api/user";
+import { login, findById, logout } from "@/api/user";
 
 const userStore = {
   namespaced: true,
@@ -124,23 +124,23 @@ const userStore = {
     //     }
     //   );
     // },
-    // async userLogout({ commit }, userid) {
-    //   await logout(
-    //     userid,
-    //     ({ data }) => {
-    //       if (data.message === "success") {
-    //         commit("SET_IS_LOGIN", false);
-    //         commit("SET_USER_INFO", null);
-    //         commit("SET_IS_VALID_TOKEN", false);
-    //       } else {
-    //         console.log("유저 정보 없음!!!!");
-    //       }
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
-    // },
+    async userLogout({ commit }, userid) {
+      await logout(
+        userid,
+        ({ data }) => {
+          if (data.message === "success") {
+            commit("SET_IS_LOGIN", false);
+            commit("SET_USER_INFO", null);
+            commit("SET_IS_VALID_TOKEN", false);
+          } else {
+            console.log("유저 정보 없음!!!!");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
   },
 };
 

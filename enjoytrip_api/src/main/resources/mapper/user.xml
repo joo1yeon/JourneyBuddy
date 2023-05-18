@@ -63,4 +63,10 @@
 		set token = #{token}
 		where user_id = #{userId}		
 	</update>
+	
+	<update id="deleteRefreshToken" parameterType="String">
+		update user
+		set token = null
+		where user_id = #{userId}
+	</update>
 </mapper>

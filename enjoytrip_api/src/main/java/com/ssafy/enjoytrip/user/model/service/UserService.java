@@ -14,5 +14,5 @@ public interface UserService {
 	int updateUser(UserDto userDto) throws SQLException;
 	int deleteUser(String userId) throws SQLException;
 	List<UserDto> getUserList() throws SQLException;
-	
+	int deleteRefreshToken(String userid) throws SQLException;
 }

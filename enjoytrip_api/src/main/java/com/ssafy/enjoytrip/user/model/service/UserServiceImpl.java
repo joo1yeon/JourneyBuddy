@@ -83,5 +83,10 @@ public class UserServiceImpl implements UserService {
 	public List<UserDto> getUserList() throws SQLException {
 		return userMapper.getUserList();
 	}
+	
+	@Override
+	public int deleteRefreshToken(String userId) throws SQLException {
+		return userMapper.deleteRefreshToken(userId);
+	}
 
 }

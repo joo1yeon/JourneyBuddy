@@ -18,4 +18,6 @@ public interface UserMapper {
 	int deleteUser(String userId) throws SQLException;
 	List<UserDto> getUserList() throws SQLException;
 	int updateRefreshToken(UserDto userDto) throws SQLException;
+	int deleteRefreshToken(String userId) throws SQLException;
+	
 }
