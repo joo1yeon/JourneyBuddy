@@ -10,15 +10,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.enjoytrip.config.UserDetailsImpl;
 import com.ssafy.enjoytrip.config.jwt.JwtToken;
 import com.ssafy.enjoytrip.config.jwt.JwtTokenProvider;
-import com.ssafy.enjoytrip.user.UserLoginDetails;
+import com.ssafy.enjoytrip.config.security.UserDetailsImpl;
 import com.ssafy.enjoytrip.user.model.UserDto;
 import com.ssafy.enjoytrip.user.model.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
+	
 	
 	private final UserMapper userMapper;
 	
@@ -50,15 +50,8 @@ public class UserServiceImpl implements UserService {
 		JwtToken token = null;
 		if (passwordEncoder.matches(userDto.getUserPassword(), loginUserDto.getUserPassword())) {
 			
-			UserLoginDetails userLoginDetails = new UserLoginDetails(userDto.getUserId(), userDto.getUserPassword());
-			
-//			UserDetailsImpl userDetailsImpl = new UserDetailsImpl();
-//			userDetailsImpl.setPassword(loginUserDto.getUserPassword());
-//			userDetailsImpl.setUsername(userDto.getUserId());
-			
 			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDto.getUserId(), userDto.getUserPassword());
 			// Authentication 객체 생성
-			authenticationToken.setDetails(userLoginDetails);
 			Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 			// 검증된 인증 정보로 JWT 토큰 생성
 			token = jwtTokenProvider.generateToken(authentication);
