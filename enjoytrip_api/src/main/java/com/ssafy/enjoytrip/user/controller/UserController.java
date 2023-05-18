@@ -30,11 +30,13 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/user")
 @Api(tags = {"회원"})
 @CrossOrigin("*")
+@Slf4j
 public class UserController {
 	
 	private static final String SUCCESS = "success";

@@ -102,9 +102,9 @@ public class NoticeController {
 	public ResponseEntity<?> userModify(@RequestBody NoticeDto noticeDto) {
 		try {
 //			// 메인공지 취소했다면 기존 메인 공지 내리기
-			if(noticeDto.getMainNotice().equals("true")) {
-				noticeService.updateMainNotice();
-			}
+//			if(noticeDto.getMainNotice().equals("false")) {
+//				noticeService.updateMainNotice();
+//			}
 			noticeService.modifyNotice(noticeDto);
 			List<NoticeDto> list = noticeService.listNotice(null);
 			return new ResponseEntity<List<NoticeDto>>(list, HttpStatus.OK);

@@ -1,14 +1,20 @@
-package com.ssafy.enjoytrip.config;
+package com.ssafy.enjoytrip.config.security;
 
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.ssafy.enjoytrip.user.model.UserDto;
+
 public class UserDetailsImpl implements UserDetails {
 	
-	private String password;
-	private String username;
+	private UserDto user;
+
+	public UserDetailsImpl(UserDto user) {
+		super();
+		this.user = user;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -18,45 +24,36 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
+		return user.getUserPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return username;
-	}
-	
-	public void setUsername(String username) {
-		this.username = username;
+		return user.getUserId();
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
-
 	
 }
