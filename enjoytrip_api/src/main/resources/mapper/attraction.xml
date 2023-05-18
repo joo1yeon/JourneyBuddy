@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.enjoytrip.attraction.model.mapper.AttractionMapper">
+
+	<resultMap type="sidoDto" id="sido">
+		<result column="sido_code" property="sidoCode"/>
+		<result column="sido_name" property="sidoName"/>
+	</resultMap>
+	
+	<resultMap type="gugunDto" id="gugun">
+		<result column="gugun_code" property="gugunCode"/>
+		<result column="gugun_name" property="gugunName"/>
+		<result column="sido_code" property="sidoCode"/>
+	</resultMap>
+	
+	<resultMap type="AttractionDto" id="attraction">
+		<result column="content_id" property="contentId"/>
+		<result column="content_type_id" property="contentTypeId"/>
+		<result column="title" property="title"/>
+		<result column="addr1" property="addr1"/>
+		<result column="addr2" property="addr2"/>
+		<result column="zipcode" property="zipcode"/>
+		<result column="tel" property="tel"/>
+		<result column="first_image" property="image1"/>
+		<result column="first_image2" property="image2"/>
+		<result column="readcount" property="readcount"/>
+		<result column="sido_code" property="sidoCode"/>
+		<result column="gugun_code" property="gugunCode"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+		<result column="mlevel" property="mlevel"/>
+	</resultMap>
+	
+	<parameterMap id="search" type="java.util.HashMap">
+		<parameter property="sidoCode" javaType="java.lang.Integer"/>
+		<parameter property="gugunCode" javaType="java.lang.Integer"/>
+		<parameter property="contentType" javaType="java.lang.Integer"/>
+		<parameter property="query" javaType="java.lang.String"/>
+	</parameterMap>
+	
+	
+	<!-- 시도 정보 -->
+	<select id="getSido" resultMap="sido">
+		SELECT * 
+		FROM sido
+	</select>
+	
+	<!-- 구군 정보 -->
+	<select id="getGugun" parameterType="int" resultMap="gugun">
+		SELECT * 
+		FROM gugun
+		WHERE sido_code = #{sidoCode}
+	</select>
+	
+	<!-- 관광지 정보 검색 -->
+	<select id="getAttractionList" parameterMap="search" resultMap="attraction">
+		SELECT ai.*, ad.*, detail.*
+		FROM attraction_info ai, attraction_description ad, attraction_detail detail
+		WHERE ai.content_id = ad.content_id AND ai.content_id = detail.content_id
+		<if test="contentType != null and contentType != 0">AND content_type_id = #{contentType}</if>
+		<if test="sidoCode != null"> AND sido_code = #{sidoCode}</if>
+		<if test="gugunCode != null">AND gugun_code = #{gugunCode}</if>
+		AND (ai.title LIKE CONCAT('%',#{query},'%') OR ad.overview LIKE CONCAT('%',#{query},'%'))
+	</select>
+	
+	<!-- 여행 경로 -->
+</mapper>

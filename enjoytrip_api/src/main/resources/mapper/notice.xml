@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.enjoytrip.notice.model.mapper.NoticeMapper">
+
+	<resultMap type="NoticeDto" id="notice">
+		<result column="notice_no" property="noticeNo" />
+		<result column="user_id" property="userId" />
+		<result column="subject" property="subject" />
+		<result column="content" property="content" />
+		<result column="hit" property="hit" />
+		<result column="register_time" property="registerTime" />
+		<result column="main_notice" property="mainNotice" />
+	</resultMap>
+
+	<!-- 검색 -->
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
+
+	<!-- 공지사항 리스트 -->
+	<select id="listNotice" parameterType="map" resultMap="notice">
+		SELECT notice_no, user_id, subject, content, hit, register_time, main_notice FROM notice
+		<include refid="search"></include>
+		ORDER BY notice_no DESC
+	</select>
+
+	<!-- 공지사항 등록 -->
+	<insert id="registNotice" parameterType="NoticeDto">
+		INSERT INTO notice
+		(user_id, subject, content, hit, register_time, main_notice)
+		VALUES (#{userId}, #{subject}, #{content}, #{hit}, now(), #{mainNotice})
+	</insert>
+
+	<!-- 공지사항 보기 -->
+	<select id="viewNotice" parameterType="int" resultMap="notice">
+		SELECT *
+		FROM notice
+		WHERE notice_no = #{noticeNo}
+	</select>
+
+
+	<!-- 공지사항 수정 -->
+	<update id="modifyNotice" parameterType="NoticeDto">
+		UPDATE notice
+		SET
+		subject= #{subject}, content = #{content}, main_notice = #{mainNotice}
+		WHERE notice_no = #{noticeNo}
+	</update>
+
+	<!-- 공지사항 삭제 -->
+	<delete id="deleteNotice" parameterType="int">
+		DELETE FROM notice
+		WHERE
+		notice_no = #{noticeNo}
+	</delete>
+
+	<!-- 조회수 증가 -->
+	<update id="updateHit" parameterType="int">
+		UPDATE notice
+		SET hit = hit
+		+ 1
+		WHERE notice_no = #{noticeNo}
+	</update>
+
+	<!-- 공지사항 총 갯수 -->
+	<select id="getTotalNoticeCount" parameterType="map"
+		resultType="int">
+		SELECT count(notice_no)
+		FROM notice
+		<where>
+		</where>
+		<include refid="search"></include>
+	</select>
+	
+	<!-- 기존 메인 공지 삭제 -->
+	<update id="updateMainNotice">
+		UPDATE notice
+		SET main_notice = "false"
+		WHERE main_notice = "true"
+	</update>
+	
+	<!-- 새로운 메인 공지 등록 -->
+	<update id="registerMainNotice">
+		UPDATE notice
+		SET main_notice = "check"
+		WHERE main_notice IS NULL
+	</update>
+
+
+</mapper>

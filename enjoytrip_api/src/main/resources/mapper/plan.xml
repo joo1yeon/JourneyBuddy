@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.enjoytrip.plan.model.mapper.PlanMapper">
+
+	<resultMap type="PlanDto" id="plan">
+		<result column="trip_plan_id" property="tripPlanId" />
+		<result column="writer" property="writer" />
+		<result column="title" property="title" />
+		<result column="trip_plan_detail_id"
+			property="tripPlanDetailId" />
+		<result column="plan_num" property="planNum" />
+		<result column="content_id" property="contentId" />
+		<result column="time" property="time" />
+		<result column="info" property="info" />
+		<result column="sequence" property="sequence" />
+	</resultMap>
+
+	<parameterMap type="java.util.HashMap" id="myPlan">
+		<parameter property="writer" javaType="java.lang.String" />
+		<parameter property="planNum" javaType="java.lang.Integer" />
+	</parameterMap>
+
+	<parameterMap type="java.util.HashMap" id="planDetail">
+		<parameter property="userId" javaType="java.lang.String" />
+		<parameter property="planNum" javaType="java.lang.Integer" />
+	</parameterMap>
+
+	<insert id="registerPlan" parameterType="PlanDto">
+		INSERT INTO trip_plan
+		(writer, title)
+		VALUES (#{writer}, #{title})
+		<selectKey resultType="int" keyProperty="planNum"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+
+	<insert id="registerPlanDetail" parameterType="PlanDto">
+		INSERT INTO
+		trip_plan_detail (plan_num, writer, content_id, time, info, sequence)
+		VALUES (#{planNum}, #{writer}, #{contentId}, #{time},
+		#{info},
+		#{sequence})
+	</insert>
+
+	<select id="viewMyPlan" parameterMap="myPlan" resultMap="plan">
+		SELECT *
+		FROM trip_plan tp, trip_plan_detail tpd
+		WHERE tp.writer =
+		tpd.writer
+		AND tp.writer = #{userId}
+		<if test="planNum != null">AND tpd.plan_num = #{planNum}</if>
+	</select>
+
+	<!-- <select id="viewDetailInfo" parameterType="int" resultMap="attraction"> 
+		SELECT ai.*, ad.*, detail.* FROM attraction_info ai, attraction_description 
+		ad, attraction_detail detail WHERE ai.content_id = ad.content_id AND ai.content_id 
+		= detail.content_id AND content_id = #{contentId} </select> -->
+
+</mapper>
