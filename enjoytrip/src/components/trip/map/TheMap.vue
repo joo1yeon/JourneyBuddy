@@ -21,11 +21,8 @@ export default {
   props: {
     attractionList: Array,
   },
-  created() {
-    this.positions = this.attractionList;
-  },
+  created() {},
   mounted() {
-    this.positions = this.attractionList;
     const script = document.createElement("script");
     const appKey = "76da4d3f68b56c2e06c858e365da0873";
     /* global kakao */
@@ -46,10 +43,15 @@ export default {
 
       this.map = new kakao.maps.Map(this.container, options);
       this.infowindow = new kakao.maps.InfoWindow();
+      const zoomControl = new kakao.maps.ZoomControl();
+      const mapTypeControl = new kakao.maps.MapTypeControl();
+
+      this.map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+      this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
     },
 
     displayMarker(data) {
-      this.removeMarker;
+      this.removeMarker();
       this.positions = data;
       // 마커 이미지의 이미지 주소입니다
       var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
@@ -61,7 +63,7 @@ export default {
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
         // 마커를 생성합니다
-        var marker = new kakao.maps.Marker({
+        let marker = new kakao.maps.Marker({
           map: this.map, // 마커를 표시할 지도
           position: new kakao.maps.LatLng(this.positions[i].latitude, this.positions[i].longitude), // 마커를 표시할 위치
           title: this.positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
@@ -110,7 +112,7 @@ export default {
       this.map.setCenter(new kakao.maps.LatLng(mapy, mapx));
       this.infowindow.close();
       var iwContent = `
-            <div style="padding:5px; width:auto; height:auto" class="row">
+            <div style="padding:5px; margin:auto" class="row">
                 <img src="${image}" height="100px" class="col-4" alt="관광지 사진" />
                 <div class="col-8">
                     <p>
@@ -119,45 +121,49 @@ export default {
                         </b>
                         ${contentType}
                     </p>
-                    <p>
-                        ${addr1} ${addr2}
-                    </p>
-                    <div class="row">
-                    <a
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal-plan"
-                        class="btn btn-outline-primary col-4"
-                        href="javascript:planModal();"
-                        >계획 등록</a>
-                    <a
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#hotPlaceModal"
-                        class="btn btn-outline-danger col-4"
-                        >핫플 등록</a>
-                    </div>
+                    <span>${addr1}</span>
+                    <span>${addr2}</span>
                 </div>
+            </div>
               `,
+        //               <div class="row">
+        //   <button
+        //     id='plan-btn'
+        //     type="button"
+        //     class="btn btn-outline-primary"
+        //     onclick="hello();">
+        //     계획 추가
+        //   </button>
+        //   <button
+        //     class="btn btn-outline-danger">
+        //     핫플 등록
+        //   </button>
+        // </div>
         // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         iwPosition = new kakao.maps.LatLng(mapy + 0.00125, mapx); // 인포윈도우 표시
-
       // 인포윈도우를 생성합니다
       this.infowindow = new kakao.maps.InfoWindow({
         position: iwPosition,
         content: iwContent,
+        removable: true,
+        clickable: true,
+      });
+      kakao.maps.event.addListener(this.infowindow, "domready", () => {
+        const button = document.getElementById("plan-btn");
+        button.addEventListener("click", this.planModal);
       });
 
       // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
       this.infowindow.open(this.map);
     },
     removeMarker() {
-      for (var i = 0; i < this.markers.length; i++) {
+      for (let i = 0; i < this.markers.length; i++) {
         this.markers[i].setMap(null);
       }
       this.markers = [];
     },
     planModal() {
-      alert("경로추가");
+      alert("계획 추가!");
     },
   },
 };

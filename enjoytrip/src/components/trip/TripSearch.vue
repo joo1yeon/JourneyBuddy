@@ -8,7 +8,11 @@
           <!-- 관광지 리스트 Start -->
           <b-alert variant="success" show>관광지 리스트</b-alert>
           <div style="overflow-y: auto; height: 520px">
-            <b-table striped hover :fields="fields" :items="attractionList" @row-clicked="moveCenter" v-if="attractionList.length"> </b-table>
+            <b-table striped hover :fields="fields" :items="attractionList" @row-clicked="moveCenter" v-if="attractionList.length">
+              <template #cell(checked)="data">
+                <b-checkbox v-model="data.item.checked"></b-checkbox>
+              </template>
+            </b-table>
             <span v-else>관광지 리스트가 존재하지 않습니다</span>
           </div>
           <!-- 관광지 리스트 End -->
@@ -122,6 +126,7 @@ export default {
       contentType: 12,
       query: "해운대",
       attractionList: [],
+      checkList: [],
       fields: [
         {
           key: "title",
@@ -130,6 +135,10 @@ export default {
         {
           key: "addr1",
           label: "주소",
+        },
+        {
+          key: "checked",
+          label: "선택",
         },
       ],
     };
@@ -159,13 +168,25 @@ export default {
       }
       url += "&query=" + this.query;
       http.get(`/trip/list?${url}`).then((response) => {
+        this.attractionList = [];
         this.attractionList = response.data;
         this.$refs.map.displayMarker(this.attractionList);
       });
     },
     moveCenter(items) {
-      console.log(items);
-      this.$refs.map.moveCenter(items);
+      this.$refs.map.moveCenter(
+        items.contentId,
+        items.latitude,
+        items.longitude,
+        items.title,
+        items.addr1,
+        items.addr2,
+        items.image1,
+        items.contentTypeId
+      );
+    },
+    check(data) {
+      console.log(data);
     },
   },
 };
