@@ -17,5 +17,5 @@ public interface UserMapper {
 	int updateUser(UserDto userDto) throws SQLException;
 	int deleteUser(String userId) throws SQLException;
 	List<UserDto> getUserList() throws SQLException;
-	String findBy(String userId) throws SQLException;
+	int updateRefreshToken(UserDto userDto) throws SQLException;
 }

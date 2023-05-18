@@ -13,6 +13,7 @@
 		<result column="gender" property="gender"/>
 		<result column="birth_date" property="birthDate"/>
 		<result column="register_date" property="registerDate"/>
+		<result column="token" property="token"/>
 	</resultMap>
 	
 	<insert id="joinUser" parameterType="userDto">
@@ -57,9 +58,9 @@
 		order by register_date;
 	</select>
 	
-	<select id="findBy" parameterType="String">
-		select user_id
-		from user
-		where user_id = #{userId}
-	</select>
+	<update id="updateRefreshToken" parameterType="userDto">
+		update user
+		set token = #{token}
+		where user_id = #{userId}		
+	</update>
 </mapper>

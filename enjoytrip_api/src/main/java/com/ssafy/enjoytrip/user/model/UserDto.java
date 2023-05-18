@@ -2,7 +2,7 @@ package com.ssafy.enjoytrip.user.model;
 
 import io.swagger.annotations.ApiModel;
 
-@ApiModel(value = "UserDto (회원정보)", description = "회원의 아이디, 비밀번호, 이름, 이메일, 이메일 도메인, 성별, 생일, 가입 날짜 정보를 가진 domain class")
+@ApiModel(value = "UserDto (회원정보)", description = "회원의 아이디, 비밀번호, 이름, 이메일, 이메일 도메인, 성별, 생일, 가입 날짜, 토큰 정보를 가진 domain class")
 public class UserDto {
 
 	private String userId;
@@ -13,6 +13,7 @@ public class UserDto {
 	private String gender;
 	private String birthDate;
 	private String registerDate;
+	private String token;
 	
 	public String getUserId() {
 		return userId;
@@ -62,12 +63,19 @@ public class UserDto {
 	public void setRegisterDate(String registerDate) {
 		this.registerDate = registerDate;
 	}
-	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	@Override
 	public String toString() {
 		return "UserDto [userId=" + userId + ", userPassword=" + userPassword + ", userName=" + userName + ", emailId="
 				+ emailId + ", emailDomain=" + emailDomain + ", gender=" + gender + ", birthDate=" + birthDate
-				+ ", registerDate=" + registerDate + "]";
+				+ ", registerDate=" + registerDate + ", token=" + token + "]";
 	}
+	
+	
 	
 }

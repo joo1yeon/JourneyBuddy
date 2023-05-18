@@ -55,6 +55,10 @@ public class UserServiceImpl implements UserService {
 			Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 			// 검증된 인증 정보로 JWT 토큰 생성
 			token = jwtTokenProvider.generateToken(authentication);
+			
+			loginUserDto.setToken(token.getRefreshToken());
+			// DB에 refreshToken 저장
+			userMapper.updateRefreshToken(loginUserDto);
 		}
         
         return token;
@@ -79,9 +83,5 @@ public class UserServiceImpl implements UserService {
 	public List<UserDto> getUserList() throws SQLException {
 		return userMapper.getUserList();
 	}
-	
-	@Override
-	public String findBy(String userId) throws SQLException {
-		return userMapper.findBy(userId);
-	}
+
 }
