@@ -37,4 +37,6 @@ public class AttractionDto {
 	String overview;
 	String createTime;
 	String modifyTime;
+	@ApiModelProperty(value = "선택 여부")
+	String checked;
 }
