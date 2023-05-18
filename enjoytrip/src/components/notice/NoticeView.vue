@@ -1,12 +1,14 @@
 <template>
   <b-container fluid="lg" id="view">
-    <h2>공지사항 상세보기</h2>
+    <b-alert show class="text-left"
+      ><h2>{{ form.noticeNo }}. {{ form.subject }}</h2></b-alert
+    >
     <b-form @submit="onSubmit" @reset="onReset">
-      <b-form-group id="input-group-1" label="제목" label-for="input-1">
+      <b-form-group id="input-group-1" label="제목" label-for="input-1" label-align="left">
         <b-form-input id="input-1" v-model="form.subject" type="text" placeholder="제목을 입력하세요" required readonly></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="내용" label-for="input-2">
+      <b-form-group id="input-group-2" label="내용" label-for="input-2" label-align="left">
         <b-form-textarea
           id="textarea"
           v-model="form.content"
@@ -17,28 +19,17 @@
           readonly
         ></b-form-textarea>
       </b-form-group>
-      <b-form-group id="input-group-1" label="조회수" label-for="input-3">
+      <b-form-group id="input-group-1" label="조회수" label-for="input-3" label-align="left">
         <b-form-input id="input-3" v-model="form.hit" type="number" required readonly></b-form-input>
       </b-form-group>
-      <b-form-group id="input-group-1" label="등록 시간" label-for="input-4">
+      <b-form-group id="input-group-1" label="등록 시간" label-for="input-4" label-align="left">
         <b-form-input id="input-4" v-model="form.registerTime" type="text" required readonly></b-form-input>
       </b-form-group>
 
-      <!-- 메인 공지 작성 여부 -->
-      <!-- <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
-        <b-form-checkbox-group v-model="form.checked" id="checkboxes-4" :aria-describedby="ariaDescribedby">
-          <b-form-checkbox value="me">Check me out</b-form-checkbox>
-          <b-form-checkbox value="that">Check that out</b-form-checkbox>
-        </b-form-checkbox-group>
-      </b-form-group> -->
-
-      <b-button type="button" variant="success" @click="noticemodify">수정하기</b-button>
-      <b-button type="button" variant="danger" @click="noticedelete">삭제하기</b-button>
+      <b-button type="button" variant="success" @click="noticemodify" class="mr-4">수정하기</b-button>
+      <b-button type="button" variant="danger" @click="noticedelete" class="mr-4">삭제하기</b-button>
       <b-button type="button" @click="goList" variant="info">리스트</b-button>
     </b-form>
-    <!-- <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card> -->
   </b-container>
 </template>
 

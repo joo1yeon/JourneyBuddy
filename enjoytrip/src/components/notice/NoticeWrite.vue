@@ -1,22 +1,23 @@
 <template>
   <b-container fluid="lg" id="write">
-    <h2>공지사항 작성하기</h2>
+    <b-alert show><h2>공지사항 작성</h2></b-alert>
     <b-form @submit="onSubmit" @reset="onReset">
-      <b-form-group id="input-group-1" label="제목" label-for="input-1">
+      <!-- 제목 -->
+      <b-form-group id="input-group-1" label="제목" label-for="input-1" label-align="left">
         <b-form-input id="input-1" v-model="form.subject" type="text" placeholder="제목을 입력하세요" required></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="내용" label-for="input-2">
+      <!-- 내용 -->
+      <b-form-group id="input-group-2" label="내용" label-for="input-2" label-align="left">
         <b-form-textarea id="textarea" v-model="form.content" placeholder="내용을 입력하세요" rows="3" max-rows="6" required></b-form-textarea>
       </b-form-group>
 
       <!-- 메인 공지 작성 여부 -->
-      <b-form-group id="input-group-4">
-        <b-form-checkbox v-model="form.mainNotice">메인 공지사항 등록</b-form-checkbox>
-      </b-form-group>
+      <b-form-checkbox v-model="form.mainNotice" class="text-left">메인 공지사항 등록</b-form-checkbox>
 
-      <b-button type="submit" variant="primary">작성</b-button>
-      <b-button type="reset" variant="danger">취소</b-button>
+      <!-- 버튼 -->
+      <b-button type="submit" variant="primary" class="mr-4">작성</b-button>
+      <b-button type="reset" variant="danger" class="mr-4">취소</b-button>
       <b-button type="button" @click="goList" variant="info">리스트</b-button>
     </b-form>
   </b-container>

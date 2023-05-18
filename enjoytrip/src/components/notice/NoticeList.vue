@@ -1,17 +1,17 @@
 <template>
   <b-container id="list">
     <b-alert show><h2>공지사항</h2></b-alert>
-    <b-button class="float-left mb-3" variant="success" type="button" :to="{ name: 'noticewrite' }"
-      >작성하기</b-button
-    >
-    <div v-if="!isNotice">
+    <div class="d-flex mb-3">
+      <b-button variant="success" type="button" :to="{ name: 'noticewrite' }">작성하기</b-button>
+    </div>
+    <div v-if="!isNotice && noticeList">
       <b-table hover :items="tableData" @row-clicked="noticeView" :fields="fields">
         <template #cell(userId)="data">
-          <div v-if="data.item.userId === 'ssafy'">메인 공지 없음</div>
+          <div v-if="data.item.userId === 'ssafy'">관리자</div>
         </template>
       </b-table>
     </div>
-    <div v-else>
+    <div v-else-if="isNotice && noticeList">
       <b-table
         hover
         :items="tableData"
@@ -20,9 +20,12 @@
         :top-row="topRowContent"
       >
         <template #cell(userId)="data">
-          <div v-if="data.item.userId === 'ssafy'">메인 공지 있음</div>
+          <div v-if="data.item.userId === 'ssafy'">관리자</div>
         </template>
       </b-table>
+    </div>
+    <div v-else>
+      <h2>공지사항이 존재하지 않습니다</h2>
     </div>
   </b-container>
 </template>
@@ -77,8 +80,11 @@ export default {
   created() {
     http.get("/notice/list").then((response) => {
       this.noticeList = response.data;
-      this.mainNotice = this.noticeList.find((notice) => notice.mainNotice === "true");
-      if (this.mainNotice !== undefined) {
+      this.mainNotice !== undefined;
+      if (this.noticeList) {
+        this.mainNotice = this.noticeList.find((notice) => notice.mainNotice === "true");
+      }
+      if (this.mainNotice !== undefined && this.noticeList) {
         this.mainNotice._rowVariant = "danger";
         this.isNotice = true;
       } else {
