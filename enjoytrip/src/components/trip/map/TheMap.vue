@@ -1,13 +1,10 @@
 <template>
-  <b-container id="map">
-    <plan-modal class="b-modal" id="modal-plan"></plan-modal>
-  </b-container>
+  <b-container id="map"></b-container>
 </template>
 
 <script>
-import PlanModal from "@/components/trip/map/PlanModal.vue";
 export default {
-  components: { PlanModal },
+  components: {},
   name: "TheMap",
   data() {
     return {
@@ -126,19 +123,6 @@ export default {
                 </div>
             </div>
               `,
-        //               <div class="row">
-        //   <button
-        //     id='plan-btn'
-        //     type="button"
-        //     class="btn btn-outline-primary"
-        //     onclick="hello();">
-        //     계획 추가
-        //   </button>
-        //   <button
-        //     class="btn btn-outline-danger">
-        //     핫플 등록
-        //   </button>
-        // </div>
         // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         iwPosition = new kakao.maps.LatLng(mapy + 0.00125, mapx); // 인포윈도우 표시
       // 인포윈도우를 생성합니다
@@ -156,14 +140,12 @@ export default {
       // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
       this.infowindow.open(this.map);
     },
+    // 기존 마커 지우기
     removeMarker() {
       for (let i = 0; i < this.markers.length; i++) {
         this.markers[i].setMap(null);
       }
       this.markers = [];
-    },
-    planModal() {
-      alert("계획 추가!");
     },
   },
 };
@@ -172,6 +154,6 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 400px;
+  height: 100%;
 }
 </style>
