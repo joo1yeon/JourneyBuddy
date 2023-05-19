@@ -94,6 +94,18 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/user",
+    name: "user",
+    component: () => import(/* webpackChunkName: "user" */ "@/views/UserView"),
+    children: [
+      {
+        path: "join",
+        name: "join",
+        component: () => import(/* webpackChunkName: "user" */ "@/components/user/UserJoin"),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({

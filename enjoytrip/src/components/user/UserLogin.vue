@@ -5,7 +5,7 @@
     </div>
 
     <div class="modal-body p-5 pt-0">
-      <form id="login-form" method="post">
+      <div id="login-form">
         <div class="form-floating mb-3">
           <input
             type="text"
@@ -14,7 +14,7 @@
             name="userId"
             placeholder="아이디"
             v-model="user.userId"
-            @keyup.enter.prevent="confirm"
+            v-on:keyup.enter="confirm()"
           />
           <label for="floatingInput">아이디</label>
         </div>
@@ -26,7 +26,7 @@
             name="userPassword"
             placeholder="비밀번호"
             v-model="user.userPassword"
-            @keyup.enter.prevent="confirm"
+            v-on:keyup.enter="confirm()"
           />
           <label for="floatingPassword">비밀번호</label>
         </div>
@@ -42,14 +42,19 @@
             <small class="text-body-secondary">아이디 저장</small>
           </label>
         </div>
-        <b-button
-          type="button"
-          class="w-100 my-2 btn-lg rounded-3"
-          variant="primary"
-          @click="confirm"
-        >
+        <b-button type="button" class="w-100 my-2 btn-lg rounded-3" @click="confirm">
           로그인
         </b-button>
+        <router-link :to="{ name: 'join' }">
+          <b-button
+            type="button"
+            class="w-100 my-2 btn-lg rounded-3"
+            variant="outline-secondary"
+            @click="hideModal"
+          >
+            회원가입
+          </b-button>
+        </router-link>
         <hr class="my-4" />
         <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
         <b-button class="w-100 py-2 mb-2 rounded-3" variant="outline-secondary" type="submit">
@@ -64,7 +69,7 @@
           <svg class="bi me-1" width="16" height="16"><use xlink:href="#github" /></svg>
           깃허브를 사용하여 로그인하기
         </b-button>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -80,8 +85,8 @@ export default {
   data() {
     return {
       user: {
-        userId: "",
-        userPassword: "",
+        userId: null,
+        userPassword: null,
       },
     };
   },
@@ -99,7 +104,14 @@ export default {
         await this.getUserInfo(token);
         // console.log("4. confirm() userInfo :: ", this.userInfo);
         // this.$router.push({ name: "main" });
+        // $bvModal.hide("login-modal");
+        // this.$refs["login-modal"].hide();
+        // this.modal.hide();
+        this.$emit("hideLoginModal");
       }
+    },
+    hideModal() {
+      this.$emit("hideLoginModal");
     },
   },
 };

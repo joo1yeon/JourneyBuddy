@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.enjoytrip.config.jwt.JwtToken;
 import com.ssafy.enjoytrip.config.jwt.JwtTokenProvider;
 import com.ssafy.enjoytrip.config.security.UserDetailsImpl;
+import com.ssafy.enjoytrip.user.model.FileInfoDto;
 import com.ssafy.enjoytrip.user.model.UserDto;
 import com.ssafy.enjoytrip.user.model.mapper.UserMapper;
 
@@ -71,6 +72,11 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public int updateUser(UserDto userDto) throws SQLException {
+		FileInfoDto fileInfoDto = userDto.getFileInfo();
+		if (fileInfoDto != null) {
+			registerFile(userDto);
+		}
+
 		return userMapper.updateUser(userDto);
 	}
 	
@@ -87,6 +93,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int deleteRefreshToken(String userId) throws SQLException {
 		return userMapper.deleteRefreshToken(userId);
+	}
+	
+	@Override
+	public int registerFile(UserDto userDto) throws SQLException {
+		return userMapper.registerFile(userDto);
 	}
 
 }

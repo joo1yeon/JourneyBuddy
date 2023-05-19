@@ -22,16 +22,6 @@
     <b-collapse id="nav-collapse" is-nav class="ml-auto">
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item href="#" @click="$bvModal.show('login-modal')">로그인</b-nav-item>
-        <b-modal id="login-modal" hide-footer>
-          <user-login></user-login>
-        </b-modal>
-
-        <b-nav-item href="#" @click="$bvModal.show('join-modal')">회원가입</b-nav-item>
-        <b-modal id="join-modal" hide-footer>
-          <user-join></user-join>
-        </b-modal>
-        <b-nav-item @click="onClickLogout">로그아웃</b-nav-item>
         <b-nav-item :to="{ name: 'trip' }">여행지</b-nav-item>
         <b-nav-item :to="{ name: 'plan' }">나의여행계획</b-nav-item>
         <b-nav-item-dropdown text="핫플레이스" right>
@@ -39,6 +29,24 @@
           <b-dropdown-item href="#">게시판</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item :to="{ name: 'notice' }">공지사항</b-nav-item>
+
+        <!-- 로그인 후-->
+        <template v-if="userInfo">
+          <b-nav-item v-b-toggle.sidebar-mypage
+            ><b-avatar variant="success"></b-avatar>
+          </b-nav-item>
+          <b-sidebar id="sidebar-mypage" right shadow="lg" width="20vw" backdrop>
+            <h3>마이페이지</h3>
+            <user-mypage-edit v-if="editMode" @nowEditMode="mypageEditMode"></user-mypage-edit>
+            <user-mypage v-else @nowEditMode="mypageEditMode"></user-mypage>
+          </b-sidebar>
+        </template>
+
+        <!-- 로그인 전 -->
+        <b-nav-item v-else @click="$bvModal.show('login-modal')"><b-avatar></b-avatar></b-nav-item>
+        <b-modal id="login-modal" hide-footer ref="login-modal">
+          <user-login v-on:hideLoginModal="hideModal"></user-login>
+        </b-modal>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -46,33 +54,38 @@
 
 <script>
 import UserLogin from "@/components/user/UserLogin.vue";
-import UserJoin from "../user/UserJoin.vue";
-import { mapActions, mapGetters, mapState } from "vuex";
+import UserMypage from "@/components/user/UserMypage.vue";
+import UserMypageEdit from "../user/UserMypageEdit.vue";
 
+import { mapState } from "vuex";
 const userStore = "userStore";
 
 export default {
   name: "TheNavi",
-  components: { UserLogin, UserJoin },
+  components: { UserLogin, UserMypage, UserMypageEdit },
   data() {
-    return {};
+    return {
+      editMode: false,
+    };
   },
   created() {},
   computed: {
     ...mapState(userStore, ["isLogin", "userInfo"]),
-    ...mapGetters(["checkUserInfo"]),
+    // mypageEditMode: {
+    //   get() {
+    //     return this.editMode;
+    //   },
+    //   set(value) {
+    //     this.editMode = value;
+    //   },
+    // },
   },
   methods: {
-    ...mapActions(userStore, ["userLogout"]),
-    onClickLogout() {
-      console.log(this.userInfo.userId);
-      //vuex actions에서 userLogout 실행(Backend에 저장 된 리프레시 토큰 없애기
-      //+ satate에 isLogin, userInfo 정보 변경)
-      // this.$store.dispatch("userLogout", this.userInfo.userid);
-      this.userLogout(this.userInfo.userId);
-      sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
-      sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-      if (this.$route.path != "/") this.$router.push({ name: "main" });
+    hideModal() {
+      this.$refs["login-modal"].hide();
+    },
+    mypageEditMode(value) {
+      return (this.editMode = value);
     },
   },
 };

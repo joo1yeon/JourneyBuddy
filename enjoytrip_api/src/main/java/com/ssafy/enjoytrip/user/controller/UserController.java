@@ -1,8 +1,10 @@
 package com.ssafy.enjoytrip.user.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,6 +13,7 @@ import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,10 +24,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.enjoytrip.config.jwt.JwtToken;
 import com.ssafy.enjoytrip.config.jwt.JwtTokenProvider;
+import com.ssafy.enjoytrip.user.model.FileInfoDto;
 import com.ssafy.enjoytrip.user.model.UserDto;
 import com.ssafy.enjoytrip.user.model.service.UserService;
 
@@ -39,13 +45,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/user")
-@Api(tags = {"회원"})
+@Api(tags = { "회원" })
 @CrossOrigin("*")
 public class UserController {
-	
+
 	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
+
+	@Value("${file.imgPath}")
+	private String uploadImgPath;
 
 	private final UserService userService;
 	private final JwtTokenProvider jwtTokenProvider;
@@ -58,7 +67,7 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "로그인", notes = "아이디와 패스워드를 이용하여 로그인 정보를 리턴합니다.")
-	@ApiResponses({@ApiResponse(code = 200, message = "로그인 OK"), @ApiResponse(code = 500, message = "서버 에러")})
+	@ApiResponses({ @ApiResponse(code = 200, message = "로그인 OK"), @ApiResponse(code = 500, message = "서버 에러") })
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody UserDto userDto) {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -82,7 +91,7 @@ public class UserController {
 		System.out.println(resultMap.get("message"));
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
 	@GetMapping("/info/{userid}")
 	public ResponseEntity<Map<String, Object>> getInfo(
@@ -111,7 +120,7 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	@ApiOperation(value = "로그아웃", notes = "회원 정보를 담은 Token을 제거한다.", response = Map.class)
 	@GetMapping("/logout/{userid}")
 	public ResponseEntity<?> logout(@PathVariable("userid") String userId) {
@@ -128,7 +137,9 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
+	@ApiOperation(value = "회원가입", notes = "회원 정보를 DB에 저장합니다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "회원가입 OK"), @ApiResponse(code = 500, message = "서버 에러") })
 	@PostMapping
 	public ResponseEntity<?> userRegister(@RequestBody UserDto userDto) {
 		try {
@@ -139,15 +150,16 @@ public class UserController {
 			return exceptionHandling(e);
 		}
 	}
-	
+
 	@ApiOperation(value = "회원 정보", notes = "회원 한 명의 정보를 리턴합니다.")
-	@ApiResponses({@ApiResponse(code = 200, message = "회원 정보 OK"), @ApiResponse(code = 500, message = "서버 에러")})
-	@ApiImplicitParams({@ApiImplicitParam(name = "userid", value = "회원 아이디", required = true, dataType = "String", paramType = "path")})
+	@ApiResponses({ @ApiResponse(code = 200, message = "회원 정보 OK"), @ApiResponse(code = 500, message = "서버 에러") })
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "userid", value = "회원 아이디", required = true, dataType = "String", paramType = "path") })
 	@GetMapping("/{userid}")
 	public ResponseEntity<?> userInfo(@PathVariable("userid") String userId) {
 		try {
 			UserDto userDto = userService.getUser(userId);
-			
+
 			if (userDto != null) {
 				return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 			} else {
@@ -157,23 +169,48 @@ public class UserController {
 			return exceptionHandling(e);
 		}
 	}
-	
+
 	@ApiOperation(value = "회원 수정", notes = "회원 정보를 수정합니다.")
-	@ApiResponses({@ApiResponse(code = 200, message = "회원 정보 수정 OK"), @ApiResponse(code = 500, message = "서버 에러")})
+	@ApiResponses({ @ApiResponse(code = 200, message = "회원 정보 수정 OK"), @ApiResponse(code = 500, message = "서버 에러") })
 	@PutMapping
-	public ResponseEntity<?> userModify(@RequestBody UserDto userDto) {
+	public ResponseEntity<?> userModify(UserDto userDto, @RequestParam("upfile") MultipartFile file) {
 		try {
+			// 프로필 사진 업로드
+			logger.debug("MultipartFile.isEmpty : {}", file.isEmpty());
+
+			if (!file.isEmpty()) {
+				String saveFolder = uploadImgPath + File.separator + userDto.getUserId();
+				logger.debug("저장 폴더: {}", saveFolder);
+				File folder = new File(saveFolder);
+				if (!folder.exists()) {
+					folder.mkdirs();
+				}
+				FileInfoDto fileInfoDto = new FileInfoDto();
+				String originalFileName = file.getOriginalFilename();
+				if (!originalFileName.isEmpty()) {
+					String saveFileName = UUID.randomUUID().toString()
+							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
+					fileInfoDto.setSaveFolder(userDto.getUserId());
+					fileInfoDto.setOriginalFile(originalFileName);
+					fileInfoDto.setSaveFile(saveFileName);
+					logger.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", file.getOriginalFilename(), saveFileName);
+					file.transferTo(new File(folder, saveFileName));
+				}
+				userDto.setFileInfo(fileInfoDto);
+			}
+
 			userService.updateUser(userDto);
-			List<UserDto> list = userService.getUserList();
-			return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);
+
+			return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
 	}
-	
+
 	@ApiOperation(value = "회원 삭제", notes = "회원 한 명의 정보를 삭제합니다.")
-	@ApiResponses({@ApiResponse(code = 200, message = "회원 정보 삭제 OK"), @ApiResponse(code = 500, message = "서버 에러")})
-	@ApiImplicitParams({@ApiImplicitParam(name = "userid", value = "회원 아이디", required = true, dataType = "String", paramType = "path")})	
+	@ApiResponses({ @ApiResponse(code = 200, message = "회원 정보 삭제 OK"), @ApiResponse(code = 500, message = "서버 에러") })
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "userid", value = "회원 아이디", required = true, dataType = "String", paramType = "path") })
 	@DeleteMapping(value = "/{userid}")
 	public ResponseEntity<?> userDelete(@PathVariable("userid") String userId) {
 		try {
@@ -184,7 +221,7 @@ public class UserController {
 			return exceptionHandling(e);
 		}
 	}
-	
+
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

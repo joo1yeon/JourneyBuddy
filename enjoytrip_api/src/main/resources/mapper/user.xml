@@ -1,38 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
-<mapper namespace="com.ssafy.enjoytrip.user.model.mapper.UserMapper">
+
+<mapper
+	namespace="com.ssafy.enjoytrip.user.model.mapper.UserMapper">
 
 	<resultMap type="userDto" id="user">
-		<result column="user_id" property="userId"/>
-		<result column="user_password" property="userPassword"/>
-		<result column="user_name" property="userName"/>
-		<result column="email_id" property="emailId"/>
-		<result column="email_domain" property="emailDomain"/>
-		<result column="gender" property="gender"/>
-		<result column="birth_date" property="birthDate"/>
-		<result column="register_date" property="registerDate"/>
-		<result column="token" property="token"/>
+		<result column="user_id" property="userId" />
+		<result column="user_password" property="userPassword" />
+		<result column="user_name" property="userName" />
+		<result column="email_id" property="emailId" />
+		<result column="email_domain" property="emailDomain" />
+		<result column="gender" property="gender" />
+		<result column="birth_date" property="birthDate" />
+		<result column="register_date" property="registerDate" />
+		<result column="token" property="token" />
 	</resultMap>
-	
+
+	<resultMap type="userDto" id="userInfo" extends="user">
+		<result column="profile_img" property="fileInfoDto" />
+		<association property="fileInfo" column="user_id"
+			javaType="fileInfoDto" resultMap="file" />
+	</resultMap>
+
+	<resultMap type="fileInfoDto" id="file">
+		<result column="save_folder" property="saveFolder" />
+		<result column="original_file" property="originalFile" />
+		<result column="save_file" property="saveFile" />
+	</resultMap>
+
+
 	<insert id="joinUser" parameterType="userDto">
-		insert into User (user_id, user_password, user_name, email_id, email_domain, gender, birth_date, register_date)
-		values (#{userId}, #{userPassword}, #{userName}, #{emailId}, #{emailDomain}, #{gender}, #{birthDate}, now())
+		insert into User (user_id,
+		user_password, user_name, email_id, email_domain, gender, birth_date,
+		register_date)
+		values (#{userId}, #{userPassword}, #{userName},
+		#{emailId}, #{emailDomain}, #{gender}, #{birthDate}, now())
 	</insert>
-	
+
 	<select id="loginUser" parameterType="userDto" resultMap="user">
-		select *
-		from user
-		where user_id = #{userId}
+		select
+		*
+		from user u, file_info f
+		where u.user_id = f.user_id
+		and u.user_id = #{userId}
 	</select>
-	
+
 	<select id="getUser" parameterType="String" resultMap="user">
 		select *
 		from user
 		where user_id = #{userId}
 	</select>
-	
+
 	<update id="updateUser" parameterType="userDto">
 		update user
 		<trim prefix="set" suffixOverrides=",">
@@ -43,30 +62,39 @@
 			<if test="gender != null">gender = #{gender},</if>
 			<if test="birthDate != null">birth_date = #{birthDate},</if>
 		</trim>
-		where user_id = #{userId}		
+		where user_id = #{userId}
 	</update>
-	
+
+	<insert id="registerFile" parameterType="userDto">
+		insert into file_info (user_id, save_folder, original_file, save_file)
+		values (#{userId}, #{fileInfo.saveFolder}, #{fileInfo.originalFile}, #{fileInfo.saveFile})
+	</insert>
+
 	<delete id="deleteUser" parameterType="String">
 		delete
 		from user
-		where user_id = #{userId}
+		where
+		user_id = #{userId}
 	</delete>
-	
+
 	<select id="getUserList" resultMap="user">
 		select *
 		from user
-		order by register_date;
+		order by
+		register_date;
 	</select>
-	
+
 	<update id="updateRefreshToken" parameterType="userDto">
 		update user
-		set token = #{token}
-		where user_id = #{userId}		
+		set
+		token = #{token}
+		where user_id = #{userId}
 	</update>
-	
+
 	<update id="deleteRefreshToken" parameterType="String">
 		update user
-		set token = null
+		set
+		token = null
 		where user_id = #{userId}
 	</update>
 </mapper>
