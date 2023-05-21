@@ -1,12 +1,15 @@
 package com.ssafy.enjoytrip.user.model.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -40,8 +43,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int joinUser(UserDto userDto) throws SQLException {
-		userDto.setUserPassword(passwordEncoder.encode(userDto.getUserPassword()));
-		return userMapper.joinUser(userDto);
+		userDto.setUserPassword(passwordEncoder.encode(userDto.getUserPassword()));		
+		userMapper.joinUser(userDto);
+		userMapper.registerUserId(userDto.getUserId());
+		return userMapper.registerAuthority(userDto.getUserId());
 	}
 	
 	@Override
@@ -74,7 +79,7 @@ public class UserServiceImpl implements UserService {
 	public int updateUser(UserDto userDto) throws SQLException {
 		FileInfoDto fileInfoDto = userDto.getFileInfo();
 		if (fileInfoDto != null) {
-			registerFile(userDto);
+			updateFile(userDto);
 		}
 
 		return userMapper.updateUser(userDto);
@@ -96,8 +101,19 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public int registerFile(UserDto userDto) throws SQLException {
-		return userMapper.registerFile(userDto);
+	public int updateFile(UserDto userDto) throws SQLException {
+		return userMapper.updateFile(userDto);
+	}
+	
+	public ArrayList<GrantedAuthority> getUserAuthorities(String userId) throws SQLException {
+        List<String> authorities = userMapper.getUserAuthorities(userId);
+        ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+
+        for (String auth: authorities) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(auth));
+        }
+
+        return grantedAuthorities;
 	}
 
 }

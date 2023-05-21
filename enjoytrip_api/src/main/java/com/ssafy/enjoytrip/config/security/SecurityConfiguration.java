@@ -29,15 +29,25 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+//        String[] staticResources  =  {
+//                "/css/**",
+//                "/images/**",
+//                "/fonts/**",
+//                "/scripts/**",
+//            };
+        
+        http        		
                 .csrf().disable()
                 .httpBasic().disable()
                 .formLogin().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers ("/api/**", "/user/**", "/oauth2/**").permitAll ()
-                .and()
+//                .antMatchers(staticResources).permitAll()
+                .anyRequest().permitAll()
+//                .antMatchers ("/api/**", "/user/**", "/oauth2/**").permitAll()
+//                .antMatchers("/user/**").hasRole("USER")
+                .and()               
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

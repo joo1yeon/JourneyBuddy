@@ -1,6 +1,9 @@
 package com.ssafy.enjoytrip.config.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,16 +13,21 @@ import com.ssafy.enjoytrip.user.model.UserDto;
 public class UserDetailsImpl implements UserDetails {
 	
 	private UserDto user;
+	private ArrayList<GrantedAuthority> authorities;
 
 	public UserDetailsImpl(UserDto user) {
 		super();
-		this.user = user;
+		this.user = user;		
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<GrantedAuthority> authList = new ArrayList<GrantedAuthority>(authorities);
+        return authList;
+	}
+	
+	public void setAuthorities(List<GrantedAuthority> authorities) {
+		this.authorities = (ArrayList<GrantedAuthority>)authorities;
 	}
 
 	@Override

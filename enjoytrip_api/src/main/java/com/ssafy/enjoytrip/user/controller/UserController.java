@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -73,6 +74,7 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
+			System.out.println(userDto);
 			JwtToken token = userService.loginUser(userDto);
 			if (token != null) {
 				resultMap.put("access-token", token.getAccessToken());
@@ -173,7 +175,7 @@ public class UserController {
 	@ApiOperation(value = "회원 수정", notes = "회원 정보를 수정합니다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원 정보 수정 OK"), @ApiResponse(code = 500, message = "서버 에러") })
 	@PutMapping
-	public ResponseEntity<?> userModify(UserDto userDto, @RequestParam("upfile") MultipartFile file) {
+	public ResponseEntity<?> userModify(UserDto userDto, @RequestParam(value="upfile", required = false) MultipartFile file) {
 		try {
 			// 프로필 사진 업로드
 			logger.debug("MultipartFile.isEmpty : {}", file.isEmpty());

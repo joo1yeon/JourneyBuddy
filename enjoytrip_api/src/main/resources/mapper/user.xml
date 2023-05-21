@@ -31,11 +31,21 @@
 
 
 	<insert id="joinUser" parameterType="userDto">
-		insert into User (user_id,
+		insert into user (user_id,
 		user_password, user_name, email_id, email_domain, gender, birth_date,
 		register_date)
 		values (#{userId}, #{userPassword}, #{userName},
 		#{emailId}, #{emailDomain}, #{gender}, #{birthDate}, now())
+	</insert>
+
+	<insert id="registerUserId" parameterType="String">
+		insert into file_info (user_id)
+		values (#{userId})
+	</insert>
+	
+	<insert id="registerAuthority" parameterType="String">
+		insert into authorities (user_id, authority)
+		values (#{userId}, 'USER')
 	</insert>
 
 	<select id="loginUser" parameterType="userDto" resultMap="user">
@@ -65,10 +75,11 @@
 		where user_id = #{userId}
 	</update>
 
-	<insert id="registerFile" parameterType="userDto">
-		insert into file_info (user_id, save_folder, original_file, save_file)
-		values (#{userId}, #{fileInfo.saveFolder}, #{fileInfo.originalFile}, #{fileInfo.saveFile})
-	</insert>
+	<update id="updateFile" parameterType="userDto">
+		update file_info
+		set save_folder = #{fileInfo.saveFolder}, original_file = #{fileInfo.originalFile}, save_file = #{fileInfo.saveFile}
+		where user_id = #{userId} 
+	</update>
 
 	<delete id="deleteUser" parameterType="String">
 		delete
@@ -97,4 +108,10 @@
 		token = null
 		where user_id = #{userId}
 	</update>
+
+	<select id="getUserAuthorities" parameterType="String" resultType="String">
+		select authority 
+		from authorities 
+		where user_id = #{user_id}
+	</select>
 </mapper>
