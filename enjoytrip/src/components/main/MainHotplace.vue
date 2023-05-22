@@ -16,7 +16,9 @@
           content.
         </b-card-text>
 
-        <b-button href="#" variant="primary">Go somewhere</b-button>
+        <router-link :to="{ name: 'hotplacedetail' }">
+          <b-button>Go somewhere</b-button>
+        </router-link>
       </b-card>
     </div>
     <div>
@@ -34,7 +36,7 @@
           content.
         </b-card-text>
 
-        <b-button href="#" variant="primary">Go somewhere</b-button>
+        <b-button>Go somewhere</b-button>
       </b-card>
     </div>
     <div>
@@ -52,7 +54,7 @@
           content.
         </b-card-text>
 
-        <b-button href="#" variant="primary">Go somewhere</b-button>
+        <b-button>Go somewhere</b-button>
       </b-card>
     </div>
   </div>

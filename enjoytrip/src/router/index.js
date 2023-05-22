@@ -106,6 +106,24 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/hotplace",
+    name: "hotplace",
+    component: () => import(/* webpackChunkName: "hotplace" */ "@/views/HotplaceView"),
+    redirect: "/hotplace/list",
+    children: [
+      {
+        path: "list",
+        name: "hotplacelist",
+        component: () => import(/* webpackChunkName: "hotplace" */ "@/components/hotplace/HotplaceList"),
+      },
+      {
+        path: "detail",
+        name: "hotplacedetail",
+        component: () => import(/* webpackChunkName: "hotplace" */ "@/components/hotplace/HotplaceDetail"),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({

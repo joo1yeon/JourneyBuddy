@@ -134,6 +134,16 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+-- -----------------------------------------------------
+-- Table `enjoytrip`.`authorities`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `authorities` (
+  `user_id` VARCHAR(45) DEFAULT NULL,
+  `authority` varchar(45) DEFAULT NULL
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`board`
