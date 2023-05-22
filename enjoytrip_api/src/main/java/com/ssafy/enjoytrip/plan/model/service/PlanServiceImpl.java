@@ -22,6 +22,10 @@ public class PlanServiceImpl implements PlanService {
 		PlanDto tmp = new PlanDto();
 		tmp.setWriter(userId);
 		tmp.setTitle(title);
+		int cnt = planMapper.cntMyPlan(userId);
+		if(cnt ==0) cnt =1;
+		else cnt += 1;
+		tmp.setPlanNum(cnt);
 		planMapper.registerPlan(tmp);
 		for (PlanDto plan : list) {
 			plan.setPlanNum(tmp.getPlanNum());

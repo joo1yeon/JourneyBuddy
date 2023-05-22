@@ -11,8 +11,8 @@ public class PlanDto {
 	private int tripPlanId;
 	private String writer;
 	private String title;
+	
 	// trip_plan_detail
-
 	private int tripPlanDetailId;
 	private int planNum;
 	private int contentId;

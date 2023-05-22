@@ -24,11 +24,11 @@
     </b-form-group>
     <b-row>
       <b-col col>
-        <b-form-group label="시간 : " label-for="time">
-          <b-input type="time" id="time" v-model="planDetail.time"></b-input>
+        <b-form-group label="시간 : " label-for="date">
+          <b-input type="date" id="date" v-model="info.time"></b-input>
         </b-form-group>
         <b-form-group label="추가 정보 입력 : ">
-          <b-input type="text" v-model="planDetail.info"></b-input>
+          <b-input type="text" v-model="info.info"></b-input>
         </b-form-group>
       </b-col>
     </b-row>
@@ -42,7 +42,7 @@ export default {
   props: {
     attraction: Object,
     show: Boolean,
-    infoItem: Object,
+    infoItem: Array,
   },
   data() {
     return {
@@ -62,13 +62,6 @@ export default {
         return this.attraction;
       } else {
         return null;
-      }
-    },
-    item() {
-      if (this.infoItem) {
-        return this.infoItem;
-      } else {
-        return this.planDetail;
       }
     },
   },

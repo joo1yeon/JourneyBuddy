@@ -16,4 +16,7 @@ public interface PlanMapper {
 
 	// 내 여행 계획 확인
 	List<PlanDto> viewMyPlan(String userId, Integer planNum);
+	
+	// 내 여행계획 수
+	int cntMyPlan(String userId);
 }

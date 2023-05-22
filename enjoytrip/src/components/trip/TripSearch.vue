@@ -55,12 +55,11 @@
         <!-- 선택된 여행지 start -->
         <div class="col-md-3">
           <b-alert variant="warning" show>선택된 여행지</b-alert>
-          <!-- <b-button v-b-modal.plan-title variant="primary" class="mr-3">여행 주제</b-button> -->
           <b-form v-if="checkList.length" class="text-left">
-            <b-button class="text-left mb-2" variant="danger" @click="registerPlan">등록하기</b-button>
             <b-form-group label="여행 주제 : ">
               <b-input type="text" v-model="title"></b-input>
             </b-form-group>
+            <b-button class="text-left mb-2" variant="danger" @click="registerPlan">등록하기</b-button>
           </b-form>
           <div style="overflow-y: auto; height: 520px" class="mt-3">
             <b-table striped hover :fields="fields2" :items="checkList" @row-clicked="showModal" v-if="checkList.length"> </b-table>
@@ -121,7 +120,7 @@ export default {
       ],
       contentType: 0,
       query: "해운대",
-      infoItem: {},
+      // infoItem: {},
       attraction: {},
       attractionList: [],
       checkList: [],
@@ -201,8 +200,23 @@ export default {
     },
     // 여행 계획 등록
     registerPlan() {
-      // let tmp = [];
-      // http.post(`/plan/ssafy/${this.title}`).then(alert("등록 완료!"));
+      let plan = [];
+      console.log(this.title);
+      console.log(this.checkList);
+      this.checkList.forEach((check, index) => {
+        const obj = {
+          contentId: check.contentId,
+          info: check.info,
+          planNum: 0,
+          sequence: index + 1,
+          time: check.time,
+          title: this.title,
+          tripPlanDetailId: 0,
+          writer: "ssafy",
+        };
+        plan.push(obj);
+      });
+      http.post(`/plan/ssafy/${this.title}`, plan).then(alert("정상적으로 등록되었습니다"));
     },
     // 계획 정보 등록 모달
     showModal(item) {
@@ -250,7 +264,18 @@ export default {
     },
     // 여행 정보 세팅 (PlanModal로 부터 받음)
     DetailSetting(detail) {
-      this.infoList.push(detail);
+      const index = this.infoList.findIndex((item) => item.contentId == detail.contentId);
+      // 값이 존재하는 경우
+      if (index != -1) {
+        this.infoList[index] = detail;
+      }
+      // 값이 존재하지 않는 경우
+      else {
+        this.infoList.push(detail);
+      }
+    },
+    infoItem() {
+      return this.infoList;
     },
   },
 };
