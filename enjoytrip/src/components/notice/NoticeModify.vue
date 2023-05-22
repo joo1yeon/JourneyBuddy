@@ -15,7 +15,7 @@
         <b-form-input id="input-3" v-model="form.hit" type="number" required readonly></b-form-input>
       </b-form-group>
       <b-form-group id="input-group-1" label="등록 시간" label-for="input-4" label-align="left">
-        <b-form-input id="input-4" v-model="form.registerTime" type="text" required readonly></b-form-input>
+        <b-form-input id="input-4" v-model="form.registerTiem" type="text" required readonly></b-form-input>
       </b-form-group>
 
       <!-- 메인 공지 작성 여부 -->

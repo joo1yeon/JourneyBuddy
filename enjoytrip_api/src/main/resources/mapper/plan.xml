@@ -28,22 +28,20 @@
 		<parameter property="planNum" javaType="java.lang.Integer" />
 	</parameterMap>
 
-	<insert id="registerPlan" parameterType="PlanDto">
+	<insert id="registerPlan">
 		INSERT INTO trip_plan
-		(writer, title)
-		VALUES (#{writer}, #{title})
+		(writer, title, plan_num)
+		VALUES (#{writer}, #{title}, #{planNum})
 		<selectKey resultType="int" keyProperty="planNum"
 			order="AFTER">
 			select last_insert_id()
 		</selectKey>
 	</insert>
 
-	<insert id="registerPlanDetail" parameterType="PlanDto">
+	<insert id="registerPlanDetail">
 		INSERT INTO
 		trip_plan_detail (plan_num, writer, content_id, time, info, sequence)
-		VALUES (#{planNum}, #{writer}, #{contentId}, #{time},
-		#{info},
-		#{sequence})
+		VALUES (#{planNum}, #{writer}, #{contentId}, #{time}, #{info},#{sequence})
 	</insert>
 
 	<select id="viewMyPlan" parameterMap="myPlan" resultMap="plan">
@@ -53,6 +51,12 @@
 		tpd.writer
 		AND tp.writer = #{userId}
 		<if test="planNum != null">AND tpd.plan_num = #{planNum}</if>
+	</select>
+	
+	<select id="cntMyPlan" resultType="int">
+		SELECT count(*)
+		FROM trip_plan
+		WHERE writer = #{userId}
 	</select>
 
 	<!-- <select id="viewDetailInfo" parameterType="int" resultMap="attraction"> 

@@ -39,4 +39,8 @@ public class AttractionDto {
 	String modifyTime;
 	@ApiModelProperty(value = "선택 여부")
 	String checked;
+	@ApiModelProperty(value = "추가 정보")
+	String info;
+	@ApiModelProperty(value = "시간")
+	String time;
 }
