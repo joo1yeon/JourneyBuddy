@@ -57,7 +57,7 @@
           <b-alert variant="warning" show>선택된 여행지</b-alert>
           <b-form v-if="checkList.length" class="text-left">
             <b-form-group label="여행 주제 : ">
-              <b-input type="text" v-model="title"></b-input>
+              <b-input type="text" v-model="title" placeholder="여행 주제를"></b-input>
             </b-form-group>
             <b-button class="text-left mb-2" variant="danger" @click="registerPlan">등록하기</b-button>
           </b-form>

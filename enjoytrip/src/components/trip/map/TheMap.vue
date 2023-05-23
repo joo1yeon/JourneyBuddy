@@ -156,15 +156,15 @@ export default {
         longitude: item.longitude,
       }));
       // 마커를 생성합니다
-      items.forEach((item) => {
-        let marker = new kakao.maps.Marker({
-          map: this.map, // 마커를 표시할 지도
-          position: new kakao.maps.LatLng(item.latitude, item.longitude), // 마커를 표시할 위치
-          title: item.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-        });
-        marker.setMap(this.map);
-        this.markers.push(marker);
-      });
+      // items.forEach((item) => {
+      //   let marker = new kakao.maps.Marker({
+      //     map: this.map, // 마커를 표시할 지도
+      //     position: new kakao.maps.LatLng(item.latitude, item.longitude), // 마커를 표시할 위치
+      //     title: item.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+      //   });
+      //   marker.setMap(this.map);
+      //   this.markers.push(marker);
+      // });
 
       // 선을 그립니다
       let linePath = markerPositions.map((position) => new kakao.maps.LatLng(position.latitude, position.longitude));
@@ -173,7 +173,7 @@ export default {
         path: linePath,
         strokeWeight: 3,
         strokeColor: "#FF0000",
-        strokeOpacity: 0.7,
+        strokeOpacity: 1,
         strokeStyle: "solid",
       });
       line.setMap(this.map);

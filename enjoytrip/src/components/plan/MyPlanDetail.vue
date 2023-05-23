@@ -1,34 +1,32 @@
 <template>
   <b-container id="detail">
-    <h2 class="text-left"><b-icon icon="map"></b-icon> {{ title }}</h2>
-    <!-- <b-card-group>
-      <b-card border-variant="primary" :header="title" align="center">
-        <b-card-text>{{}}</b-card-text>
-      </b-card>
-    </b-card-group> -->
+    <h2 align="left"><b-icon icon="map"></b-icon> {{ title }}</h2>
     <hr />
-    <div id="map" v-if="detailList.length > 0">
+    <div id="map">
       <the-map ref="map"></the-map>
     </div>
+    <!-- <hr /> -->
+    <h2 class="mt-4 mb-3" align="left"><b-icon icon="list-task"></b-icon> 나의 일정</h2>
     <hr />
-    <h2><b-icon icon="info-circle-fill"></b-icon> 일정</h2>
     <div id="detail-card" v-for="(detail, index) in detailList" :key="index">
-      <b-card no-body class="overflow-hidden mb-3" border-variant="dark">
+      <span class="icon-number mb-3">{{ index + 1 }}</span>
+      <b-card no-body class="overflow-hidden mb-3" border-variant="dark" align="left" style="position: relative">
         <b-row no-gutters>
           <b-col md="4">
-            <b-card-img :src="detail.image1" :alt="detail.title" class="rounded-0" style="max-height: 250px"></b-card-img>
+            <b-img thumbnail :src="detail.image1" :alt="detail.title" class="rounded-0 card-img" style="max-height: 250px"></b-img>
           </b-col>
           <b-col md="4">
             <b-card-body :title="detail.title" :sub-title="detail.addr1">
+              <hr />
               <b-card-text>
-                <strong>날짜 : </strong>{{ detail.detailTime }}<br />
-                <strong>메모 내용 : </strong>
+                <strong><b-icon icon="calendar-date"></b-icon> 날짜 : </strong>{{ detail.detailTime }}<br />
+                <strong><b-icon icon="check2-square"></b-icon> 메모 내용 : </strong>
                 {{ detail.detailInfo }}
               </b-card-text>
             </b-card-body>
           </b-col>
           <b-col md="4" style="overflow-y: auto">
-            <b-card-footer><b-icon-info-square-fill></b-icon-info-square-fill> 관광지 정보</b-card-footer>
+            <b-card-footer><b-icon icon="info-square-fill"></b-icon> 관광지 정보</b-card-footer>
             <div style="max-height: 200px; overflow-y: auto">
               <b-list-group>
                 <b-list-group-item>{{ detail.overview }}</b-list-group-item>
@@ -54,29 +52,17 @@ export default {
       title: "",
     };
   },
-  created() {
-    this.loadMapComponent(); // TheMap 컴포넌트를 먼저 로드하기 위해 created 훅에서 실행
-  },
-  methods: {
-    loadMapComponent() {
-      import("@/components/trip/map/TheMap.vue").then((module) => {
-        this.$options.components.TheMap = module.default || module; // TheMap 컴포넌트를 동적으로 등록
-      });
-    },
-    loadData() {
-      http.get(`/plan/detail/ssafy/${this.$route.params.tripPlanId}`).then((response) => {
-        this.detailList = response.data;
-        this.title = this.detailList[0].planTitle;
-        this.$nextTick(() => {
-          this.$refs.map.drawLine(this.detailList);
-          this.$refs.map.displayMarker(this.detailList);
-        });
-      });
-    },
-  },
+  created() {},
   mounted() {
-    this.loadData(); // 데이터 로드 및 지도 작업 실행
+    http.get(`/plan/detail/ssafy/${this.$route.params.tripPlanId}`).then((response) => {
+      this.detailList = response.data;
+      this.title = this.detailList[0].planTitle;
+      this.$refs.map.drawLine(this.detailList);
+      this.$refs.map.displayMarker(this.detailList);
+    });
   },
+  updated() {},
+  methods: {},
 };
 </script>
 
@@ -86,5 +72,21 @@ export default {
 }
 #map {
   height: 500px;
+}
+.icon-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #28a745;
+  color: #fff;
+  font-size: 15px;
+}
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
