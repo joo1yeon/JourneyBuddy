@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.enjoytrip.plan.model.PlanAttractionDto;
 import com.ssafy.enjoytrip.plan.model.PlanDto;
 import com.ssafy.enjoytrip.plan.model.mapper.PlanMapper;
 
@@ -21,7 +22,7 @@ public class PlanServiceImpl implements PlanService {
 	public void registerPlan(List<PlanDto> list, String userId, String title) {
 		PlanDto tmp = new PlanDto();
 		tmp.setWriter(userId);
-		tmp.setTitle(title);
+		tmp.setPlanTitle(title);;
 		int cnt = planMapper.cntMyPlan(userId);
 		if(cnt ==0) cnt =1;
 		else cnt += 1;
@@ -37,5 +38,12 @@ public class PlanServiceImpl implements PlanService {
 	public List<PlanDto> viewMyPlan(String userId, Integer planNum) {
 		return planMapper.viewMyPlan(userId, planNum);
 	}
+
+	@Override
+	public List<PlanAttractionDto> viewMyPlanDetail(String userId, int tripPlanId) {
+		return planMapper.viewMyPlanDetail(userId, tripPlanId);
+	}
+
+
 
 }

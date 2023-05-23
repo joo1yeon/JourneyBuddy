@@ -76,8 +76,7 @@ const routes = [
       {
         path: "modify/:noticeno",
         name: "noticemodify",
-        component: () =>
-          import(/* webpackChunkName: "notice" */ "@/components/notice/NoticeModify"),
+        component: () => import(/* webpackChunkName: "notice" */ "@/components/notice/NoticeModify"),
       },
     ],
   },
@@ -91,6 +90,11 @@ const routes = [
         path: "list",
         name: "planlist",
         component: () => import(/* webpackChunkName: "plan" */ "@/components/plan/MyPlanList"),
+      },
+      {
+        path: "detail/:tripPlanId",
+        name: "plandetail",
+        component: () => import(/* webpackChunkName: "plan" */ "@/components/plan/MyPlanDetail"),
       },
     ],
   },

@@ -12,13 +12,7 @@
       </b-table>
     </div>
     <div v-else-if="isNotice && noticeList">
-      <b-table
-        hover
-        :items="tableData"
-        @row-clicked="noticeView"
-        :fields="fields"
-        :top-row="topRowContent"
-      >
+      <b-table hover :items="tableData" @row-clicked="noticeView" :fields="fields" :top-row="topRowContent">
         <template #cell(userId)="data">
           <div v-if="data.item.userId === 'ssafy'">관리자</div>
         </template>
@@ -40,7 +34,6 @@ export default {
         {
           key: "noticeNo",
           label: "글 번호",
-          sortable: true,
         },
         {
           key: "subject",
@@ -53,7 +46,6 @@ export default {
         {
           key: "hit",
           label: "조회수",
-          sortable: true,
         },
       ],
       noticeList: [],

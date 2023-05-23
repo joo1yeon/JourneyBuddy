@@ -5,17 +5,51 @@
 <mapper
 	namespace="com.ssafy.enjoytrip.plan.model.mapper.PlanMapper">
 
+	<!-- 계획 정보 담을 resultMap -->
 	<resultMap type="PlanDto" id="plan">
+		<!-- 여행 계획 정보 -->
 		<result column="trip_plan_id" property="tripPlanId" />
 		<result column="writer" property="writer" />
-		<result column="title" property="title" />
-		<result column="trip_plan_detail_id"
-			property="tripPlanDetailId" />
+		<result column="plan_title" property="planTitle" />
+		<!-- 여행 계획 상세 정보 -->
+		<result column="trip_plan_detail_id" property="tripPlanDetailId" />
 		<result column="plan_num" property="planNum" />
-		<result column="content_id" property="contentId" />
+		<result column="detail_content_id" property="detailContentId" />
 		<result column="time" property="time" />
 		<result column="info" property="info" />
 		<result column="sequence" property="sequence" />
+		<result column="register_time" property="registerTime" />
+	</resultMap>
+
+	<!-- 관광지 + 여행 resultMap -->
+	<resultMap type="PlanAttractionDto" id="planAttraction">
+		<!-- 관광지 정보 -->
+		<result column="content_type_id" property="contentTypeId" />
+		<result column="title" property="title" />
+		<result column="addr1" property="addr1" />
+		<result column="addr2" property="addr2" />
+		<result column="zipcode" property="zipcode" />
+		<result column="tel" property="tel" />
+		<result column="first_image" property="image1" />
+		<result column="first_image2" property="image2" />
+		<result column="readcount" property="readcount" />
+		<result column="sido_code" property="sidoCode" />
+		<result column="gugun_code" property="gugunCode" />
+		<result column="latitude" property="latitude" />
+		<result column="longitude" property="longitude" />
+		<result column="mlevel" property="mlevel" />
+		<!-- 여행 계획 정보 -->
+		<result column="trip_plan_id" property="tripPlanId" />
+		<result column="writer" property="writer" />
+		<result column="plan_title" property="planTitle" />
+		<!-- 여행 계획 상세 정보 -->
+		<result column="trip_plan_detail_id" property="tripPlanDetailId" />
+		<result column="plan_num" property="planNum" />
+		<result column="content_id" property="contentId" />
+		<result column="detail_time" property="detailTime" />
+		<result column="detail_info" property="detailInfo" />
+		<result column="sequence" property="sequence" />
+		<result column="register_time" property="registerTime" />
 	</resultMap>
 
 	<parameterMap type="java.util.HashMap" id="myPlan">
@@ -28,40 +62,50 @@
 		<parameter property="planNum" javaType="java.lang.Integer" />
 	</parameterMap>
 
+	<!-- 여행 계획 등록 -->
 	<insert id="registerPlan">
-		INSERT INTO trip_plan
-		(writer, title)
-		VALUES (#{writer}, #{title})
+		INSERT INTO trip_plan (writer, plan_title)
+		VALUES (#{writer}, #{planTitle})
 		<selectKey resultType="int" keyProperty="planNum"
 			order="AFTER">
 			select last_insert_id()
 		</selectKey>
 	</insert>
 
+	<!-- 여행 계획 상세 등록 -->
 	<insert id="registerPlanDetail">
 		INSERT INTO
-		trip_plan_detail (plan_num, writer, content_id, time, info, sequence)
-		VALUES (#{planNum}, #{writer}, #{contentId}, #{time}, #{info},#{sequence})
+		trip_plan_detail (plan_num, writer,
+		detail_content_id, detail_time, detail_info, sequence)
+		VALUES (#{planNum}, #{writer},
+		#{detailContentId}, #{detailTime}, #{detailInfo},#{sequence})
 	</insert>
 
-	<select id="viewMyPlan" parameterMap="myPlan" resultMap="plan">
+	<!-- 나의 여행 계획 조회 -->
+	<select id="viewMyPlan" resultMap="plan">
 		SELECT *
-		FROM trip_plan tp, trip_plan_detail tpd
-		WHERE tp.writer =
-		tpd.writer
-		AND tp.writer = #{userId}
-		<if test="planNum != null">AND tpd.plan_num = #{planNum}</if>
+		FROM trip_plan
+		WHERE
+		writer= #{userId}
 	</select>
-	
+
+	<!-- 나의 여행 계획 개수 -->
 	<select id="cntMyPlan" resultType="int">
 		SELECT count(*)
 		FROM trip_plan
 		WHERE writer = #{userId}
 	</select>
 
-	<!-- <select id="viewDetailInfo" parameterType="int" resultMap="attraction"> 
-		SELECT ai.*, ad.*, detail.* FROM attraction_info ai, attraction_description 
-		ad, attraction_detail detail WHERE ai.content_id = ad.content_id AND ai.content_id 
-		= detail.content_id AND content_id = #{contentId} </select> -->
+	<!-- 나의 여행 계획 상세 정보 -->
+	<select id="viewMyPlanDetail" resultMap="planAttraction">
+ 		SELECT *
+		FROM trip_plan tp, trip_plan_detail tpd, attraction_info ai, attraction_description ad, attraction_detail detail
+		WHERE tp.writer = tpd.writer AND tp.writer = #{userId}
+		AND tp.trip_plan_id = tpd.plan_num
+        AND ai.content_id = ad.content_id AND ai.content_id = detail.content_id 
+		AND ai.content_id = tpd.detail_content_id
+		AND tpd.plan_num = #{tripPlanId}
+	</select>
+
 
 </mapper>
