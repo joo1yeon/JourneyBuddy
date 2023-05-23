@@ -38,6 +38,10 @@
               drop-placeholder="이 곳으로 드래그"
             ></b-form-file>
           </div>
+          <div class="inputStyle">
+            <b-icon icon="star-fill" /> 별점
+            <b-form-rating v-model="ratingValue" variant="warning" class="mb-2"></b-form-rating>
+          </div>
         </div>
       </div>
     </b-row>
@@ -90,6 +94,7 @@ export default {
       ],
       previewImage: "",
       upfile: null,
+      ratingValue: "",
     };
   },
   created() {},
@@ -111,7 +116,7 @@ export default {
 .box {
   border: lightgrey 1px solid;
   border-radius: 1em;
-  height: 19em;
+  height: 23em;
   padding: 1em;
   margin: 1em;
 }
