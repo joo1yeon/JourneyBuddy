@@ -119,8 +119,7 @@ export default {
         { text: "음식점", value: 39 },
       ],
       contentType: 0,
-      query: "해운대",
-      // infoItem: {},
+      query: "",
       attraction: {},
       attractionList: [],
       checkList: [],
@@ -201,8 +200,6 @@ export default {
     // 여행 계획 등록
     registerPlan() {
       let plan = [];
-      console.log(this.title);
-      console.log(this.checkList);
       this.checkList.forEach((check, index) => {
         const obj = {
           detailContentId: check.contentId,

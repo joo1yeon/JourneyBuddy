@@ -9,7 +9,6 @@ export default {
   data() {
     return {
       map: null,
-      container: null,
       infowindow: null,
       markers: [],
       positions: [],
@@ -20,14 +19,18 @@ export default {
   },
   created() {},
   mounted() {
-    const script = document.createElement("script");
-    const appKey = "76da4d3f68b56c2e06c858e365da0873";
-    /* global kakao */
-    script.onload = () => kakao.maps.load(this.initMap);
+    if (!window.kakao || !window.kakao.maps) {
+      const script = document.createElement("script");
+      const appKey = "76da4d3f68b56c2e06c858e365da0873";
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${appKey}&libraries=services,clusterer,drawing`;
+      /* global kakao */
+      script.onload = () => kakao.maps.load(this.initMap);
 
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${appKey}&libraries=services,clusterer,drawing`;
-
-    document.head.appendChild(script);
+      document.head.appendChild(script);
+    } else {
+      this.initMap();
+      console.log(window.kakao);
+    }
   },
   methods: {
     initMap() {
@@ -146,6 +149,34 @@ export default {
         this.markers[i].setMap(null);
       }
       this.markers = [];
+    },
+    drawLine(items) {
+      let markerPositions = items.map((item) => ({
+        latitude: item.latitude,
+        longitude: item.longitude,
+      }));
+      // 마커를 생성합니다
+      items.forEach((item) => {
+        let marker = new kakao.maps.Marker({
+          map: this.map, // 마커를 표시할 지도
+          position: new kakao.maps.LatLng(item.latitude, item.longitude), // 마커를 표시할 위치
+          title: item.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        });
+        marker.setMap(this.map);
+        this.markers.push(marker);
+      });
+
+      // 선을 그립니다
+      let linePath = markerPositions.map((position) => new kakao.maps.LatLng(position.latitude, position.longitude));
+      let line = new kakao.maps.Polyline({
+        map: this.map,
+        path: linePath,
+        strokeWeight: 3,
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.7,
+        strokeStyle: "solid",
+      });
+      line.setMap(this.map);
     },
   },
 };
