@@ -205,12 +205,11 @@ export default {
       console.log(this.checkList);
       this.checkList.forEach((check, index) => {
         const obj = {
-          contentId: check.contentId,
-          info: check.info,
-          planNum: 0,
+          detailContentId: check.contentId,
+          detailInfo: check.info,
           sequence: index + 1,
-          time: check.time,
-          title: this.title,
+          detailTime: check.time,
+          planTitle: this.title,
           tripPlanDetailId: 0,
           writer: "ssafy",
         };

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,11 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.notice.model.NoticeDto;
+import com.ssafy.enjoytrip.plan.model.PlanAttractionDto;
 import com.ssafy.enjoytrip.plan.model.PlanDto;
 import com.ssafy.enjoytrip.plan.model.service.PlanService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin("*")
 @RestController
@@ -44,6 +48,45 @@ public class PlanController {
 			return exceptionHandling(e);
 		}
 
+	}
+	
+	// 여행계획 리스트
+	@ApiOperation(value = "나의 여행계획 리스트", notes = "나의 여행계획 전체 리스트를 불러옵니다.")
+	@ApiResponses({@ApiResponse(code = 200, message = "나의 여행계획 리스트 OK"), @ApiResponse(code = 500, message = "서버 에러")})
+	@GetMapping("/list/{userId}")
+	public ResponseEntity<?> noticeList(@PathVariable("userId")String userId){
+		try {
+//			List<NoticeDto> list = noticeService.listNotice(null);
+			List<PlanDto> list = planService.viewMyPlan(userId, null);
+			if(list != null && !list.isEmpty()) {
+				System.out.println(list.toString());
+				return new ResponseEntity<List<PlanDto>>(list, HttpStatus.OK);
+//				return new ResponseEntity<List<MemberDto>>(HttpStatus.NOT_FOUND);
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	// 여행 계획 상세 정보
+	@ApiOperation(value = "나의 여행계획 리스트", notes = "나의 여행계획 전체 리스트를 불러옵니다.")
+	@ApiResponses({@ApiResponse(code = 200, message = "나의 여행계획 리스트 OK"), @ApiResponse(code = 500, message = "서버 에러")})
+	@GetMapping("/detail/{userId}/{tripPlanId}")
+	public ResponseEntity<?> noticeList(@PathVariable("userId")String userId, @PathVariable("tripPlanId")int tripPlanId){
+		try {
+			List<PlanAttractionDto> list = planService.viewMyPlanDetail(userId, tripPlanId);
+			if(list != null && !list.isEmpty()) {
+				System.out.println(list.toString());
+				return new ResponseEntity<List<PlanAttractionDto>>(list, HttpStatus.OK);
+//				return new ResponseEntity<List<MemberDto>>(HttpStatus.NOT_FOUND);
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
 	}
 
 	// 에러
