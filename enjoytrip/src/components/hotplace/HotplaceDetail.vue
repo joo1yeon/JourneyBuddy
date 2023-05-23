@@ -38,26 +38,29 @@
     </b-row>
     <hr />
 
-    <b-row>
+    <b-row class="my-5">
       <div class="col-12" style="height: 20em">
         위치
         <the-map ref="map" class="radiusImg"></the-map>
       </div>
     </b-row>
     <hr />
-    <div>댓글</div>
-    <hr />
+
     <div>
+      댓글
       <b-form-textarea
         id="textarea"
         v-model="text"
         placeholder="댓글 작성하기"
         rows="3"
         max-rows="6"
-        class="radiusImg mb-5"
+        class="radiusImg"
       ></b-form-textarea>
 
       <pre class="mt-3 mb-0">{{ text }}</pre>
+      <div class="alignRight">
+        <b-button>등록</b-button>
+      </div>
     </div>
     <hotplace-comment-item></hotplace-comment-item>
   </b-container>
