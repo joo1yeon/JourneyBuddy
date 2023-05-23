@@ -47,4 +47,14 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.alignLeft {
+  text-align: left;
+}
+.alignRight {
+  text-align: right;
+}
+.radiusImg {
+  border-radius: 1em;
+}
 </style>

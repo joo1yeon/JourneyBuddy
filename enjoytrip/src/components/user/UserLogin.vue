@@ -61,7 +61,7 @@
           <svg class="bi me-1" width="16" height="16"><use xlink:href="#twitter" /></svg>
           네이버를 사용하여 로그인하기
         </b-button>
-        <b-button class="w-100 py-2 mb-2 rounded-3" variant="outline-primary" type="submit">
+        <b-button class="w-100 py-2 mb-2 rounded-3" variant="outline-secondary" type="submit">
           <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook" /></svg>
           카카오를 사용하여 로그인하기
         </b-button>

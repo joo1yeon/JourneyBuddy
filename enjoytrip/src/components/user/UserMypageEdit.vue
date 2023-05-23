@@ -1,40 +1,63 @@
 <template>
   <div>
-    <div class="px-3 py-2">
-      <b-img :src="previewProfile" fluid rounded="circle"></b-img>
-
+    <div class="p-3 py-2 box shadow">
+      <b-img
+        v-if="previewProfile"
+        :src="previewProfile"
+        fluid
+        rounded="circle"
+        class="imageSize"
+      ></b-img>
+      <b-img
+        v-else
+        src="https://picsum.photos/200/200/?image=54"
+        fluid
+        rounded="circle"
+        class="imageSize"
+      ></b-img>
       <!-- 프로필 사진 수정 -->
-      <input
-        @change="previewImg"
-        ref="profileImg"
-        id="profileimg"
-        type="file"
-        style="display: none"
-      />
-      <label for="profileimg">여기 클릭</label>
-      <div class="px-3 my-5">
-        <table>
-          <tr>
-            <td>이름</td>
-            <td><b-form-input v-model="user.userName"></b-form-input></td>
-          </tr>
-          <tr>
-            <td>이메일</td>
-            <td>
-              <b-form-input v-model="user.emailId"></b-form-input>
-              @
-              <b-form-input v-model="user.emailDomain"></b-form-input>
-            </td>
-          </tr>
-          <tr>
-            <td>생년월일</td>
-            <td><b-form-input type="date" v-model="user.birthDate"></b-form-input></td>
-          </tr>
-        </table>
+      <div>
+        <input
+          @change="previewImg"
+          ref="profileImg"
+          id="profileimg"
+          type="file"
+          style="display: none"
+        />
+        <label for="profileimg"><b-icon icon="camera-fill" class="editProfileBtn" /></label>
       </div>
+      <hr />
+      <h5>{{ userInfo.userId }}</h5>
+      <div class="inputWidth">
+        <b-form-input v-model="user.userName" size="sm" />
+      </div>
+    </div>
 
-      <b-button @click="modifyUser">정보수정</b-button>
-      <b-button @click="changeEditMode" variant="outline-secondary">취소</b-button>
+    <div class="px-3 box">
+      <table class="col-12 my-1">
+        <tr>
+          <td><b-icon icon="envelope" /> 이메일</td>
+          <td>
+            <b-form-input v-model="user.emailId" size="sm" class="emailInput"></b-form-input>
+            @
+            <b-form-input v-model="user.emailDomain" size="sm" class="emailInput"></b-form-input>
+          </td>
+        </tr>
+        <tr>
+          <td><b-icon icon="emoji-smile" /> 생년월일</td>
+          <td><b-form-input type="date" v-model="user.birthDate" size="sm"></b-form-input></td>
+        </tr>
+        <tr>
+          <td><b-icon icon="calendar" /> 가입 날짜</td>
+          <td><b-form-input type="date" v-model="user.registerDate" size="sm" readonly /></td>
+        </tr>
+      </table>
+      <div class="my-5">
+        <b-button @click="modifyUser" class="m-1 col-12">수정완료</b-button>
+        <b-button @click="changeEditMode" variant="outline-secondary" class="m-1 col-12"
+          >취소</b-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -106,4 +129,37 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.box {
+  border-radius: 1em;
+  height: 20em;
+  padding: 1em;
+  margin: 1em;
+}
+.inputWidth {
+  width: 5em;
+  margin: 0 auto;
+}
+.editProfileBtn {
+  color: gray;
+}
+td {
+  padding: 0.5em;
+  border-bottom: lightgrey 1px solid;
+}
+tr > td:nth-child(1) {
+  text-align: left;
+  width: 7em;
+}
+tr > td:nth-child(2) {
+  text-align: left;
+}
+.emailInput {
+  width: 6em;
+  display: inline;
+}
+.imageSize {
+  width: 10em;
+  height: 10em;
+}
+</style>

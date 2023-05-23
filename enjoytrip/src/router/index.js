@@ -115,12 +115,20 @@ const routes = [
       {
         path: "list",
         name: "hotplacelist",
-        component: () => import(/* webpackChunkName: "hotplace" */ "@/components/hotplace/HotplaceList"),
+        component: () =>
+          import(/* webpackChunkName: "hotplace" */ "@/components/hotplace/HotplaceList"),
       },
       {
         path: "detail",
         name: "hotplacedetail",
-        component: () => import(/* webpackChunkName: "hotplace" */ "@/components/hotplace/HotplaceDetail"),
+        component: () =>
+          import(/* webpackChunkName: "hotplace" */ "@/components/hotplace/HotplaceDetail"),
+      },
+      {
+        path: "write",
+        name: "hotplacewrite",
+        component: () =>
+          import(/* webpackChunkName: "hotplace" */ "@/components/hotplace/HotplaceWrite"),
       },
     ],
   },

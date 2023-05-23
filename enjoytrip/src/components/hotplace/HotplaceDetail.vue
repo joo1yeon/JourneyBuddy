@@ -18,7 +18,7 @@
 
         <table class="box">
           <tr>
-            <b-td><b-icon icon="calendar" /> 날짜</b-td>
+            <td><b-icon icon="calendar" /> 날짜</td>
             <td>2023.05.23</td>
           </tr>
           <tr>
@@ -50,15 +50,14 @@
       댓글
       <b-form-textarea
         id="textarea"
-        v-model="text"
+        v-model="comment"
         placeholder="댓글 작성하기"
         rows="3"
         max-rows="6"
         class="radiusImg"
       ></b-form-textarea>
 
-      <pre class="mt-3 mb-0">{{ text }}</pre>
-      <div class="alignRight">
+      <div class="alignRight my-3">
         <b-button>등록</b-button>
       </div>
     </div>
@@ -73,19 +72,15 @@ import HotplaceCommentItem from "./item/HotplaceCommentItem.vue";
 export default {
   components: { HotplaceCommentItem, TheMap },
   name: "HotplaceDetail",
+  data() {
+    return {
+      comment: "",
+    };
+  },
 };
 </script>
 
 <style scoped>
-.alignLeft {
-  text-align: left;
-}
-.alignRight {
-  text-align: right;
-}
-.radiusImg {
-  border-radius: 1em;
-}
 table {
   /* border: lightgrey 1px solid; */
   border-radius: 1em;

@@ -25,8 +25,8 @@
         <b-nav-item :to="{ name: 'trip' }">여행지</b-nav-item>
         <b-nav-item :to="{ name: 'plan' }">나의여행계획</b-nav-item>
         <b-nav-item-dropdown text="핫플레이스" right>
-          <b-dropdown-item href="#">등록하기</b-dropdown-item>
-          <b-dropdown-item href="#">게시판</b-dropdown-item>
+          <b-dropdown-item :to="{ name: 'hotplacewrite' }">등록하기</b-dropdown-item>
+          <b-dropdown-item>게시판</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item :to="{ name: 'notice' }">공지사항</b-nav-item>
 
