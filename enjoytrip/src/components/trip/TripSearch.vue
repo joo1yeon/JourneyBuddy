@@ -207,7 +207,6 @@ export default {
         const obj = {
           contentId: check.contentId,
           info: check.info,
-          planNum: 0,
           sequence: index + 1,
           time: check.time,
           title: this.title,

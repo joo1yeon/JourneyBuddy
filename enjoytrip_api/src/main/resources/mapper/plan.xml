@@ -30,8 +30,8 @@
 
 	<insert id="registerPlan">
 		INSERT INTO trip_plan
-		(writer, title, plan_num)
-		VALUES (#{writer}, #{title}, #{planNum})
+		(writer, title)
+		VALUES (#{writer}, #{title})
 		<selectKey resultType="int" keyProperty="planNum"
 			order="AFTER">
 			select last_insert_id()
