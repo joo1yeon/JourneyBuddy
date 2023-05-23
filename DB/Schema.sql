@@ -238,10 +238,11 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `enjoytrip`.`trip_plan`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`trip_plan` (
-  `trip_plan_id` INT NOT NULL AUTO_INCREMENT,
-  `writer` VARCHAR(45) NOT NULL,
-  `title` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`trip_plan_id`))
+  `trip_plan_id` int NOT NULL AUTO_INCREMENT,
+  `writer` varchar(45) NOT NULL,
+  `plan_title` varchar(50) DEFAULT NULL,
+  `register_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`trip_plan_id`)
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
@@ -252,13 +253,13 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `enjoytrip`.`trip_plan_detail`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`trip_plan_detail` (
-  `trip_plan_detail_id` INT NOT NULL AUTO_INCREMENT,
-  `plan_num` INT NOT NULL,
-  `writer` VARCHAR(45) NOT NULL,
-  `content_id` int NOT NULL,
-  `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `info` VARCHAR(45) NOT NULL,
-  `sequence` INT NOT NULL,
+ `trip_plan_detail_id` int NOT NULL AUTO_INCREMENT,
+  `plan_num` int NOT NULL,
+  `writer` varchar(45) NOT NULL,
+  `detail_content_id` varchar(50) DEFAULT NULL,
+  `detail_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `detail_info` varchar(45) DEFAULT NULL,
+  `sequence` int NOT NULL,
   PRIMARY KEY (`trip_plan_detail_id`),
   INDEX `trip_plan_detail_to_trip_plan_plan_num_fk_idx` (`plan_num` ASC) VISIBLE,
   CONSTRAINT `trip_plan_detail_to_trip_plan_plan_num_fk`
