@@ -10,7 +10,7 @@
           src="https://picsum.photos/1024/500/?image=41"
           fluid
           alt="Responsive image"
-          class="radiusImg"
+          class="borderRadius"
         ></b-img>
       </div>
       <div class="col-6">
@@ -84,7 +84,7 @@
     <b-row class="my-5">
       <div class="col-12" style="height: 20em">
         위치
-        <the-map ref="map" class="radiusImg"></the-map>
+        <the-map ref="map" class="borderRadius"></the-map>
       </div>
     </b-row>
     <hr />
@@ -97,7 +97,7 @@
         placeholder="댓글 작성하기"
         rows="3"
         max-rows="6"
-        class="radiusImg"
+        class="borderRadius"
       ></b-form-textarea>
 
       <div class="alignRight my-3">

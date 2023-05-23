@@ -29,25 +29,22 @@
           <b-dropdown-item :to="{ name: 'hotplacelist' }">게시판</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item :to="{ name: 'notice' }">공지사항</b-nav-item>
-
-        <!-- 로그인 후-->
-        <template v-if="userInfo">
-          <b-nav-item v-b-toggle.sidebar-mypage
-            ><b-avatar variant="success"></b-avatar>
-          </b-nav-item>
-          <b-sidebar id="sidebar-mypage" right shadow="lg" width="20vw" backdrop>
-            <h3>마이페이지</h3>
-            <user-mypage-edit v-if="editMode" @nowEditMode="mypageEditMode"></user-mypage-edit>
-            <user-mypage v-else @nowEditMode="mypageEditMode"></user-mypage>
-          </b-sidebar>
-        </template>
-
-        <!-- 로그인 전 -->
-        <b-nav-item v-else @click="$bvModal.show('login-modal')"><b-avatar></b-avatar></b-nav-item>
-        <b-modal id="login-modal" hide-footer ref="login-modal">
-          <user-login v-on:hideLoginModal="hideModal"></user-login>
-        </b-modal>
       </b-navbar-nav>
+      <!-- 로그인 후-->
+      <template v-if="userInfo">
+        <b-nav-item v-b-toggle.sidebar-mypage><b-avatar variant="success"></b-avatar> </b-nav-item>
+        <b-sidebar id="sidebar-mypage" right shadow="lg" width="20vw" backdrop>
+          <h3>마이페이지</h3>
+          <user-mypage-edit v-if="editMode" @nowEditMode="mypageEditMode"></user-mypage-edit>
+          <user-mypage v-else @nowEditMode="mypageEditMode"></user-mypage>
+        </b-sidebar>
+      </template>
+
+      <!-- 로그인 전 -->
+      <b-nav-item v-else @click="$bvModal.show('login-modal')"><b-avatar></b-avatar></b-nav-item>
+      <b-modal id="login-modal" hide-footer ref="login-modal">
+        <user-login v-on:hideLoginModal="hideModal"></user-login>
+      </b-modal>
     </b-collapse>
   </b-navbar>
 </template>

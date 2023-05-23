@@ -1,30 +1,30 @@
 <template>
   <b-container>
-    <div class="m-5 py-5">
-      <div>
-        <div>
-          <h4>회원가입</h4>
-        </div>
-
-        <div>
+    <div class="my-5 py-5 alignLeft">
+      <b-row>
+        <div class="col-3"></div>
+        <div class="col-6 p-5 box shadow">
+          <h3>회원가입</h3>
+          <hr />
           <b-form id="join-form" method="POST">
             <div class="mb-3">
               <label for="question" class="form-label">아이디</label>
               <b-form-input
                 type="text"
-                class="form-control"
+                class="form-control borderRadius"
                 id="register-id"
-                placeholder="아이디..."
+                placeholder="아이디"
                 v-model="user.userId"
+                :state="idState"
               />
             </div>
             <div class="mb-3">
               <label for="question" class="form-label">비밀번호</label>
               <b-form-input
                 type="password"
-                class="form-control"
+                class="form-control borderRadius"
                 id="register-password"
-                placeholder="비밀번호..."
+                placeholder="비밀번호"
                 v-model="user.userPassword"
               />
             </div>
@@ -32,19 +32,20 @@
               <label for="question" class="form-label">비밀번호확인</label>
               <b-form-input
                 type="password"
-                class="form-control"
+                class="form-control borderRadius"
                 id="register-password-confirm"
-                placeholder="비밀번호확인..."
+                placeholder="비밀번호확인"
                 v-model="user.userPasswordConfirm"
+                :state="pwState"
               />
             </div>
             <div class="mb-3">
               <label for="question" class="form-label">이름</label>
               <b-form-input
                 type="text"
-                class="form-control"
+                class="form-control borderRadius"
                 id="register-name"
-                placeholder="이름..."
+                placeholder="이름"
                 v-model="user.userName"
               />
             </div>
@@ -52,27 +53,23 @@
               <label for="birthdate" class="form-label">생년월일</label>
               <b-form-input
                 type="date"
-                class="form-control"
+                class="form-control borderRadius"
                 id="register-birthdate"
                 v-model="user.birthDate"
               />
             </div>
-            <div class="mb-3">
+            <div class="mb-3 btnWidth">
               <b-form-group label="성별">
-                <b-form-radio
-                  id="register-gender-male"
+                <b-form-radio-group
+                  id="register-gender"
                   name="gender"
                   v-model="user.gender"
+                  :options="radioOptions"
                   value="0"
+                  buttons
+                  button-variant="outline-secondary"
+                  class="col-12 mx-0 px-0"
                 />
-                남
-                <b-form-radio
-                  id="register-gender-female"
-                  name="gender"
-                  v-model="user.gender"
-                  value="1"
-                />
-                여
               </b-form-group>
             </div>
             <div class="mb-3">
@@ -80,7 +77,7 @@
               <div class="input-group mb-3">
                 <b-form-input
                   type="text"
-                  class="form-control"
+                  class="form-control borderRadius"
                   id="register-email"
                   placeholder="이메일아이디"
                   v-model="user.emailId"
@@ -89,29 +86,33 @@
                 <b-form-select
                   id="emali-domain"
                   v-model="user.emailDomain"
-                  :options="options"
-                  class="form-select"
+                  :options="selectOptions"
+                  class="form-select borderRadius"
                 />
               </div>
             </div>
           </b-form>
+          <div class="mt-5 alignRight">
+            <b-button
+              type="button"
+              class="mx-1 borderRadius"
+              variant="outline-secondary"
+              :to="{ name: 'main' }"
+            >
+              닫기
+            </b-button>
+            <b-button
+              type="button"
+              id="btn-register"
+              class="mx-1 borderRadius"
+              variant="secondary"
+              @click="join()"
+            >
+              회원가입
+            </b-button>
+          </div>
         </div>
-
-        <div>
-          <b-button
-            type="button"
-            id="btn-register"
-            class="btn-sm"
-            variant="primary"
-            @click="join()"
-          >
-            회원가입
-          </b-button>
-          <b-button type="button" class="btn-sm" variant="outline-danger" data-bs-dismiss="modal">
-            닫기
-          </b-button>
-        </div>
-      </div>
+      </b-row>
     </div>
   </b-container>
 </template>
@@ -129,18 +130,24 @@ export default {
         userPassword: "",
         userName: "",
         birthDate: "",
-        gender: "",
+        gender: "0",
         emailId: "",
         emailDomain: "0",
         registerDate: "",
       },
-      options: [
+      selectOptions: [
         { value: 0, text: "선택" },
         { value: "gmail.com", text: "gmail.com" },
         { value: "naver.com", text: "naver.com" },
         { value: "kakao.com", text: "kakao.com" },
         { value: "ssafy.com", text: "ssafy.com" },
       ],
+      radioOptions: [
+        { text: "남", value: 0 },
+        { text: "여", value: 1 },
+      ],
+      idState: null,
+      pwState: null,
     };
   },
   created() {},
@@ -157,4 +164,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.box {
+  border-radius: 1em;
+  border: 1px solid lightgrey;
+}
+.btnWidth {
+  margin: 0 auto;
+}
+.borderRadius {
+  border-radius: 1em;
+}
+</style>

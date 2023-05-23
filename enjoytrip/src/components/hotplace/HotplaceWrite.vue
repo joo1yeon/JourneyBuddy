@@ -10,7 +10,7 @@
           :src="previewImage"
           fluid
           alt="Responsive image"
-          class="radiusImg"
+          class="borderRadius"
         ></b-img>
         <div v-else>이미지를 선택해주세요.</div>
       </div>
@@ -53,7 +53,7 @@
         placeholder="상세 내용 작성하기"
         rows="5"
         max-rows="10"
-        class="radiusImg"
+        class="borderRadius"
       ></b-form-textarea>
     </b-row>
 
@@ -61,7 +61,7 @@
     <b-row class="mb-5">
       <div class="col-12" style="height: 20em">
         위치
-        <the-map ref="map" class="radiusImg"></the-map>
+        <the-map ref="map" class="borderRadius"></the-map>
       </div>
     </b-row>
 

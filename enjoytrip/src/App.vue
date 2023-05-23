@@ -54,7 +54,7 @@ nav a.router-link-exact-active {
 .alignRight {
   text-align: right;
 }
-.radiusImg {
+.borderRadius {
   border-radius: 1em;
 }
 </style>
