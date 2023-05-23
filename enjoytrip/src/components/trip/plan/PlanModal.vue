@@ -24,12 +24,16 @@
     </b-form-group>
     <b-row>
       <b-col col>
-        <b-form-group label="시간 : " label-for="date">
-          <b-input type="date" id="date" v-model="info.time"></b-input>
-        </b-form-group>
-        <b-form-group label="추가 정보 입력 : ">
-          <b-input type="text" v-model="info.info"></b-input>
-        </b-form-group>
+        <!-- 날짜 입력 -->
+        <b-input-group class="mb-4">
+          <b-input-group-prepend is-text><b-icon icon="calendar-date"></b-icon></b-input-group-prepend>
+          <b-form-input type="date" id="date" v-model="info.time"></b-form-input>
+        </b-input-group>
+        <!-- 메모 입력 -->
+        <b-input-group>
+          <b-input-group-prepend is-text><b-icon icon="check2-square"></b-icon></b-input-group-prepend>
+          <b-form-input type="text" id="text" v-model="info.time" placeholder="메모를 입력하세요"></b-form-input>
+        </b-input-group>
       </b-col>
     </b-row>
   </b-form>
