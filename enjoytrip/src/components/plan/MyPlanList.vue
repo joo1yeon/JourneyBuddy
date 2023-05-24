@@ -31,7 +31,7 @@ export default {
         },
         {
           key: "registerTime",
-          label: "등록 일",
+          label: "등록일",
           sortable: true,
         },
       ],

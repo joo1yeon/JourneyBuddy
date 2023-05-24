@@ -32,7 +32,7 @@
         <!-- 메모 입력 -->
         <b-input-group>
           <b-input-group-prepend is-text><b-icon icon="check2-square"></b-icon></b-input-group-prepend>
-          <b-form-input type="text" id="text" v-model="info.time" placeholder="메모를 입력하세요"></b-form-input>
+          <b-form-input type="text" id="text" v-model="info.info" placeholder="메모를 입력하세요"></b-form-input>
         </b-input-group>
       </b-col>
     </b-row>

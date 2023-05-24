@@ -57,9 +57,10 @@
           <b-alert variant="warning" show>선택된 여행지</b-alert>
           <b-form v-if="checkList.length" class="text-left">
             <b-form-group label="여행 주제 : ">
-              <b-input type="text" v-model="title" placeholder="여행 주제를"></b-input>
+              <b-input type="text" v-model="title" placeholder="여행 주제를 입력하세요"></b-input>
             </b-form-group>
-            <b-button class="text-left mb-2" variant="danger" @click="registerPlan">등록하기</b-button>
+            <b-button class="text-left mb-2" variant="primary" @click="registerPlan">등록하기</b-button>
+            <b-button class="text-left mb-2 ml-2" variant="danger" @click="resetPlan">초기화</b-button>
           </b-form>
           <div style="overflow-y: auto; height: 520px" class="mt-3">
             <b-table striped hover :fields="fields2" :items="checkList" @row-clicked="showModal" v-if="checkList.length"> </b-table>
@@ -213,6 +214,10 @@ export default {
         plan.push(obj);
       });
       http.post(`/plan/ssafy/${this.title}`, plan).then(alert("정상적으로 등록되었습니다"));
+      this.$router.push({ name: "planlist" });
+    },
+    resetPlan() {
+      this.checkList = [];
     },
     // 계획 정보 등록 모달
     showModal(item) {
@@ -280,5 +285,7 @@ export default {
 <style>
 #search {
   margin-top: 100px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 </style>
