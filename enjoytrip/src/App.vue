@@ -57,4 +57,10 @@ nav a.router-link-exact-active {
 .borderRadius {
   border-radius: 1em;
 }
+.borderRadiusLeft {
+  border-radius: 1em 0 0 1em;
+}
+.borderRadiusRight {
+  border-radius: 0 1em 1em 0;
+}
 </style>

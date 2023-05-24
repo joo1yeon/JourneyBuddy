@@ -16,33 +16,6 @@
       <div class="col-6">
         핫플레이스 정보
 
-        <!-- <div class="box shadow">
-          <div class="inputStyle">
-            <b-icon icon="calendar" /> 방문 날짜
-            <div>2023.05.23</div>
-          </div>
-          <div class="inputStyle">
-            <b-icon icon="building" /> 장소 유형
-            <b-form-select v-model="selected" :options="options"></b-form-select>
-          </div>
-          <div class="inputStyle">
-            <b-icon icon="camera-fill" /> 이미지 추가
-
-            <b-form-file
-              @change="previewImageFile"
-              ref="hotplImage"
-              id="hotplImage"
-              :state="Boolean(upfile)"
-              placeholder="파일을 선택하거나 이 곳으로 드래그"
-              drop-placeholder="이 곳으로 드래그"
-            ></b-form-file>
-          </div>
-          <div class="inputStyle">
-            <b-icon icon="star-fill" /> 별점
-            <b-form-rating v-model="ratingValue" variant="warning" class="mb-2"></b-form-rating>
-          </div>
-        </div> -->
-
         <div class="box shadow">
           <table>
             <tr>
@@ -122,8 +95,10 @@ export default {
     return {
       comment: "",
       ratingValue: 5,
+      hotplaceInfo: {},
     };
   },
+  created: {},
 };
 </script>
 

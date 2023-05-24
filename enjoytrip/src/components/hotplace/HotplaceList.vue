@@ -4,17 +4,18 @@
       <h1 class="alignLeft">핫플레이스</h1>
       <hr />
       <div class="flexContainer col-12">
-        <hotplace-list-item></hotplace-list-item>
-        <hotplace-list-item></hotplace-list-item>
-        <hotplace-list-item></hotplace-list-item>
-        <hotplace-list-item></hotplace-list-item>
-        <hotplace-list-item></hotplace-list-item>
+        <hotplace-list-item
+          v-for="hotplace in hotplaceList"
+          :key="hotplace.hotplaceId"
+          :hotplace="hotplace"
+        ></hotplace-list-item>
       </div>
     </b-container>
   </div>
 </template>
 
 <script>
+import http from "@/api/http";
 import HotplaceListItem from "./item/HotplaceListItem.vue";
 
 export default {
@@ -22,10 +23,15 @@ export default {
   components: { HotplaceListItem },
   data() {
     return {
-      message: "",
+      hotplaceList: [],
     };
   },
-  created() {},
+  created() {
+    http.get(`/hotplace/list`).then(({ data }) => {
+      this.hotplaceList = data;
+      console.log(this.hotplaceList);
+    });
+  },
   methods: {},
 };
 </script>

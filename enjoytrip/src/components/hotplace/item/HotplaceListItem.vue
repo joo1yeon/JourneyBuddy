@@ -11,27 +11,28 @@
             ></b-card-img>
           </b-col>
           <b-col md="6">
-            <b-card-body title="해운대">
+            <b-card-body>
+              <h4>{{ hotplace.placeName }}</h4>
               <b-card-text>
                 <div class="box">
                   <table class="alignLeft">
                     <tr>
                       <td><b-icon icon="calendar" /></td>
-                      <td>2023.05.23</td>
+                      <td>{{ hotplace.visitDate }}</td>
                     </tr>
                     <tr>
                       <td><b-icon icon="building" /></td>
-                      <td>관광지</td>
+                      <td>{{ getPlaceType() }}</td>
                     </tr>
                     <tr>
                       <td><b-icon icon="person" /></td>
-                      <td>김싸피</td>
+                      <td>{{ hotplace.writer }}</td>
                     </tr>
                     <tr>
                       <td><b-icon icon="star-fill" /></td>
                       <td>
                         <b-form-rating
-                          v-model="ratingValue"
+                          v-model="score"
                           show-value
                           readonly
                           variant="warning"
@@ -56,11 +57,35 @@ export default {
   components: {},
   data() {
     return {
-      ratingValue: 5,
+      score: this.hotplace.score,
+      placeType: this.hotplace.placeType,
     };
   },
+  props: {
+    hotplace: Object,
+  },
   created() {},
-  methods: {},
+  methods: {
+    getPlaceType() {
+      if (this.placeType === "12") {
+        return "관광지";
+      } else if (this.placeType === "14") {
+        return "문화시설";
+      } else if (this.placeType === "15") {
+        return "축제 | 공연 | 행사";
+      } else if (this.placeType === "25") {
+        return "여행코스";
+      } else if (this.placeType === "28") {
+        return "레포츠";
+      } else if (this.placeType === "32") {
+        return "숙박";
+      } else if (this.placeType === "38") {
+        return "쇼핑";
+      } else if (this.placeType === "39") {
+        return "음식점";
+      }
+    },
+  },
 };
 </script>
 
@@ -69,7 +94,7 @@ export default {
   border: none;
 }
 td {
-  padding: 0.2em;
+  padding: 0.1em;
   font-size: 1em;
 }
 .textStyle {

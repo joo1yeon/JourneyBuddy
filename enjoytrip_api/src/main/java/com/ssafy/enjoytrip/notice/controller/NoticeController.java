@@ -63,7 +63,7 @@ public class NoticeController {
 	@ApiResponses({@ApiResponse(code = 200, message = "공지사항 게시글 상세정보 OK"), @ApiResponse(code = 500, message = "서버 에러")})
 	@ApiImplicitParams({@ApiImplicitParam(name= "noticeNo", value = "공지사항 게시글 번호", required = true, dataType = "int", paramType = "path")})
 	@GetMapping("/list/{noticeNo}")
-	public ResponseEntity<?> userInfo(@PathVariable("noticeNo") String noticeNo) {
+	public ResponseEntity<?> NoticeInfo(@PathVariable("noticeNo") String noticeNo) {
 		try {
 			NoticeDto noticeDto = noticeService.viewNotice(Integer.parseInt(noticeNo));
 			if(noticeDto != null)
@@ -79,7 +79,7 @@ public class NoticeController {
 	@ApiOperation(value = "공지사항 게시글 작성", notes = "공지사항 게시글을 작성합니다.")
 	@ApiResponses({@ApiResponse(code = 200, message = "공지사항 게시글 작성 OK"), @ApiResponse(code = 500, message = "서버 에러")})
 	@PostMapping(value = "/list")
-	public ResponseEntity<?> userRegister(@RequestBody NoticeDto noticeDto) {
+	public ResponseEntity<?> NoticeRegister(@RequestBody NoticeDto noticeDto) {
 		try {
 			// 메인공지 등록했다면 기존 메인 공지 내리기
 			if(noticeDto.getMainNotice().equals("true")) {
