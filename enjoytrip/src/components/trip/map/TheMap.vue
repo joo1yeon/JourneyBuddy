@@ -8,14 +8,23 @@ export default {
   name: "TheMap",
   data() {
     return {
+      container: null,
       map: null,
       infowindow: null,
       markers: [],
       positions: [],
+      dots: [],
+      list: [],
     };
   },
   props: {
     attractionList: Array,
+    detailList: Array,
+  },
+  computed: {
+    detail() {
+      return this.detailList;
+    },
   },
   created() {},
   mounted() {
@@ -25,12 +34,21 @@ export default {
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${appKey}&libraries=services,clusterer,drawing`;
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-
       document.head.appendChild(script);
     } else {
       this.initMap();
       console.log(window.kakao);
     }
+  },
+  watch: {
+    detailList() {
+      try {
+        this.displayMarker(this.detail); // displayMarker 함수 호출
+        this.drawLine(this.detail); // drawLine 함수 호출
+      } catch (error) {
+        // console.log("hey" + error);
+      }
+    },
   },
   methods: {
     initMap() {
@@ -48,6 +66,12 @@ export default {
 
       this.map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
       this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+      console.log(this.detail);
+      if (this.detailList != undefined) {
+        this.displayMarker(this.detailList); // displayMarker 함수 호출
+        this.drawLine(this.detailList); // drawLine 함수 호출
+      }
     },
 
     displayMarker(data) {
@@ -151,32 +175,65 @@ export default {
       this.markers = [];
     },
     drawLine(items) {
-      let markerPositions = items.map((item) => ({
-        latitude: item.latitude,
-        longitude: item.longitude,
-      }));
-      // 마커를 생성합니다
-      // items.forEach((item) => {
-      //   let marker = new kakao.maps.Marker({
-      //     map: this.map, // 마커를 표시할 지도
-      //     position: new kakao.maps.LatLng(item.latitude, item.longitude), // 마커를 표시할 위치
-      //     title: item.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-      //   });
-      //   marker.setMap(this.map);
-      //   this.markers.push(marker);
-      // });
+      kakao.maps.load(() => {
+        let markerPositions = items.map((item) => ({
+          latitude: item.latitude,
+          longitude: item.longitude,
+        }));
+        // 마커를 생성합니다
+        // items.forEach((item) => {
+        //   let marker = new kakao.maps.Marker({
+        //     map: this.map, // 마커를 표시할 지도
+        //     position: new kakao.maps.LatLng(item.latitude, item.longitude), // 마커를 표시할 위치
+        //     title: item.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        //   });
+        //   marker.setMap(this.map);
+        //   this.markers.push(marker);
+        // });
 
-      // 선을 그립니다
-      let linePath = markerPositions.map((position) => new kakao.maps.LatLng(position.latitude, position.longitude));
-      let line = new kakao.maps.Polyline({
-        map: this.map,
-        path: linePath,
-        strokeWeight: 3,
-        strokeColor: "#FF0000",
-        strokeOpacity: 1,
-        strokeStyle: "solid",
+        // 선을 그립니다
+        let linePath = markerPositions.map((position) => new kakao.maps.LatLng(position.latitude, position.longitude));
+        let line = new kakao.maps.Polyline({
+          map: this.map,
+          path: linePath,
+          strokeWeight: 3,
+          strokeColor: "#FF0000",
+          strokeOpacity: 1,
+          strokeStyle: "solid",
+        });
+        // console.log(line.getLength());
+        // this.displayCircleDot(markerPositions, line.getLength());
+        line.setMap(this.map);
       });
-      line.setMap(this.map);
+    },
+    displayCircleDot(position, distance) {
+      // 클릭 지점을 표시할 빨간 동그라미 커스텀오버레이를 생성합니다
+      position.forEach((element) => {
+        var circleOverlay = new kakao.maps.CustomOverlay({
+          content: '<span class="dot"></span>',
+          position: element,
+          zIndex: 1,
+        });
+        circleOverlay.setMap(this.map);
+      });
+
+      // 지도에 표시합니다
+
+      if (distance > 0) {
+        // 클릭한 지점까지의 그려진 선의 총 거리를 표시할 커스텀 오버레이를 생성합니다
+      }
+      var distanceOverlay = new kakao.maps.CustomOverlay({
+        content: '<div class="dotOverlay">거리 <span class="number">' + distance + "</span>m</div>",
+        position: position,
+        yAnchor: 1,
+        zIndex: 2,
+      });
+
+      // 지도에 표시합니다
+      distanceOverlay.setMap(this.map);
+
+      // 배열에 추가합니다
+      // this.dots.push({ circle: circleOverlay, distance: distanceOverlay });
     },
   },
 };
@@ -186,5 +243,55 @@ export default {
 #map {
   width: 100%;
   height: 100%;
+}
+.dot {
+  overflow: hidden;
+  float: left;
+  width: 12px;
+  height: 12px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png");
+}
+.dotOverlay {
+  position: relative;
+  bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  border-bottom: 2px solid #ddd;
+  float: left;
+  font-size: 12px;
+  padding: 5px;
+  background: #fff;
+}
+.dotOverlay:nth-of-type(n) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+.number {
+  font-weight: bold;
+  color: #ee6152;
+}
+.dotOverlay:after {
+  content: "";
+  position: absolute;
+  margin-left: -6px;
+  left: 50%;
+  bottom: -8px;
+  width: 11px;
+  height: 8px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png");
+}
+.distanceInfo {
+  position: relative;
+  top: 5px;
+  left: 5px;
+  list-style: none;
+  margin: 0;
+}
+.distanceInfo .label {
+  display: inline-block;
+  width: 50px;
+}
+.distanceInfo:after {
+  content: none;
 }
 </style>
