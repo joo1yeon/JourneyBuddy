@@ -30,6 +30,12 @@
 		<result column="save_file" property="saveFile" />
 	</resultMap>
 	
+	<resultMap type="hotplaceCommentDto" id="hotplaceComment">
+		<result column="hotplace_id" property="hotplaceId" />
+		<result column="writer" property="writer" />
+		<result column="contents" property="contents" />
+	</resultMap>
+	
 	
 	<!-- 핫플레이스 리스트 -->
 	<select id="listHotplace" resultMap="hotplace">
@@ -39,7 +45,7 @@
 	</select>
 
 	<!-- 핫플레이스 등록 -->
-	<insert id="writeHotplace">
+	<insert id="writeHotplace" parameterType="hotplaceDto">
 		INSERT INTO hotplace
 		(hotplace_id, place_id, place_type, place_name, hotplace_title, writer, visit_date, contents, score)
 		VALUES (#{hotplaceId}, #{placeId}, #{placeType}, #{placeName}, #{hotplaceTitle}, #{writer}, #{visitDate}, #{contents}, #{score})
@@ -50,5 +56,20 @@
 		SELECT *
 		FROM hotplace
 		WHERE hotplace_id = #{hotplaceId}
+	</select>
+	
+	<!-- 댓글 작성 -->
+	<insert id="writeComment" parameterType="hotplaceCommentDto">
+		INSERT INTO hotplace_comment
+		(hotplace_id, writer, contents)
+		VALUES (#{hotplaceId}, #{writer}, #{contents})
+	</insert>
+	
+	<!-- 댓글 리스트 -->
+	<select id="listHotplaceComment" parameterType="int" resultMap="hotplaceComment">
+		SELECT *
+		FROM hotplace_comment
+		where hotplace_id = #{hotplaceId}
+		ORDER BY hotplace_comment_id DESC
 	</select>
 </mapper>

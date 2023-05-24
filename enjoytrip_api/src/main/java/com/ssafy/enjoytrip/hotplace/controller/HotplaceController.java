@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.enjoytrip.hotplace.model.dto.HotplaceCommentDto;
 import com.ssafy.enjoytrip.hotplace.model.dto.HotplaceDto;
 import com.ssafy.enjoytrip.hotplace.model.service.HotplaceServiceImpl;
 import com.ssafy.enjoytrip.notice.model.NoticeDto;
@@ -37,15 +38,15 @@ public class HotplaceController {
 		super();
 		this.hotplaceServiceImpl = hotplaceServiceImpl;
 	}
-	
+
 	// 핫플레이스 리스트
 	@ApiOperation(value = "핫플레이스 리스트", notes = "핫플레이스 전체 리스트를 불러옵니다.")
-	@ApiResponses({@ApiResponse(code = 200, message = "핫플레이스 리스트 OK"), @ApiResponse(code = 500, message = "서버 에러")})
+	@ApiResponses({ @ApiResponse(code = 200, message = "핫플레이스 리스트 OK"), @ApiResponse(code = 500, message = "서버 에러") })
 	@GetMapping("/list")
-	public ResponseEntity<?> hotplaceList(){
+	public ResponseEntity<?> hotplaceList() {
 		try {
 			List<HotplaceDto> list = hotplaceServiceImpl.listHotplace();
-			if(list != null && !list.isEmpty()) {
+			if (list != null && !list.isEmpty()) {
 				System.out.println(list.toString());
 				return new ResponseEntity<List<HotplaceDto>>(list, HttpStatus.OK);
 			} else {
@@ -54,8 +55,7 @@ public class HotplaceController {
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
-	}	
-	
+	}
 
 	// 핫플레이스 등록
 	@ApiOperation(value = "핫플레이스 등록", notes = "핫플레이스로 등록합니다.")
@@ -70,24 +70,52 @@ public class HotplaceController {
 		}
 
 	}
+
+	// 핫플레이스 상세보기
+	@ApiOperation(value = "핫플레이스 상세정보", notes = "핫플레이스 상세정보를 불러옵니다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "핫플레이스 상세정보 OK"), @ApiResponse(code = 500, message = "서버 에러") })
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "hotplaceId", value = "핫플레이스 번호", required = true, dataType = "int", paramType = "path") })
+	@GetMapping("/{hotplaceId}")
+	public ResponseEntity<?> hotplaceDetail(@PathVariable("hotplaceId") int hotplaceId) {
+		try {
+			HotplaceDto hotplaceDto = hotplaceServiceImpl.detailHotplace(hotplaceId);
+			if (hotplaceDto != null )
+				return new ResponseEntity<HotplaceDto>(hotplaceDto, HttpStatus.OK);
+			else
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 	
-//	// 핫플레이스 상세보기
-//		@ApiOperation(value = "핫플레이스 상세정보", notes = "핫플레이스 상세정보를 불러옵니다.")
-//		@ApiResponses({@ApiResponse(code = 200, message = "핫플레이스 상세정보 OK"), @ApiResponse(code = 500, message = "서버 에러")})
-//		@ApiImplicitParams({@ApiImplicitParam(name= "hotplaceId", value = "핫플레이스 번호", required = true, dataType = "int", paramType = "path")})
-//		@GetMapping("/list/{hotplaceId}")
-//		public ResponseEntity<?> hoplaceDetail(@PathVariable("hotplaceId") String hotplaceId) {
-//			try {
-//				HotplaceDto hotplaceDto = noticeService.viewNotice(Integer.parseInt(noticeNo));
-//				if(noticeDto != null)
-//					return new ResponseEntity<NoticeDto>(noticeDto, HttpStatus.OK);
-//				else
-//					return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-//			} catch (Exception e) {
-//				return exceptionHandling(e);
-//			}
-//		}
-		
+	// 댓글 작성
+	@PostMapping("/comment")
+	public ResponseEntity<?> writeComment(@RequestBody HotplaceCommentDto hotplaceCommentDto) {
+		try {
+			int result = hotplaceServiceImpl.writeComment(hotplaceCommentDto);
+			if (result == 1)
+				return new ResponseEntity<>(HttpStatus.OK);
+			else
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	// 댓글 리스트
+	@GetMapping("/comment/list")
+	public ResponseEntity<?> listComment(@RequestBody int hotplaceId) {
+		try {
+			List<HotplaceCommentDto> list = hotplaceServiceImpl.listHotplaceComment(hotplaceId);
+			if (list.size() > 0)
+				return new ResponseEntity<List<HotplaceCommentDto>>(list, HttpStatus.OK);
+			else
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();

@@ -123,7 +123,7 @@ const routes = [
           import(/* webpackChunkName: "hotplace" */ "@/components/hotplace/HotplaceList"),
       },
       {
-        path: "detail",
+        path: "detail/:hotplaceId",
         name: "hotplacedetail",
         component: () =>
           import(/* webpackChunkName: "hotplace" */ "@/components/hotplace/HotplaceDetail"),

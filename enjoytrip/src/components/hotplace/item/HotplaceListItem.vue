@@ -1,6 +1,9 @@
 <template>
   <div class="col-6 my-3">
-    <router-link :to="{ name: 'hotplacedetail' }" class="textStyle">
+    <router-link
+      :to="{ name: 'hotplacedetail', params: { hotplaceId: hotplace.hotplaceId } }"
+      class="textStyle"
+    >
       <b-card no-body class="overflow-hidden shadow borderRadius" style="max-width: 32em">
         <b-row no-gutters>
           <b-col md="6">

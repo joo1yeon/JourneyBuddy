@@ -170,21 +170,19 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `enjoytrip`.`hotplace`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`hotplace` (
-  `hotplace_id` INT NOT NULL AUTO_INCREMENT,
-  `place` VARCHAR(45) NOT NULL,
-  `writer` VARCHAR(45) NOT NULL,
-  `title` VARCHAR(45) NOT NULL,
-  `contents` VARCHAR(45) NOT NULL,
-  `score` INT NOT NULL,
-  `img` VARCHAR(45) NULL DEFAULT NULL,
-  `start_date` TIMESTAMP NOT NULL,
-  `end_date` TIMESTAMP NOT NULL,
-  `hit` INT NULL DEFAULT '0',
-  `rcmd_cnt` INT NULL DEFAULT '0',
-  PRIMARY KEY (`hotplace_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+  `hotplace_id` int NOT NULL AUTO_INCREMENT,
+  `place_id` varchar(45) NOT NULL,
+  `place_type` varchar(45) DEFAULT NULL,
+  `place_name` varchar(45) NOT NULL,
+  `hotplace_title` varchar(255) DEFAULT NULL,
+  `writer` varchar(45) NOT NULL,
+  `visit_date` date DEFAULT NULL,
+  `contents` varchar(45) NOT NULL,
+  `score` int,
+  `hit` int DEFAULT 0,
+  `rcmd_cnt` int NOT NULL DEFAULT 0,
+  PRIMARY KEY (`hotplace_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -195,6 +193,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`hotplace_comment` (
   `hotplace_id` INT NOT NULL,
   `writer` VARCHAR(45) NOT NULL,
   `contents` VARCHAR(45) NULL DEFAULT NULL,
+  `register_date` timestamp default CURRENT_TIMESTAMP,
   PRIMARY KEY (`hotplace_comment_id`),
   INDEX `hotplace_comment_to_hotplace_hotplace_id_fk_idx` (`hotplace_id` ASC) VISIBLE,
   CONSTRAINT `hotplace_comment_to_hotplace_hotplace_id_fk`
@@ -290,6 +289,15 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`file_info` (
     REFERENCES `enjoytrip`.`user` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`hotplace_file_info` (
+  `idx` INT NOT NULL AUTO_INCREMENT,
+  `hotplace_id` VARCHAR(45) NULL,
+  `save_folder` VARCHAR(45) NULL,
+  `original_file` VARCHAR(50) NULL,
+  `save_file` VARCHAR(50) NULL,
+  PRIMARY KEY (`idx`))
 ENGINE = InnoDB;
 
 

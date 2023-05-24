@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.enjoytrip.hotplace.model.dto.HotplaceCommentDto;
 import com.ssafy.enjoytrip.hotplace.model.dto.HotplaceDto;
 
 @Mapper
@@ -18,7 +19,7 @@ public interface HotplaceMapper {
 	int writeHotplace (HotplaceDto hotplaceDto) throws SQLException;
 
 	// 핫플레이스 보기
-//	HotplaceDto viewHotplace(int hotplaceId) throws SQLException;
+	HotplaceDto detailHotplace(int hotplaceId) throws SQLException;
 
 	// 핫플레이스 수정
 //	void modifyHotplace(HotplaceDto hotplaceDto) throws SQLException;
@@ -28,4 +29,10 @@ public interface HotplaceMapper {
 
 	// 핫플레이스 조회수 증가
 //	void updateHit(int hotplaceId) throws SQLException;
+	
+	// 댓글 작성
+	int writeComment(HotplaceCommentDto hotplaceCommentDto) throws SQLException;
+	
+	// 댓글 리스트
+	List<HotplaceCommentDto> listHotplaceComment(int hotplaceId) throws SQLException;
 }
