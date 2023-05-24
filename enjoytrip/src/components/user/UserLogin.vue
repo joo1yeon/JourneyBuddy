@@ -32,35 +32,17 @@
         </div>
         <div class="form-check">
           <label class="form-check-label" for="id-checkbox">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value="save"
-              id="id-checkbox"
-              name="saveid"
-            />
+            <input class="form-check-input" type="checkbox" value="save" id="id-checkbox" name="saveid" />
             <small class="text-body-secondary">아이디 저장</small>
           </label>
         </div>
-        <b-button type="button" class="w-100 my-2 btn-lg rounded-3" @click="confirm">
-          로그인
-        </b-button>
+        <b-button type="button" class="w-100 my-2 btn-lg rounded-3" @click="confirm"> 로그인 </b-button>
         <router-link :to="{ name: 'join' }">
-          <b-button
-            type="button"
-            class="w-100 my-2 btn-lg rounded-3"
-            variant="outline-secondary"
-            @click="hideModal"
-          >
-            회원가입
-          </b-button>
+          <b-button type="button" class="w-100 my-2 btn-lg rounded-3" variant="outline-secondary" @click="hideModal"> 회원가입 </b-button>
         </router-link>
         <hr class="my-4" />
-        <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
-        <b-button class="w-100 py-2 mb-2 rounded-3" variant="outline-secondary" type="submit">
-          <svg class="bi me-1" width="16" height="16"><use xlink:href="#twitter" /></svg>
-          네이버를 사용하여 로그인하기
-        </b-button>
+        <!-- <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2> -->
+        <div class="py-2 mb-2" id="naver_id_login" align="center"></div>
         <b-button class="w-100 py-2 mb-2 rounded-3" variant="outline-secondary" type="submit">
           <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook" /></svg>
           카카오를 사용하여 로그인하기
@@ -87,6 +69,7 @@ export default {
       user: {
         userId: null,
         userPassword: null,
+        naver_id_login: null,
       },
     };
   },
@@ -94,7 +77,27 @@ export default {
     ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
   },
   created() {},
+  //  네이버 로그인을 위한 마운트 설정
+  mounted() {
+    this.naver_id_login = new window.naver_id_login("3J5vj5fdFNN1eewCVg11", "http://localhost:8080");
+    const state = this.naver_id_login.getUniqState();
+    this.naver_id_login.setButton("green", 3); // 버튼 설정
+    this.naver_id_login.setState(state);
+    // naver_id_login.setPopup(); // popup 설정을 위한 코드
+    this.naver_id_login.init_naver_id_login();
+    // access token 발급 성공
+    if (this.naver_id_login != null) {
+      console.log("access token :", this.naver_id_login.oauthParams.access_token);
+      this.naver_id_login.get_naver_userprofile("naverSignInCallback()");
+      // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+    }
+  },
   methods: {
+    naverSignInCallback() {
+      alert(this.naver_id_login.getProfileData("email"));
+      alert(this.naver_id_login.getProfileData("nickname"));
+      alert(this.naver_id_login.getProfileData("age"));
+    },
     ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
     async confirm() {
       await this.userConfirm(this.user);
@@ -117,4 +120,7 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#naver_id_login {
+}
+</style>
