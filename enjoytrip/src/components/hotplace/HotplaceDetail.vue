@@ -84,6 +84,7 @@
         v-for="comment in commentList"
         :key="comment.hotplaceCommentId"
         :comment="comment"
+        @reloadComments="reloadComments"
       ></hotplace-comment-item>
     </template>
     <div v-else>댓글이 없습니다.</div>
@@ -107,8 +108,6 @@ export default {
   name: "HotplaceDetail",
   data() {
     return {
-      comment: "",
-      ratingValue: 5,
       hotplaceInfo: {
         hotplaceId: "",
         placeId: "",
@@ -123,6 +122,7 @@ export default {
         rcmdCnt: 0,
       },
       commentInfo: {
+        hotplaceCommentId: "",
         hotplaceId: "",
         writer: "",
         contents: "",
@@ -187,6 +187,17 @@ export default {
             this.commentList = data;
           });
       });
+    },
+    reloadComments() {
+      http
+        .get(`/hotplace/comment/list`, {
+          params: {
+            hotplaceId: `${this.hotplaceInfo.hotplaceId}`,
+          },
+        })
+        .then(({ data }) => {
+          this.commentList = data;
+        });
     },
   },
 };

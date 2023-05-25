@@ -8,13 +8,7 @@
         rounded="circle"
         class="imageSize"
       ></b-img>
-      <b-img
-        v-else
-        src="https://picsum.photos/200/200/?image=54"
-        fluid
-        rounded="circle"
-        class="imageSize"
-      ></b-img>
+      <b-avatar v-else size="10rem"></b-avatar>
       <!-- 프로필 사진 수정 -->
       <div>
         <input
@@ -46,10 +40,6 @@
         <tr>
           <td><b-icon icon="emoji-smile" /> 생년월일</td>
           <td><b-form-input type="date" v-model="user.birthDate" size="sm"></b-form-input></td>
-        </tr>
-        <tr>
-          <td><b-icon icon="calendar" /> 가입 날짜</td>
-          <td><b-form-input type="date" v-model="user.registerDate" size="sm" readonly /></td>
         </tr>
       </table>
       <div class="my-5">
@@ -124,6 +114,8 @@ export default {
         },
         data: formData,
       });
+
+      this.$emit("nowEditMode", false);
     },
   },
 };

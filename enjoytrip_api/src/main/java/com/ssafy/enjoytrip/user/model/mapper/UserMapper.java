@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.ssafy.enjoytrip.config.jwt.JwtToken;
+import com.ssafy.enjoytrip.user.model.FileInfoDto;
 import com.ssafy.enjoytrip.user.model.UserDto;
 
 @Mapper
@@ -25,5 +26,6 @@ public interface UserMapper {
 	int updateRefreshToken(UserDto userDto) throws SQLException;
 	int deleteRefreshToken(String userId) throws SQLException;
 	List<String> getUserAuthorities(String userId) throws SQLException;
+	FileInfoDto getUserFileInfo(String userId) throws SQLException;
 	
 }

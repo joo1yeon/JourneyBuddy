@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.ssafy.enjoytrip.config.jwt.JwtToken;
+import com.ssafy.enjoytrip.user.model.FileInfoDto;
 import com.ssafy.enjoytrip.user.model.UserDto;
 
 public interface UserService {
@@ -19,5 +20,6 @@ public interface UserService {
 	List<UserDto> getUserList() throws SQLException;
 	int updateFile(UserDto userDto) throws SQLException;
 	int deleteRefreshToken(String userid) throws SQLException;
+	FileInfoDto getUserFileInfo(String userId) throws SQLException;
 	
 }

@@ -13,7 +13,7 @@ import com.ssafy.enjoytrip.hotplace.model.dto.HotplaceDto;
 public interface HotplaceMapper {
 	
 	// 핫플레이스 리스트
-	List<HotplaceDto> listHotplace() throws SQLException;
+	List<HotplaceDto> listHotplace(int cnt) throws SQLException;
 
 	// 핫플레이스 등록
 	int writeHotplace (HotplaceDto hotplaceDto) throws SQLException;
@@ -35,4 +35,7 @@ public interface HotplaceMapper {
 	
 	// 댓글 리스트
 	List<HotplaceCommentDto> listHotplaceComment(int hotplaceId) throws SQLException;
+	
+	// 댓글 삭제
+	int deleteComment(int hotplaceCommentId) throws SQLException;
 }

@@ -8,7 +8,7 @@
       indicators
       background="#ababab"
       img-width="1024"
-      img-height="480"
+      img-height="100"
       style="text-shadow: 1px 1px 2px #333"
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
@@ -18,9 +18,9 @@
       <b-carousel-slide caption="Blank Image" img-alt="Blank image">
         <template #img>
           <img
-            class="d-block img-fluid h-50"
+            class="d-block h-50"
             width="1024"
-            height="100"
+            height="240"
             src="@/assets/img/common/main-background3.jpg"
             alt="image slot"
           />
@@ -30,26 +30,26 @@
       <b-carousel-slide
         caption="First slide"
         text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-        img-src="https://picsum.photos/1024/480/?image=52"
+        img-src="https://picsum.photos/1024/240/?image=52"
       ></b-carousel-slide>
 
       <!-- Slides with custom text -->
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
+      <b-carousel-slide img-src="https://picsum.photos/1024/240/?image=54">
         <h1>Hello world!</h1>
       </b-carousel-slide>
 
       <!-- Slides with image only -->
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+      <b-carousel-slide img-src="https://picsum.photos/1024/240/?image=58"></b-carousel-slide>
 
       <!-- Slides with img slot -->
       <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
       <b-carousel-slide>
         <template #img>
           <img
-            class="d-block img-fluid h-50"
+            class="d-block h-50"
             width="1024"
-            height="100"
-            src="https://picsum.photos/1024/480/?image=55"
+            height="240"
+            src="https://picsum.photos/1024/100/?image=55"
             alt="image slot"
           />
         </template>

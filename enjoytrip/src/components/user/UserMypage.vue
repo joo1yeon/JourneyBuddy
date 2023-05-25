@@ -1,7 +1,15 @@
 <template>
   <div>
     <div class="p-3 py-2 box shadow">
-      <b-img src="https://picsum.photos/200/200/?image=54" fluid rounded="circle"></b-img>
+      <b-img
+        v-if="userProfileImg"
+        :src="userProfileImg"
+        fluid
+        rounded="circle"
+        width="200"
+        height="200"
+      ></b-img>
+      <b-avatar v-else size="12rem"></b-avatar>
       <hr />
       <h5>{{ userInfo.userId }}</h5>
       <small>{{ userInfo.userName }}</small>
@@ -31,6 +39,7 @@
 </template>
 
 <script>
+import http from "@/api/http";
 import { mapActions, mapGetters, mapState } from "vuex";
 
 const userStore = "userStore";
@@ -39,9 +48,44 @@ export default {
   name: "UserMypage",
   components: {},
   data() {
-    return {};
+    return {
+      userFileInfo: {},
+      userProfileImg: "",
+    };
   },
-  created() {},
+  created() {
+    // 프로필 이미지 정보 가져오기
+    http({
+      method: "get",
+      url: `/user/file/${this.userInfo.userId}`,
+    }).then(({ data }) => {
+      this.userFileInfo = data;
+
+      // 프로필 이미지 가져오기
+      if (
+        this.userFileInfo.saveFolder != null &&
+        this.userFileInfo.originalFile &&
+        this.userFileInfo.saveFile
+      ) {
+        http({
+          method: "get",
+          url: `/user/file/${this.userFileInfo.saveFolder}/${this.userFileInfo.originalFile}/${this.userFileInfo.saveFile}`,
+          responseType: "blob",
+        }).then(({ data }) => {
+          console.log(data);
+          const newFile = new File([data], this.userInfo.userId);
+
+          // FileReader를 통해 File 객체를 브라우저가 이해할 수 있는 이미지 링크로 변환
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const previewImage = String(event.target?.result);
+            this.userProfileImg = previewImage;
+          };
+          reader.readAsDataURL(newFile);
+        });
+      }
+    });
+  },
   computed: {
     ...mapState(userStore, ["isLogin", "userInfo"]),
     ...mapGetters(["checkUserInfo"]),

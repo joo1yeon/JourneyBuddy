@@ -1,9 +1,17 @@
 <template>
-  <b-navbar toggleable="lg" type="light" variant="light" class="bg-body-tertiary shadow fixed-top" style="padding: 0 10vw">
-    <!-- <a class="navbar-brand link-primary fw-bold fs-3" href="/"> -->
-    <!-- </a> -->
+  <b-navbar
+    toggleable="lg"
+    variant="light"
+    class="bg-body-tertiary shadow fixed-top"
+    style="padding: 0 10vw"
+  >
     <router-link :to="{ name: 'main' }" class=""
-      ><img id="header-logo" src="@/assets/img/common/logo.png" alt="" width="100px" :to="{ name: 'main' }"
+      ><img
+        id="header-logo"
+        src="@/assets/img/common/logo.png"
+        alt=""
+        width="100px"
+        :to="{ name: 'main' }"
     /></router-link>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>

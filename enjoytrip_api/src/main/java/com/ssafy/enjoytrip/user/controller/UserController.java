@@ -1,20 +1,27 @@
 package com.ssafy.enjoytrip.user.controller;
 
 import java.io.File;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.util.json.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +32,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,7 +48,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/user")
@@ -175,7 +180,8 @@ public class UserController {
 	@ApiOperation(value = "회원 수정", notes = "회원 정보를 수정합니다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "회원 정보 수정 OK"), @ApiResponse(code = 500, message = "서버 에러") })
 	@PutMapping
-	public ResponseEntity<?> userModify(UserDto userDto, @RequestParam(value="upfile", required = false) MultipartFile file) {
+	public ResponseEntity<?> userModify(UserDto userDto,
+			@RequestParam(value = "upfile", required = false) MultipartFile file) {
 		try {
 			// 프로필 사진 업로드
 			logger.debug("MultipartFile.isEmpty : {}", file.isEmpty());
@@ -206,6 +212,47 @@ public class UserController {
 			return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
+		}
+	}
+
+	// 파일 정보 불러오기
+	@GetMapping("/file/{userid}")
+	public ResponseEntity<?> userFileInfo(@PathVariable("userid")String userId) {
+		try {
+			FileInfoDto fileInfoDto = userService.getUserFileInfo(userId);
+			
+			System.out.println("파일 정보" + fileInfoDto);
+
+			if (fileInfoDto != null) {
+				return new ResponseEntity<FileInfoDto>(fileInfoDto, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+
+	// 이미지 파일 불러오기
+	@GetMapping("/file/{sfolder}/{ofile}/{sfile}")
+	public ResponseEntity<Object> download(@PathVariable("sfolder") String sfolder, @PathVariable("ofile") String ofile,
+			@PathVariable("sfile") String sfile) {
+		logger.debug("download file info sfolder : {}, ofile : {}, sfile : {}", sfolder, ofile, sfile);
+		String file = uploadImgPath + File.separator + sfolder + File.separator + sfile;
+
+		try {
+			Path filePath = Paths.get(file);
+			Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentDisposition(ContentDisposition.builder("attachment")
+					.filename(URLEncoder.encode(ofile, "UTF-8").replaceAll("\\+", "%20")).build());
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
 		}
 	}
 

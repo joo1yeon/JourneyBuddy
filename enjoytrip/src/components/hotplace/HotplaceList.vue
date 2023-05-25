@@ -31,10 +31,16 @@ export default {
     };
   },
   created() {
-    http.get(`/hotplace/list`).then(({ data }) => {
-      this.hotplaceList = data;
-      console.log(this.hotplaceList);
-    });
+    http
+      .get(`/hotplace/list`, {
+        params: {
+          cnt: 0,
+        },
+      })
+      .then(({ data }) => {
+        this.hotplaceList = data;
+        console.log(this.hotplaceList);
+      });
   },
   methods: {},
 };

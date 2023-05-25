@@ -24,6 +24,8 @@
 	</resultMap>
 
 	<resultMap type="fileInfoDto" id="file">
+		<result column="idx" property="idx" />
+		<result column="user_id" property="userId" />
 		<result column="save_folder" property="saveFolder" />
 		<result column="original_file" property="originalFile" />
 		<result column="save_file" property="saveFile" />
@@ -80,6 +82,13 @@
 		set save_folder = #{fileInfo.saveFolder}, original_file = #{fileInfo.originalFile}, save_file = #{fileInfo.saveFile}
 		where user_id = #{userId} 
 	</update>
+	
+	<!-- 프로필 이미지 정보 가져오기 -->
+	<select id="getUserFileInfo" parameterType="String" resultMap="file">
+		select *
+		from file_info
+		where user_id = #{userId}
+	</select>
 
 	<delete id="deleteUser" parameterType="String">
 		delete

@@ -2,16 +2,16 @@ package com.ssafy.enjoytrip.hotplace.model.dto;
 
 public class HotplaceCommentDto {
 
-	private String hotplaceCommentId;
+	private int hotplaceCommentId;	
 	private int hotplaceId;
 	private String writer;
 	private String contents;
 	private String registerDate;
 	
-	public String getHotplaceCommentId() {
+	public int getHotplaceCommentId() {
 		return hotplaceCommentId;
 	}
-	public void setHotplaceCommentId(String hotplaceCommentId) {
+	public void setHotplaceCommentId(int hotplaceCommentId) {
 		this.hotplaceCommentId = hotplaceCommentId;
 	}
 	public int getHotplaceId() {
@@ -38,5 +38,5 @@ public class HotplaceCommentDto {
 	public void setRegisterDate(String registerDate) {
 		this.registerDate = registerDate;
 	}
-	
+
 }

@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.enjoytrip.hotplace.model.mapper.HotplaceMapper">
+<mapper
+	namespace="com.ssafy.enjoytrip.hotplace.model.mapper.HotplaceMapper">
 
 	<resultMap type="hotplaceDto" id="hotplace">
 		<result column="hotplace_id" property="hotplaceId" />
@@ -18,59 +19,78 @@
 		<result column="rcmd_cnt" property="rcmdCnt" />
 	</resultMap>
 
-	<resultMap type="hotplaceDto" id="hotplaceInfo" extends="hotplace">
+	<resultMap type="hotplaceDto" id="hotplaceInfo"
+		extends="hotplace">
 		<result column="hotplace_img" property="hotplaceFileInfoDto" />
-		<association property="hotplaceFileInfo" column="hotplace_id"
-			javaType="hotplaceFileInfoDto" resultMap="hotplaceFile" />
+		<association property="hotplaceFileInfo"
+			column="hotplace_id" javaType="hotplaceFileInfoDto"
+			resultMap="hotplaceFile" />
 	</resultMap>
-	
+
 	<resultMap type="hotplaceFileInfoDto" id="hotplaceFile">
 		<result column="save_folder" property="saveFolder" />
 		<result column="original_file" property="originalFile" />
 		<result column="save_file" property="saveFile" />
 	</resultMap>
-	
+
 	<resultMap type="hotplaceCommentDto" id="hotplaceComment">
+		<result column="hotplace_comment_id" property="hotplaceCommentId" />
 		<result column="hotplace_id" property="hotplaceId" />
 		<result column="writer" property="writer" />
 		<result column="contents" property="contents" />
 		<result column="register_date" property="registerDate" />
 	</resultMap>
-	
-	
+
+
 	<!-- 핫플레이스 리스트 -->
 	<select id="listHotplace" resultMap="hotplace">
 		SELECT *
 		FROM hotplace
 		ORDER BY hotplace_id DESC
+		<if test="cnt != 0">LIMIT #{cnt}</if>
 	</select>
 
 	<!-- 핫플레이스 등록 -->
 	<insert id="writeHotplace" parameterType="hotplaceDto">
 		INSERT INTO hotplace
-		(hotplace_id, place_id, place_type, place_name, hotplace_title, writer, visit_date, contents, score)
-		VALUES (#{hotplaceId}, #{placeId}, #{placeType}, #{placeName}, #{hotplaceTitle}, #{writer}, #{visitDate}, #{contents}, #{score})
+		(hotplace_id, place_id, place_type, place_name, hotplace_title,
+		writer, visit_date, contents, score)
+		VALUES (#{hotplaceId}, #{placeId},
+		#{placeType}, #{placeName}, #{hotplaceTitle}, #{writer}, #{visitDate},
+		#{contents}, #{score})
 	</insert>
-	
+
 	<!-- 핫플레이스 보기 -->
-	<select id="detailHotplace" parameterType="int" resultMap="hotplace">
+	<select id="detailHotplace" parameterType="int"
+		resultMap="hotplace">
 		SELECT *
 		FROM hotplace
 		WHERE hotplace_id = #{hotplaceId}
 	</select>
-	
+
 	<!-- 댓글 작성 -->
 	<insert id="writeComment" parameterType="hotplaceCommentDto">
-		INSERT INTO hotplace_comment
+		INSERT INTO
+		hotplace_comment
 		(hotplace_id, writer, contents)
-		VALUES (#{hotplaceId}, #{writer}, #{contents})
+		VALUES (#{hotplaceId},
+		#{writer}, #{contents})
 	</insert>
-	
+
 	<!-- 댓글 리스트 -->
-	<select id="listHotplaceComment" parameterType="int" resultMap="hotplaceComment">
+	<select id="listHotplaceComment" parameterType="int"
+		resultMap="hotplaceComment">
 		SELECT *
 		FROM hotplace_comment
-		where hotplace_id = #{hotplaceId}
+		where hotplace_id =
+		#{hotplaceId}
 		ORDER BY hotplace_comment_id DESC
 	</select>
+
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComment" parameterType="int">
+		DELETE
+		FROM hotplace_comment
+		WHERE hotplace_comment_id = #{hotplaceCommentId}
+	</delete>
 </mapper>

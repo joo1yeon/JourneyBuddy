@@ -105,6 +105,11 @@ public class UserServiceImpl implements UserService {
 		return userMapper.updateFile(userDto);
 	}
 	
+	@Override
+	public FileInfoDto getUserFileInfo(String userId) throws SQLException {
+		return userMapper.getUserFileInfo(userId);
+	}
+	
 	public ArrayList<GrantedAuthority> getUserAuthorities(String userId) throws SQLException {
         List<String> authorities = userMapper.getUserAuthorities(userId);
         ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<>();
