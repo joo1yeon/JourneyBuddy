@@ -81,24 +81,19 @@
       </b-row>
     </div>
     <!-- 중앙 content end -->
-
-    <!-- 핫플레이스 추가 (예정) modal start -->
-    <b-modal>
-      <hot-place> </hot-place>
-    </b-modal>
-    <!-- 핫플레이스 추가 (예정) modal end -->
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+const userStore = "userStore";
+
 import http from "@/api/http";
 import TheMap from "@/components/trip/map/TheMap.vue";
-import HotPlace from "@/components/trip/map/HotPlace.vue";
 import PlanModal from "@/components/trip/plan/PlanModal.vue";
-import PlanTitle from "@/components/trip/plan/PlanTitle.vue";
 export default {
   name: "TripSearch",
-  components: { TheMap, HotPlace, PlanModal, PlanTitle },
+  components: { TheMap, PlanModal },
   data() {
     return {
       title: "",
@@ -157,7 +152,9 @@ export default {
       this.sidos = response.data;
     });
   },
-  computed: {},
+  computed: {
+    ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
+  },
   methods: {
     // 구군 검색
     searchGugun() {
@@ -209,7 +206,7 @@ export default {
           detailTime: check.time,
           planTitle: this.title,
           tripPlanDetailId: 0,
-          writer: "ssafy",
+          writer: this.userInfo.userId,
         };
         plan.push(obj);
       });

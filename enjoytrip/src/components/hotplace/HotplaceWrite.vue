@@ -1,6 +1,6 @@
 <template>
   <b-container class="my-5 py-5 alignLeft">
-    <h1>핫플레이스 등록</h1>
+    <h1>핫 플레이스 등록</h1>
     <hr />
     <b-row class="mb-5">
       <div class="col-6">
@@ -8,28 +8,16 @@
         <!-- 검색창 -->
         <div>
           <b-input-group class="mb-3">
-            <b-form-input v-model="query" style="border-radius: 1em 0 0 1em"></b-form-input>
+            <b-form-input @keyup.enter="search" v-model="query" style="border-radius: 1em 0 0 1em"></b-form-input>
             <b-input-group-append>
-              <b-button
-                @click="search"
-                @keyup.enter="search"
-                size="sm"
-                style="border-radius: 0 1em 1em 0"
-                ><b-icon icon="search"
-              /></b-button>
+              <b-button @click="search" size="sm" style="border-radius: 0 1em 1em 0"><b-icon icon="search" /></b-button>
             </b-input-group-append>
           </b-input-group>
+          <strong v-if="attractionList.length">{{ attractionList.length }}개의 검색결과</strong>
         </div>
         <!-- 검색 결과 -->
         <div style="overflow-y: auto; height: 20em">
-          <b-table
-            hover
-            :fields="fields"
-            :items="attractionList"
-            @row-clicked="moveCenter"
-            v-if="attractionList.length"
-          >
-          </b-table>
+          <b-table hover :fields="fields" :items="attractionList" @row-clicked="moveCenter" v-if="attractionList.length"> </b-table>
           <span v-else>검색 결과가 없습니다.</span>
         </div>
       </div>
@@ -42,7 +30,7 @@
     <hr />
     <b-row>
       <div class="col-6">
-        핫플레이스 정보
+        핫 플레이스 정보
 
         <div class="box shadow">
           <b-input type="text" v-model="userId" style="display: none"></b-input>
@@ -76,24 +64,13 @@
           </div>
           <div class="inputStyle">
             <b-icon icon="star-fill" /> 별점
-            <b-form-rating
-              v-model="hotplaceInfo.score"
-              variant="warning"
-              class="mb-2"
-              style="border: none"
-            ></b-form-rating>
+            <b-form-rating v-model="hotplaceInfo.score" variant="warning" class="mb-2" style="border: none"></b-form-rating>
           </div>
         </div>
       </div>
       <div class="col-6">
         <div class="mb-3">선택된 이미지</div>
-        <b-img
-          v-if="previewImage"
-          :src="previewImage"
-          fluid
-          alt="Responsive image"
-          class="borderRadius"
-        ></b-img>
+        <b-img v-if="previewImage" :src="previewImage" fluid alt="Responsive image" class="borderRadius"></b-img>
         <div v-else>이미지를 선택해주세요.</div>
       </div>
     </b-row>
@@ -112,9 +89,7 @@
 
     <div style="text-align: center">
       <b-button variant="outline-secondary" style="border-radius: 1em 0 0 1em">취소</b-button>
-      <b-button @click="register()" class="borderRadiusRight" style="border-radius: 0 1em 1em 0"
-        >등록</b-button
-      >
+      <b-button @click="register()" class="borderRadiusRight" style="border-radius: 0 1em 1em 0">등록</b-button>
     </div>
   </b-container>
 </template>
@@ -158,7 +133,7 @@ export default {
       ],
       attractionList: [],
       contentType: 0,
-      query: "해운대",
+      query: "",
       hotplaceInfo: {
         placeId: "",
         placeType: "",

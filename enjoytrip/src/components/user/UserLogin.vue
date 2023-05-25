@@ -40,18 +40,18 @@
         <router-link :to="{ name: 'join' }">
           <b-button type="button" class="w-100 my-2 btn-lg rounded-3" variant="outline-secondary" @click="hideModal"> 회원가입 </b-button>
         </router-link>
-        <hr class="my-4" />
+        <!-- <hr class="my-4" /> -->
         <!-- <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2> -->
         <!-- 네이버 로그인 API -->
-        <div id="naver_id_login"></div>
-        <b-button class="w-100 py-2 mb-2 rounded-3" variant="outline-secondary" type="submit">
+        <!-- <div id="naver_id_login"></div> -->
+        <!-- <b-button class="w-100 py-2 mb-2 rounded-3" variant="outline-secondary" type="submit">
           <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook" /></svg>
           카카오를 사용하여 로그인하기
         </b-button>
         <b-button class="w-100 py-2 mb-2rounded-3" variant="outline-secondary" type="submit">
           <svg class="bi me-1" width="16" height="16"><use xlink:href="#github" /></svg>
           깃허브를 사용하여 로그인하기
-        </b-button>
+        </b-button> -->
       </div>
     </div>
   </div>
@@ -80,21 +80,20 @@ export default {
   created() {},
   //  네이버 로그인을 위한 마운트 설정
   mounted() {
-    this.naver_id_login = new window.naver_id_login(process.env.VUE_APP_NAVER_CLIENT_ID, process.env.VUE_APP_NAVER_REDIRECT_URL);
-    const state = this.naver_id_login.getUniqState();
-    this.naver_id_login.setButton("green", 3); // 버튼 설정
-    this.naver_id_login.setState(state);
-    // this.naver_id_login.setPopup(); // popup 설정을 위한 코드
-
-    console.log(this.naver_id_login.init_naver_id_login());
-    this.naver_id_login.init_naver_id_login();
+    // this.naver_id_login = new window.naver_id_login(process.env.VUE_APP_NAVER_CLIENT_ID, process.env.VUE_APP_NAVER_REDIRECT_URL);
+    // const state = this.naver_id_login.getUniqState();
+    // this.naver_id_login.setButton("green", 3); // 버튼 설정
+    // this.naver_id_login.setState(state);
+    // // this.naver_id_login.setPopup(); // popup 설정을 위한 코드
+    // console.log(this.naver_id_login.init_naver_id_login());
+    // this.naver_id_login.init_naver_id_login();
   },
   methods: {
-    naverSignInCallback() {
-      alert(this.naver_id_login.getProfileData("email"));
-      alert(this.naver_id_login.getProfileData("nickname"));
-      alert(this.naver_id_login.getProfileData("age"));
-    },
+    // naverSignInCallback() {
+    //   alert(this.naver_id_login.getProfileData("email"));
+    //   alert(this.naver_id_login.getProfileData("nickname"));
+    //   alert(this.naver_id_login.getProfileData("age"));
+    // },
     ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
     async confirm() {
       await this.userConfirm(this.user);
@@ -108,6 +107,7 @@ export default {
         // this.$refs["login-modal"].hide();
         // this.modal.hide();
         this.$emit("hideLoginModal");
+        if (this.$route.fullPath != "/") this.$router.push({ name: "main" });
       }
     },
     hideModal() {
@@ -117,7 +117,4 @@ export default {
 };
 </script>
 
-<style scoped>
-#naver_id_login {
-}
-</style>
+<style scoped></style>

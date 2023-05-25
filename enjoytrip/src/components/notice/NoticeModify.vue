@@ -1,7 +1,7 @@
 <template>
   <b-container fluid="lg" id="modify">
     <b-alert show class="text-left"
-      ><h2>{{ form.noticeNo }}. {{ form.subject }} (수정)</h2></b-alert
+      ><h2>{{ form.noticeNo }}. {{ title }} (수정)</h2></b-alert
     >
     <b-form @submit="onSubmit">
       <b-form-group id="input-group-1" label="제목" label-for="input-1" label-align="left">
@@ -15,7 +15,7 @@
         <b-form-input id="input-3" v-model="form.hit" type="number" required readonly></b-form-input>
       </b-form-group>
       <b-form-group id="input-group-1" label="등록 시간" label-for="input-4" label-align="left">
-        <b-form-input id="input-4" v-model="form.registerTiem" type="text" required readonly></b-form-input>
+        <b-form-input id="input-4" v-model="form.registerTime" type="text" required readonly></b-form-input>
       </b-form-group>
 
       <!-- 메인 공지 작성 여부 -->
@@ -35,10 +35,11 @@ export default {
   components: {},
   data() {
     return {
+      title: "",
       form: {
         subject: "",
         content: "",
-        registerTiem: "",
+        registerTime: "",
         hit: 0,
         userId: "ssafy",
         noticeNo: 0,
@@ -50,6 +51,7 @@ export default {
     this.form.noticeNo = this.$route.params.noticeno;
     http.get(`/notice/list/${this.form.noticeNo}`).then((response) => {
       this.form = response.data;
+      this.title = this.form.subject;
     });
   },
   methods: {

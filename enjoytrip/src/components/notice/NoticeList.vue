@@ -1,9 +1,10 @@
 <template>
   <b-container id="list">
     <b-alert show><h2>공지사항</h2></b-alert>
-    <div class="d-flex mb-3">
+    <div v-if="userInfo && userInfo.userId == 'ssafy'" class="d-flex mb-3">
       <b-button variant="success" type="button" :to="{ name: 'noticewrite' }">작성하기</b-button>
     </div>
+    <!-- 공지 리스트만 있을 경우 -->
     <div v-if="!isNotice && noticeList">
       <b-table hover :items="tableData" @row-clicked="noticeView" :fields="fields">
         <template #cell(userId)="data">
@@ -11,6 +12,7 @@
         </template>
       </b-table>
     </div>
+    <!-- 메인공지 & 공지 리스트 모두 존재 할 경우 -->
     <div v-else-if="isNotice && noticeList">
       <b-table hover :items="tableData" @row-clicked="noticeView" :fields="fields" :top-row="topRowContent">
         <template #cell(userId)="data">
@@ -18,13 +20,17 @@
         </template>
       </b-table>
     </div>
-    <div v-else>
+    <!-- 메인공지 & 공지 리스트 모두 존재 안 할 경우 -->
+    <div v-else-if="!isNotice && !noticeList">
       <h2>공지사항이 존재하지 않습니다</h2>
     </div>
   </b-container>
 </template>
 
 <script>
+import { mapState } from "vuex";
+const userStore = "userStore";
+
 import http from "@/api/http";
 export default {
   name: "NoticeList",
@@ -54,6 +60,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
     tableData() {
       if (this.mainNotice) {
         return [this.mainNotice, ...this.noticeList];

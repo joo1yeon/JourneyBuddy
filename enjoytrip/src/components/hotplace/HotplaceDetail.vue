@@ -7,15 +7,10 @@
     <b-row>
       <div class="col-6">
         이미지
-        <b-img
-          src="https://picsum.photos/1024/500/?image=41"
-          fluid
-          alt="Responsive image"
-          class="borderRadius"
-        ></b-img>
+        <b-img src="https://picsum.photos/1024/500/?image=41" fluid alt="Responsive image" class="borderRadius"></b-img>
       </div>
       <div class="col-6">
-        핫플레이스 정보
+        핫 플레이스 정보
 
         <div class="box shadow">
           <table>
@@ -34,13 +29,7 @@
             <tr>
               <td><b-icon icon="star" /> 평점</td>
               <td>
-                <b-form-rating
-                  v-model="hotplaceInfo.score"
-                  show-value
-                  readonly
-                  variant="warning"
-                  class="mb-2 borderNone"
-                ></b-form-rating>
+                <b-form-rating v-model="hotplaceInfo.score" show-value readonly variant="warning" class="mb-2 borderNone"></b-form-rating>
               </td>
             </tr>
           </table>

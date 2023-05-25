@@ -45,6 +45,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+const userStore = "userStore";
+
 import http from "@/api/http";
 import TheMap from "@/components/trip/map/TheMap.vue";
 export default {
@@ -57,6 +60,9 @@ export default {
       title: "",
     };
   },
+  computed: {
+    ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
+  },
   created() {
     this.loadData(); // 데이터 로드 및 지도 작업 실행
     this.loadMapComponent(); // the-map 컴포넌트 로드
@@ -68,7 +74,7 @@ export default {
       this.$options.components.TheMap = module.default || module; // the-map 컴포넌트를 동적으로 등록
     },
     loadData() {
-      http.get(`/plan/detail/ssafy/${this.$route.params.tripPlanId}`).then((response) => {
+      http.get(`/plan/detail/${this.userInfo.userId}/${this.$route.params.tripPlanId}`).then((response) => {
         this.detailList = response.data;
         this.title = this.detailList[0].planTitle;
       });

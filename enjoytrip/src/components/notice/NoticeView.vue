@@ -26,14 +26,18 @@
         <b-form-input id="input-4" v-model="form.registerTime" type="text" required readonly></b-form-input>
       </b-form-group>
 
-      <b-button type="button" variant="success" @click="noticemodify" class="mr-4">수정하기</b-button>
-      <b-button type="button" variant="danger" @click="noticedelete" class="mr-4">삭제하기</b-button>
+      <!-- 버튼 그룹 -->
+      <b-button v-if="userInfo && userInfo.userId == 'ssafy'" type="button" variant="success" @click="noticemodify" class="mr-4">수정하기</b-button>
+      <b-button v-if="userInfo && userInfo.userId == 'ssafy'" type="button" variant="danger" @click="noticedelete" class="mr-4">삭제하기</b-button>
       <b-button type="button" @click="goList" variant="info">리스트</b-button>
     </b-form>
   </b-container>
 </template>
 
 <script>
+import { mapState } from "vuex";
+const userStore = "userStore";
+
 import http from "@/api/http";
 export default {
   name: "NoticeView",
@@ -49,6 +53,9 @@ export default {
         noticeNo: 0,
       },
     };
+  },
+  computed: {
+    ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
   },
   created() {
     this.form.noticeNo = this.$route.params.noticeno;

@@ -13,6 +13,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+const userStore = "userStore";
+
 import http from "@/api/http";
 export default {
   name: "MyPlanList",
@@ -38,8 +41,11 @@ export default {
       planList: [],
     };
   },
+  computed: {
+    ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
+  },
   created() {
-    http.get("/plan/list/ssafy").then((response) => {
+    http.get(`/plan/list/${this.userInfo.userId}`).then((response) => {
       this.planList = response.data;
     });
   },
