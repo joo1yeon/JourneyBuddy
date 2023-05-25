@@ -20,10 +20,14 @@ export default {
   props: {
     attractionList: Array,
     detailList: Array,
+    hotplaceInfo: Object,
   },
   computed: {
     detail() {
       return this.detailList;
+    },
+    hotplace() {
+      return this.hotplaceInfo;
     },
   },
   created() {},
@@ -37,7 +41,6 @@ export default {
       document.head.appendChild(script);
     } else {
       this.initMap();
-      console.log(window.kakao);
     }
   },
   watch: {
@@ -45,6 +48,13 @@ export default {
       try {
         this.displayMarker(this.detail); // displayMarker 함수 호출
         this.drawLine(this.detail); // drawLine 함수 호출
+      } catch (error) {
+        // console.log("hey" + error);
+      }
+    },
+    hotplaceInfo() {
+      try {
+        this.displayMarker(this.hotplace); // displayMarker 함수 호출
       } catch (error) {
         // console.log("hey" + error);
       }
@@ -67,10 +77,11 @@ export default {
       this.map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
       this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-      console.log(this.detail);
       if (this.detailList != undefined) {
         this.displayMarker(this.detailList); // displayMarker 함수 호출
-        // this.drawLine(this.detailList); // drawLine 함수 호출
+      }
+      if (this.hotplaceInfo != undefined) {
+        this.displayMarker(this.hotplaceInfo);
       }
     },
 

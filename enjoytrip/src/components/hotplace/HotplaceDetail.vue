@@ -47,7 +47,7 @@
     <b-row class="my-5">
       <div class="col-12" style="height: 20em">
         위치
-        <the-map ref="map" class="borderRadius"></the-map>
+        <the-map ref="map" class="borderRadius" :hotplaceInfo="hotplaceInfo"></the-map>
       </div>
     </b-row>
     <hr />
