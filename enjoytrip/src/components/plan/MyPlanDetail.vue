@@ -11,7 +11,14 @@
     <!-- 일정 카드 start -->
     <div id="detail-card" v-for="(detail, index) in detailList" :key="index">
       <span class="icon-number mb-3">{{ index + 1 }}</span>
-      <b-card no-body class="overflow-hidden mb-3" border-variant="dark" align="left" style="position: relative">
+      <b-card
+        @click="moveCenter(detail.latitude, detail.longitude)"
+        no-body
+        class="overflow-hidden mb-3"
+        border-variant="dark"
+        align="left"
+        style="position: relative"
+      >
         <b-row no-gutters>
           <!-- 카드 이미지 -->
           <b-col md="4">
@@ -39,8 +46,10 @@
           </b-col>
         </b-row>
       </b-card>
-      <!-- 일정 카드 end -->
     </div>
+    <!-- 일정 카드 end -->
+    <b-button variant="danger" @click="deletePlan" class="mr-5">계획 삭제</b-button>
+    <b-button variant="primary" :to="{ name: 'planlist' }">계획 리스트</b-button>
   </b-container>
 </template>
 
@@ -78,6 +87,15 @@ export default {
         this.detailList = response.data;
         this.title = this.detailList[0].planTitle;
       });
+    },
+    deletePlan() {
+      let flag = confirm("정말 삭제하시겠습니까?");
+      if (flag) {
+        http.delete(`/plan/delete/${this.userInfo.userId}/${this.$route.params.tripPlanId}`).then(() => this.$router.push({ name: "planlist" }));
+      }
+    },
+    moveCenter(mapy, mapx) {
+      this.$refs.map.center(mapy, mapx);
     },
   },
 };

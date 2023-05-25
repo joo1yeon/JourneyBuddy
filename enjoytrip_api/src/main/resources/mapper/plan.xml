@@ -106,6 +106,18 @@
 		AND ai.content_id = tpd.detail_content_id
 		AND tpd.plan_num = #{tripPlanId}
 	</select>
+	
+	<!-- 여행계획 디테일 삭제 -->
+	<delete id="deletePlanDetail">
+		DELETE FROM trip_plan_detail
+		WHERE plan_num = #{tripPlanId} AND writer = #{userId}
+	</delete>
+	
+	<!-- 여행 계획 삭제 -->
+	<delete id="deletePlan">
+		DELETE FROM trip_plan
+		WHERE trip_plan_id = #{tripPlanId}
+	</delete>
 
 
 </mapper>

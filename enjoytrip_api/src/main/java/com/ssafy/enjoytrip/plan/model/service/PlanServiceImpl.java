@@ -44,6 +44,12 @@ public class PlanServiceImpl implements PlanService {
 		return planMapper.viewMyPlanDetail(userId, tripPlanId);
 	}
 
+	@Override
+	public void deletePlanDetail(int tripPlanId, String userId) {
+		planMapper.deletePlanDetail(tripPlanId, userId);
+		planMapper.deletePlan(tripPlanId);
+	}
+
 
 
 }

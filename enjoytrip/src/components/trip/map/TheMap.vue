@@ -79,6 +79,7 @@ export default {
 
       if (this.detailList != undefined) {
         this.displayMarker(this.detailList); // displayMarker 함수 호출
+        this.drawLine(this.detail); // drawLine 함수 호출
       }
       if (this.hotplaceAttractionInfo != undefined) {
         this.displayHotplaceMarker(this.hotplaceAttractionInfo);
@@ -122,9 +123,7 @@ export default {
         this.markers.push(marker);
       }
       if (this.positions.length != 0) {
-        this.map.setCenter(
-          new kakao.maps.LatLng(this.positions[0].latitude, this.positions[0].longitude)
-        );
+        this.map.setCenter(new kakao.maps.LatLng(this.positions[0].latitude, this.positions[0].longitude));
       }
     },
     displayHotplaceMarker(data) {
@@ -163,9 +162,7 @@ export default {
       marker.setMap(this.map);
       this.markers.push(marker);
       if (this.positions.length != 0) {
-        this.map.setCenter(
-          new kakao.maps.LatLng(this.positions.latitude, this.positions.longitude)
-        );
+        this.map.panTo(new kakao.maps.LatLng(this.positions.latitude, this.positions.longitude));
       }
     },
     moveCenter(contentId, mapy, mapx, title, addr1, addr2, image, type) {
@@ -187,7 +184,7 @@ export default {
       } else if (type == 39) {
         contentType = " - 음식점";
       }
-      this.map.setCenter(new kakao.maps.LatLng(mapy, mapx));
+      this.map.panTo(new kakao.maps.LatLng(mapy, mapx));
       this.infowindow.close();
       var iwContent = `
             <div style="padding:5px; margin:auto" class="row">
@@ -221,6 +218,9 @@ export default {
       // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
       this.infowindow.open(this.map);
     },
+    center(mapy, mapx) {
+      this.map.panTo(new kakao.maps.LatLng(mapy, mapx));
+    },
     // 기존 마커 지우기
     removeMarker() {
       for (let i = 0; i < this.markers.length; i++) {
@@ -246,9 +246,7 @@ export default {
         // });
 
         // 선을 그립니다
-        let linePath = markerPositions.map(
-          (position) => new kakao.maps.LatLng(position.latitude, position.longitude)
-        );
+        let linePath = markerPositions.map((position) => new kakao.maps.LatLng(position.latitude, position.longitude));
         let line = new kakao.maps.Polyline({
           map: this.map,
           path: linePath,

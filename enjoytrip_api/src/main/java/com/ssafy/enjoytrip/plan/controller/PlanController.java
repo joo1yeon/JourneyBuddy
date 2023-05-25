@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,8 @@ import com.ssafy.enjoytrip.plan.model.PlanDto;
 import com.ssafy.enjoytrip.plan.model.service.PlanService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -84,6 +87,22 @@ public class PlanController {
 			} else {
 				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 			}
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	// 여행계획 삭제
+	@ApiOperation(value = "여행계획 삭제", notes = "여행 계획을 삭제합니다")
+	@ApiResponses({@ApiResponse(code = 200, message = "여행계획 삭제 OK"), @ApiResponse(code = 500, message = "서버 에러")})
+	@ApiImplicitParams({
+		@ApiImplicitParam(name= "tripPlanId", value = "계획 번호", required = true, dataType = "int", paramType = "path"),
+		@ApiImplicitParam(name= "userId", value = "유저 아이디", required = true, dataType = "String", paramType = "path")})
+	@DeleteMapping(value = "/delete/{userId}/{tripPlanId}")
+	public ResponseEntity<?> userDelete(@PathVariable("tripPlanId") int tripPlanId,@PathVariable("userId") String userId) {
+		try {
+			planService.deletePlanDetail(tripPlanId, userId);
+			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

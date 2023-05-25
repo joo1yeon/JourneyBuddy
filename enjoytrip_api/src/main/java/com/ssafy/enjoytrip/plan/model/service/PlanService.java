@@ -12,9 +12,10 @@ public interface PlanService {
 
 	// 내 여행 계획 확인
 	List<PlanDto> viewMyPlan(String userId, Integer planNum);
-	
+
 	// 여행 계획 상세 정보
 	List<PlanAttractionDto> viewMyPlanDetail(String userId, int tripPlanId);
-	
 
+	// 여행 계획 디테일 삭제
+	void deletePlanDetail(int tripPlanId, String userId);
 }

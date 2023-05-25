@@ -24,4 +24,10 @@ public interface PlanMapper {
 	// 여행 계획 상세 정보
 	List<PlanAttractionDto> viewMyPlanDetail(String userId, int tripPlanId);
 	
+	// 여행 계획 디테일 삭제
+	void deletePlanDetail(int tripPlanId, String userId);
+	
+	// 여행 계획 삭제
+	void deletePlan(int tripPlanId);
+	
 }
