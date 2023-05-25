@@ -9,7 +9,7 @@
         <small>{{ comment.registerDate }}</small>
       </div>
     </b-media>
-    <p class="my-3">{{ comment.contents }}</p>
+    <p class="my-3 mx-2">{{ comment.contents }}</p>
     <hr />
   </div>
 </template>

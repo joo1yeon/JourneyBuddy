@@ -2,7 +2,7 @@
   <b-container class="my-5 py-5 alignLeft">
     <h3>{{ hotplaceInfo.hotplaceTitle }}</h3>
     <small>{{ hotplaceInfo.visitDate }}</small>
-    <p class="alignRight"><b-icon icon="suit-heart" font-scale="1" /> 12</p>
+    <p style="display: none" class="alignRight"><b-icon icon="suit-heart" font-scale="1" /> 12</p>
     <hr />
     <b-row>
       <div class="col-6">
@@ -64,9 +64,8 @@
     <hr />
 
     <div>
-      댓글
       <b-form-textarea
-        id="textarea"
+        id="textarea-comment"
         v-model="commentInfo.contents"
         placeholder="댓글 작성하기"
         rows="3"
@@ -78,6 +77,8 @@
         <b-button @click="writeComment()">등록</b-button>
       </div>
     </div>
+    댓글
+    <hr />
     <template v-if="commentList">
       <hotplace-comment-item
         v-for="comment in commentList"
@@ -135,9 +136,15 @@ export default {
       this.hotplaceInfo = data;
     });
 
-    http.get(`/hotplace/comment/list`).then(({ data }) => {
-      this.commentList = data;
-    });
+    http
+      .get(`/hotplace/comment/list`, {
+        params: {
+          hotplaceId: `${this.hotplaceInfo.hotplaceId}`,
+        },
+      })
+      .then(({ data }) => {
+        this.commentList = data;
+      });
   },
   computed: {
     ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
@@ -167,7 +174,19 @@ export default {
     writeComment() {
       this.commentInfo.hotplaceId = this.hotplaceInfo.hotplaceId;
       this.commentInfo.writer = this.userInfo.userId;
-      http.post(`/hotplace/comment`, this.commentInfo).then({});
+      http.post(`/hotplace/comment`, this.commentInfo).then(() => {
+        this.commentInfo.contents = "";
+
+        http
+          .get(`/hotplace/comment/list`, {
+            params: {
+              hotplaceId: `${this.hotplaceInfo.hotplaceId}`,
+            },
+          })
+          .then(({ data }) => {
+            this.commentList = data;
+          });
+      });
     },
   },
 };

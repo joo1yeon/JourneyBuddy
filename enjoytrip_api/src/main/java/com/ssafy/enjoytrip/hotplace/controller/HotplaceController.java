@@ -105,7 +105,7 @@ public class HotplaceController {
 	
 	// 댓글 리스트
 	@GetMapping("/comment/list")
-	public ResponseEntity<?> listComment(@RequestBody int hotplaceId) {
+	public ResponseEntity<?> listComment(int hotplaceId) {
 		try {
 			List<HotplaceCommentDto> list = hotplaceServiceImpl.listHotplaceComment(hotplaceId);
 			if (list.size() > 0)

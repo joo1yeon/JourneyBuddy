@@ -34,6 +34,7 @@
 		<result column="hotplace_id" property="hotplaceId" />
 		<result column="writer" property="writer" />
 		<result column="contents" property="contents" />
+		<result column="register_date" property="registerDate" />
 	</resultMap>
 	
 	

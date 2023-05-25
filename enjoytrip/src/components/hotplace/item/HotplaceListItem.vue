@@ -15,10 +15,14 @@
           </b-col>
           <b-col md="6">
             <b-card-body>
-              <h4>{{ hotplace.placeName }}</h4>
+              <h4>{{ hotplace.hotplaceTitle }}</h4>
               <b-card-text>
                 <div class="box">
                   <table class="alignLeft">
+                    <tr>
+                      <td><b-icon icon="geo-alt-fill" /></td>
+                      <td>{{ hotplace.placeName }}</td>
+                    </tr>
                     <tr>
                       <td><b-icon icon="calendar" /></td>
                       <td>{{ hotplace.visitDate }}</td>
@@ -97,8 +101,8 @@ export default {
   border: none;
 }
 td {
-  padding: 0.1em;
-  font-size: 1em;
+  padding: 0.2em;
+  font-size: 0.95em;
 }
 .textStyle {
   text-decoration: none;
