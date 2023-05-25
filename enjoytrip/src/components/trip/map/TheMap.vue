@@ -70,7 +70,7 @@ export default {
       console.log(this.detail);
       if (this.detailList != undefined) {
         this.displayMarker(this.detailList); // displayMarker 함수 호출
-        this.drawLine(this.detailList); // drawLine 함수 호출
+        // this.drawLine(this.detailList); // drawLine 함수 호출
       }
     },
 

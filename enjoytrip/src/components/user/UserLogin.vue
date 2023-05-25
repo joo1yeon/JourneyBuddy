@@ -42,7 +42,8 @@
         </router-link>
         <hr class="my-4" />
         <!-- <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2> -->
-        <div class="py-2 mb-2" id="naver_id_login" align="center"></div>
+        <!-- 네이버 로그인 API -->
+        <div id="naver_id_login"></div>
         <b-button class="w-100 py-2 mb-2 rounded-3" variant="outline-secondary" type="submit">
           <svg class="bi me-1" width="16" height="16"><use xlink:href="#facebook" /></svg>
           카카오를 사용하여 로그인하기
@@ -79,18 +80,14 @@ export default {
   created() {},
   //  네이버 로그인을 위한 마운트 설정
   mounted() {
-    this.naver_id_login = new window.naver_id_login("3J5vj5fdFNN1eewCVg11", "http://localhost:8080");
+    this.naver_id_login = new window.naver_id_login(process.env.VUE_APP_NAVER_CLIENT_ID, process.env.VUE_APP_NAVER_REDIRECT_URL);
     const state = this.naver_id_login.getUniqState();
     this.naver_id_login.setButton("green", 3); // 버튼 설정
     this.naver_id_login.setState(state);
-    // naver_id_login.setPopup(); // popup 설정을 위한 코드
+    // this.naver_id_login.setPopup(); // popup 설정을 위한 코드
+
+    console.log(this.naver_id_login.init_naver_id_login());
     this.naver_id_login.init_naver_id_login();
-    // access token 발급 성공
-    if (this.naver_id_login != null) {
-      console.log("access token :", this.naver_id_login.oauthParams.access_token);
-      this.naver_id_login.get_naver_userprofile("naverSignInCallback()");
-      // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
-    }
   },
   methods: {
     naverSignInCallback() {
