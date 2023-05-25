@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.enjoytrip.hotplace.model.dto.HotplaceCommentDto;
 import com.ssafy.enjoytrip.hotplace.model.dto.HotplaceDto;
 import com.ssafy.enjoytrip.hotplace.model.mapper.HotplaceMapper;
 
@@ -28,5 +29,20 @@ public class HotplaceServiceImpl implements HotplaceService {
 	@Override
 	public int writeHotplace(HotplaceDto hotplaceDto) throws SQLException {
 		return hotplaceMapper.writeHotplace(hotplaceDto);
+	}
+	
+	@Override
+	public HotplaceDto detailHotplace(int hotplaceId) throws SQLException {
+		return hotplaceMapper.detailHotplace(hotplaceId);
+	}
+	
+	@Override
+	public int writeComment(HotplaceCommentDto hotplaceCommentDto) throws SQLException {
+		return hotplaceMapper.writeComment(hotplaceCommentDto);
+	}
+	
+	@Override
+	public List<HotplaceCommentDto> listHotplaceComment(int hotplaceId) throws SQLException {
+		return hotplaceMapper.listHotplaceComment(hotplaceId);
 	}
 }

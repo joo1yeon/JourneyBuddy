@@ -1,6 +1,7 @@
 <template>
   <b-container class="my-5 py-5 alignLeft">
-    <h2>해운대</h2>
+    <h3>{{ hotplaceInfo.hotplaceTitle }}</h3>
+    <small>{{ hotplaceInfo.visitDate }}</small>
     <p class="alignRight"><b-icon icon="suit-heart" font-scale="1" /> 12</p>
     <hr />
     <b-row>
@@ -19,22 +20,22 @@
         <div class="box shadow">
           <table>
             <tr>
-              <td><b-icon icon="calendar" /> 날짜</td>
-              <td>2023.05.23</td>
+              <td><b-icon icon="geo-alt-fill" /> 장소 이름</td>
+              <td>{{ hotplaceInfo.placeName }}</td>
             </tr>
             <tr>
               <td><b-icon icon="building" /> 장소 유형</td>
-              <td>관광지</td>
+              <td>{{ getPlaceType() }}</td>
             </tr>
             <tr>
               <td><b-icon icon="person" /> 작성자</td>
-              <td>김싸피</td>
+              <td>{{ hotplaceInfo.writer }}</td>
             </tr>
             <tr>
               <td><b-icon icon="star" /> 평점</td>
               <td>
                 <b-form-rating
-                  v-model="ratingValue"
+                  v-model="hotplaceInfo.score"
                   show-value
                   readonly
                   variant="warning"
@@ -50,7 +51,7 @@
 
     <b-row class="my-2 flexContainer">
       <div class="col-12"><b-icon icon="chat-right-dots" /> 상세내용</div>
-      <div class="col-12 flexBox">ㅎㅎㅎㅎㅋㅋㅋㅋㅋㅋㅋㅋ 관통 너무 재밌다</div>
+      <div class="col-12 flexBox">{{ hotplaceInfo.contents }}</div>
     </b-row>
 
     <hr />
@@ -66,7 +67,7 @@
       댓글
       <b-form-textarea
         id="textarea"
-        v-model="comment"
+        v-model="commentInfo.contents"
         placeholder="댓글 작성하기"
         rows="3"
         max-rows="6"
@@ -74,10 +75,17 @@
       ></b-form-textarea>
 
       <div class="alignRight my-3">
-        <b-button>등록</b-button>
+        <b-button @click="writeComment()">등록</b-button>
       </div>
     </div>
-    <hotplace-comment-item></hotplace-comment-item>
+    <template v-if="commentList">
+      <hotplace-comment-item
+        v-for="comment in commentList"
+        :key="comment.hotplaceCommentId"
+        :comment="comment"
+      ></hotplace-comment-item>
+    </template>
+    <div v-else>댓글이 없습니다.</div>
     <b-row>
       <b-button class="alignCenter my-3" :to="{ name: 'hotplacelist' }">목록으로</b-button>
     </b-row>
@@ -85,8 +93,13 @@
 </template>
 
 <script>
+import http from "@/api/http";
 import TheMap from "../trip/map/TheMap.vue";
 import HotplaceCommentItem from "./item/HotplaceCommentItem.vue";
+
+import { mapState } from "vuex";
+
+const userStore = "userStore";
 
 export default {
   components: { HotplaceCommentItem, TheMap },
@@ -95,10 +108,68 @@ export default {
     return {
       comment: "",
       ratingValue: 5,
-      hotplaceInfo: {},
+      hotplaceInfo: {
+        hotplaceId: "",
+        placeId: "",
+        placeType: "",
+        placeName: "",
+        hotplaceTitle: "",
+        writer: "",
+        visitDate: "",
+        contents: "",
+        score: 0,
+        hit: 0,
+        rcmdCnt: 0,
+      },
+      commentInfo: {
+        hotplaceId: "",
+        writer: "",
+        contents: "",
+      },
+      commentList: [],
     };
   },
-  created: {},
+  created() {
+    this.hotplaceInfo.hotplaceId = this.$route.params.hotplaceId;
+    http.get(`/hotplace/${this.hotplaceInfo.hotplaceId}`).then(({ data }) => {
+      this.hotplaceInfo = data;
+    });
+
+    http.get(`/hotplace/comment/list`).then(({ data }) => {
+      this.commentList = data;
+    });
+  },
+  computed: {
+    ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
+  },
+  methods: {
+    getPlaceType() {
+      let placeType = this.hotplaceInfo.placeType;
+
+      if (placeType === "12") {
+        return "관광지";
+      } else if (placeType === "14") {
+        return "문화시설";
+      } else if (placeType === "15") {
+        return "축제 | 공연 | 행사";
+      } else if (placeType === "25") {
+        return "여행코스";
+      } else if (placeType === "28") {
+        return "레포츠";
+      } else if (placeType === "32") {
+        return "숙박";
+      } else if (placeType === "38") {
+        return "쇼핑";
+      } else if (placeType === "39") {
+        return "음식점";
+      }
+    },
+    writeComment() {
+      this.commentInfo.hotplaceId = this.hotplaceInfo.hotplaceId;
+      this.commentInfo.writer = this.userInfo.userId;
+      http.post(`/hotplace/comment`, this.commentInfo).then({});
+    },
+  },
 };
 </script>
 

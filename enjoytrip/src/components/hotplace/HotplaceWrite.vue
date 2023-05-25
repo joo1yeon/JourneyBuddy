@@ -51,12 +51,12 @@
             <b-input type="text" v-model="hotplaceInfo.hotplaceTitle"></b-input>
           </div>
           <div class="inputStyle">
-            <b-icon icon="geo-alt-fill" /> 장소명
-            <b-input type="text" v-model="hotplaceInfo.placeName"></b-input>
-          </div>
-          <div class="inputStyle">
             <b-icon icon="calendar" /> 방문 날짜
             <b-input type="date" v-model="hotplaceInfo.visitDate"></b-input>
+          </div>
+          <div class="inputStyle">
+            <b-icon icon="geo-alt-fill" /> 장소 이름
+            <b-input type="text" v-model="hotplaceInfo.placeName"></b-input>
           </div>
           <div class="inputStyle">
             <b-icon icon="building" /> 장소 유형

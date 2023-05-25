@@ -5,8 +5,6 @@
 </template>
 
 <script>
-// import HotplaceDetail from "@/components/hotplace/HotplaceDetail.vue";
-
 export default {
   name: "HotplaceView",
   components: {},
