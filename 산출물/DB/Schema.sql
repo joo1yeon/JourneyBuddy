@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`trip_plan` (
   `writer` varchar(45) NOT NULL,
   `plan_title` varchar(50) DEFAULT NULL,
   `register_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`trip_plan_id`)
+  PRIMARY KEY (`trip_plan_id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
