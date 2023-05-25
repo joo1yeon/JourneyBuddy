@@ -37,4 +37,8 @@ public class AttractionServiceImpl implements AttractionService {
 		return attractionMapper.getAttractionList(sidoCode, gugunCode, query, contentType);
 	}
 
+	@Override
+	public AttractionDto getAttractionByContentId(int contentId) throws Exception {
+		return attractionMapper.getAttractionByContentId(contentId);
+	}
 }

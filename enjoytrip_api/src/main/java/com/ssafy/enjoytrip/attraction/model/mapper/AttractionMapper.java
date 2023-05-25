@@ -18,6 +18,9 @@ public interface AttractionMapper {
 
 	// 관광지 정보 검색
 	List<AttractionDto> getAttractionList(Integer sidoCode, Integer gugunCode, String query, Integer contentType) throws Exception;
+	
+	// 관광지 1개
+	AttractionDto getAttractionByContentId(int contentId) throws Exception;
 
 	// 리스트에 포함된 관광지 정보 전부 가져오기
 	List<AttractionDto> getScheduleInfo(List<Integer> scheduleList) throws Exception;

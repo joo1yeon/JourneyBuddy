@@ -15,5 +15,8 @@ public interface AttractionService {
 
 	// 관광지 정보 검색
 	List<AttractionDto> getAttractionList(Integer sidoCode, Integer gugunCode, String query, Integer contentType) throws Exception;
+	
+	// 관광지 1개
+	AttractionDto getAttractionByContentId(int contentId) throws Exception;
 
 }

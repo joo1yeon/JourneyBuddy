@@ -65,5 +65,12 @@
 		AND (ai.title LIKE CONCAT('%',#{query},'%') OR ad.overview LIKE CONCAT('%',#{query},'%'))
 	</select>
 	
+	<!-- 관광지 1개 정보 검색 -->
+	<select id="getAttractionByContentId" parameterType="int" resultMap="attraction">
+		SELECT *
+		FROM attraction_info
+		WHERE content_id = #{contentId}
+	</select>
+	
 	<!-- 여행 경로 -->
 </mapper>
