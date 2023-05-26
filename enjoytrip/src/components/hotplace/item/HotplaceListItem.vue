@@ -1,17 +1,10 @@
 <template>
   <div class="col-6 my-3">
-    <router-link
-      :to="{ name: 'hotplacedetail', params: { hotplaceId: hotplace.hotplaceId } }"
-      class="textStyle"
-    >
+    <router-link :to="{ name: 'hotplacedetail', params: { hotplaceId: hotplace.hotplaceId } }" class="textStyle">
       <b-card no-body class="overflow-hidden shadow borderRadius" style="max-width: 32em">
         <b-row no-gutters>
           <b-col md="6">
-            <b-card-img
-              src="https://picsum.photos/400/400/?image=54"
-              alt="Image"
-              class="rounded-0"
-            ></b-card-img>
+            <b-card-img src="https://picsum.photos/400/400/?image=54" alt="Image" class="rounded-0"></b-card-img>
           </b-col>
           <b-col md="6">
             <b-card-body>
@@ -36,15 +29,13 @@
                       <td>{{ hotplace.writer }}</td>
                     </tr>
                     <tr>
+                      <td><b-icon icon="eye" /></td>
+                      <td>{{ hotplace.hit }}</td>
+                    </tr>
+                    <tr>
                       <td><b-icon icon="star-fill" /></td>
                       <td>
-                        <b-form-rating
-                          v-model="score"
-                          show-value
-                          readonly
-                          variant="warning"
-                          class="borderNone"
-                        ></b-form-rating>
+                        <b-form-rating v-model="score" show-value readonly variant="warning" class="borderNone"></b-form-rating>
                       </td>
                     </tr>
                   </table>

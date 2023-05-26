@@ -1,6 +1,6 @@
 <template>
   <b-container class="my-5 py-5 alignLeft">
-    <h1>핫 플레이스 등록</h1>
+    <h1>🚩 핫 플레이스 등록</h1>
     <hr />
     <b-row class="mb-5">
       <div class="col-6">
@@ -31,7 +31,6 @@
     <b-row>
       <div class="col-6">
         핫 플레이스 정보
-
         <div class="box shadow">
           <b-input type="text" v-model="userId" style="display: none"></b-input>
           <div class="inputStyle">

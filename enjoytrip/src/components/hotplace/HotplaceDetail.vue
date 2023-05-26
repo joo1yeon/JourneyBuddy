@@ -7,15 +7,10 @@
     <b-row>
       <div class="col-6">
         이미지
-        <b-img
-          src="https://picsum.photos/1024/500/?image=41"
-          fluid
-          alt="Responsive image"
-          class="borderRadius"
-        ></b-img>
+        <b-img src="https://picsum.photos/1024/500/?image=41" fluid alt="Responsive image" class="borderRadius"></b-img>
       </div>
       <div class="col-6">
-        핫 플레이스 정보
+        🚩 핫 플레이스 정보
 
         <div class="box shadow">
           <table>
@@ -32,15 +27,13 @@
               <td>{{ hotplaceInfo.writer }}</td>
             </tr>
             <tr>
+              <td><b-icon icon="eye" /> 조회수</td>
+              <td>{{ hotplaceInfo.hit }}</td>
+            </tr>
+            <tr>
               <td><b-icon icon="star" /> 평점</td>
               <td>
-                <b-form-rating
-                  v-model="hotplaceInfo.score"
-                  show-value
-                  readonly
-                  variant="warning"
-                  class="mb-2 borderNone"
-                ></b-form-rating>
+                <b-form-rating v-model="hotplaceInfo.score" show-value readonly variant="warning" class="mb-2 borderNone"></b-form-rating>
               </td>
             </tr>
           </table>
@@ -58,11 +51,7 @@
     <b-row class="my-5">
       <div class="col-12" style="height: 20em">
         위치
-        <the-map
-          ref="map"
-          class="borderRadius"
-          :hotplaceAttractionInfo="hotplaceAttractionInfo"
-        ></the-map>
+        <the-map ref="map" class="borderRadius" :hotplaceAttractionInfo="hotplaceAttractionInfo"></the-map>
       </div>
     </b-row>
     <hr />
@@ -136,19 +125,19 @@ export default {
     };
   },
   created() {
+    this.loadMapComponent(); // the-map 컴포넌트 로드
     this.loadHotplaceInfo(); // 핫플레이스 정보 로드
     this.loadCommentList(); // 댓글 리스트 로드
-    this.loadMapComponent(); // the-map 컴포넌트 로드
   },
   computed: {
     ...mapState(userStore, ["isLogin", "isLoginError", "userInfo"]),
   },
+  async mounted() {},
   methods: {
     loadHotplaceInfo() {
       this.hotplaceInfo.hotplaceId = this.$route.params.hotplaceId;
       http.get(`/hotplace/${this.hotplaceInfo.hotplaceId}`).then(({ data }) => {
         this.hotplaceInfo = data;
-
         this.loadAttractionInfo();
       });
     },
@@ -164,7 +153,6 @@ export default {
         });
     },
     loadAttractionInfo() {
-      console.log(this.hotplaceInfo.placeId);
       http
         .get(`/trip`, {
           params: {
@@ -173,7 +161,6 @@ export default {
         })
         .then(({ data }) => {
           this.hotplaceAttractionInfo = data;
-          console.log(this.hotplaceAttractionInfo);
         });
     },
     async loadMapComponent() {

@@ -38,4 +38,16 @@ public interface HotplaceMapper {
 	
 	// 댓글 삭제
 	int deleteComment(int hotplaceCommentId) throws SQLException;
+	
+	// 조회수 증가
+	void hotplaceUpdateHit(int hotplaceId);
+	
+	// 추천 수 증가
+	void hotplaceRcmd(int hotplaceId);
+	
+	// 추천 여부 확인
+	int confirmRcmd(int hotplaceId);
+	
+	// 추천 중복 방지를 위한 데이터 입력
+	void hotplaceUpdateRcmd(int hotplaceId, String userId);
 }

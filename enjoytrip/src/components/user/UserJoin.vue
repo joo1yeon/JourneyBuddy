@@ -41,22 +41,11 @@
             </div>
             <div class="mb-3">
               <label for="question" class="form-label">이름</label>
-              <b-form-input
-                type="text"
-                class="form-control borderRadius"
-                id="register-name"
-                placeholder="이름"
-                v-model="user.userName"
-              />
+              <b-form-input type="text" class="form-control borderRadius" id="register-name" placeholder="이름" v-model="user.userName" />
             </div>
             <div class="mb-3">
               <label for="birthdate" class="form-label">생년월일</label>
-              <b-form-input
-                type="date"
-                class="form-control borderRadius"
-                id="register-birthdate"
-                v-model="user.birthDate"
-              />
+              <b-form-input type="date" class="form-control borderRadius" id="register-birthdate" v-model="user.birthDate" />
             </div>
             <div class="mb-3 btnWidth">
               <b-form-group label="성별">
@@ -75,41 +64,15 @@
             <div class="mb-3">
               <label for="question" class="form-label">이메일</label>
               <div class="input-group mb-3">
-                <b-form-input
-                  type="text"
-                  class="form-control borderRadius"
-                  id="register-email"
-                  placeholder="이메일아이디"
-                  v-model="user.emailId"
-                />
+                <b-form-input type="text" class="form-control borderRadius" id="register-email" placeholder="이메일아이디" v-model="user.emailId" />
                 <span class="input-group-text">@</span>
-                <b-form-select
-                  id="emali-domain"
-                  v-model="user.emailDomain"
-                  :options="selectOptions"
-                  class="form-select borderRadius"
-                />
+                <b-form-select id="emali-domain" v-model="user.emailDomain" :options="selectOptions" class="form-select borderRadius" />
               </div>
             </div>
           </b-form>
           <div class="mt-5 alignRight">
-            <b-button
-              type="button"
-              class="mx-1 borderRadius"
-              variant="outline-secondary"
-              :to="{ name: 'main' }"
-            >
-              닫기
-            </b-button>
-            <b-button
-              type="button"
-              id="btn-register"
-              class="mx-1 borderRadius"
-              variant="secondary"
-              @click="join()"
-            >
-              회원가입
-            </b-button>
+            <b-button type="button" class="mx-1 borderRadius" variant="outline-secondary" :to="{ name: 'main' }"> 닫기 </b-button>
+            <b-button type="button" id="btn-register" class="mx-1 borderRadius" variant="secondary" @click="join()"> 회원가입 </b-button>
           </div>
         </div>
       </b-row>

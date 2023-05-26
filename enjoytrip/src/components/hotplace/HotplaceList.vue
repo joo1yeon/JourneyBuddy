@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-container class="my-5 py-5">
-      <h1 class="alignLeft">핫 플레이스 <b-button :to="{ name: 'hotplacewrite' }" class="btn">등록하기</b-button></h1>
+      <h1 class="alignLeft">🚩 핫 플레이스 <b-button :to="{ name: 'hotplacewrite' }" class="btn">등록하기</b-button></h1>
       <hr />
       <div class="flexContainer col-12" v-if="hotplaceList.length">
         <hotplace-list-item v-for="hotplace in hotplaceList" :key="hotplace.hotplaceId" :hotplace="hotplace"></hotplace-list-item>

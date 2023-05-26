@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -131,7 +132,20 @@ public class HotplaceController {
 			return exceptionHandling(e);
 		}
 	}
-
+	// 핫플레이스 추천
+	@PutMapping("/detail/{hotplaceId}/{userId}")
+	public ResponseEntity<?> hotplaceRcmd(@PathVariable("hotplaceId") int hotplaceId, @PathVariable("userId") String userId) {
+		try {
+//			hotplaceServiceImpl.
+//			if (result > 0)
+				return new ResponseEntity<>(HttpStatus.OK);
+//			else
+//				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

@@ -34,7 +34,8 @@
 	</resultMap>
 
 	<resultMap type="hotplaceCommentDto" id="hotplaceComment">
-		<result column="hotplace_comment_id" property="hotplaceCommentId" />
+		<result column="hotplace_comment_id"
+			property="hotplaceCommentId" />
 		<result column="hotplace_id" property="hotplaceId" />
 		<result column="writer" property="writer" />
 		<result column="contents" property="contents" />
@@ -46,7 +47,7 @@
 	<select id="listHotplace" resultMap="hotplace">
 		SELECT *
 		FROM hotplace
-		ORDER BY hotplace_id DESC
+		ORDER BY hit DESC
 		<if test="cnt != 0">LIMIT #{cnt}</if>
 	</select>
 
@@ -90,7 +91,37 @@
 	<!-- 댓글 삭제 -->
 	<delete id="deleteComment" parameterType="int">
 		DELETE
-		FROM hotplace_comment
+		FROM
+		hotplace_comment
 		WHERE hotplace_comment_id = #{hotplaceCommentId}
 	</delete>
+
+	<!-- 핫 플레이스 조회수 -->
+	<update id="hotplaceUpdateHit">
+		UPDATE hotplace
+		SET hit = hit + 1
+		WHERE hotplace_id =
+		#{hotplaceID}
+	</update>
+
+	<!-- 핫 플레이스 추천 -->
+	<update id="hotplaceRcmd">
+		UPDATE hotplace_rcmd
+		SET rcmd_cnt = rcmd_cnt + 1
+		WHERE
+		hotplace_id = #{hotplaceID}
+	</update>
+
+	<!-- 추천 여부 확인 -->
+	<select id="confirmRcmd" resultType="int">
+		SELECT count(*)
+		FROM hotplace_rcmd
+		WHERE hotplace_id = #{hotplaceId}
+	</select>
+	
+	<!-- 핫플 추천 중복 방지를 위한 테이블 등록 -->
+	<insert id="hotplaceUpdateRcmd">
+		INSERT INTO hotplace_rcmd (hotplace_id, rcmd_user)
+		VALUES (#{hotplaceId}, #{userId})
+	</insert>
 </mapper>

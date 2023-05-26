@@ -33,6 +33,7 @@ public class HotplaceServiceImpl implements HotplaceService {
 	
 	@Override
 	public HotplaceDto detailHotplace(int hotplaceId) throws SQLException {
+		hotplaceMapper.hotplaceUpdateHit(hotplaceId);
 		return hotplaceMapper.detailHotplace(hotplaceId);
 	}
 	

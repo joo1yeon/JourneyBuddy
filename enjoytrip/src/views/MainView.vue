@@ -19,7 +19,7 @@
     <div class="my-5"></div>
 
     <div v-if="hotplaceList.length">
-      <h2>핫플레이스 Best 4</h2>
+      <h2>🚩 핫플레이스 Best 4</h2>
       <b-container class="flexBox">
         <hotplace-list-item v-for="hotplace in hotplaceList" :key="hotplace.hotplaceId" :hotplace="hotplace" class="col-3"></hotplace-list-item>
       </b-container>
