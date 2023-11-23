@@ -1,4 +1,4 @@
-# 🛬 여행 친구 Journey Buddy 🛫
+# <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Airplane%20Departure.png" alt="Airplane Departure" width="50" height="50" /> 여행 친구 Journey Buddy <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Airplane%20Arrival.png" alt="Airplane Arrival" width="50" height="50" />
 
 ## 프로젝트 개요
 
