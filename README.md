@@ -31,7 +31,7 @@
 ### Back-End
 
 <div>
-  <img src="https://img.shields.io/badge/Java [8]-007396?style=for-the-badge&logo=Java&logoColor=white" />
+  <img src="https://img.shields.io/badge/Java [8]-007396?style=for-the-badge&logo=openjdk&logoColor=white" />
   <img src="https://img.shields.io/badge/Spring Boot [2.7.11]-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" />
   <img src="https://img.shields.io/badge/Spring Security [2.5.0]-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white" />
 </div>
@@ -85,4 +85,5 @@
 
 | 연주원 | 진병욱 |
 | --- | --- |
-| 팀장 <br>회원 관리 <br>핫플레이스 | 팀원 <br>관광지 <br>여행 계획 <br>공지사항 |
+| <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Smiling%20Eyes.png" alt="Grinning Face with Smiling Eyes" width="150" height="150" /> | <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Slightly%20Smiling%20Face.png" alt="Slightly Smiling Face" width="150" height="150" /> |
+| 팀장 <br>회원 관리 <br>핫플레이스 <br>최종 발표 | 팀원 <br>관광지 <br>여행 계획 <br>공지사항 |
