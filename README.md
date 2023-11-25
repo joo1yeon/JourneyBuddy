@@ -3,6 +3,7 @@
 <img src="/README_IMG/logo_white.png" width="300" />
 
 ### 프로젝트 개발 기간
+
 `2023.05.18.` - `2023.05.26.` (2주)
 
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 프로젝트 개요
@@ -69,7 +70,57 @@
 
 <br>
 
+## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 서비스 화면
+
+### 회원 관리
+
+| 로그인                                   | 회원가입                                     |
+| ---------------------------------------- | -------------------------------------------- |
+| ![로그인](/README_IMG/screen/로그인.png) | ![회원가입](/README_IMG/screen/회원가입.png) |
+
+### 마이페이지
+
+| 조회                                       | 수정                                            |
+| ------------------------------------------ | ----------------------------------------------- |
+| ![조회](/README_IMG/screen/마이페이지.png) | ![수정](/README_IMG/screen/마이페이지_수정.png) |
+
+### 여행지
+
+여행지 선택
+![여행지](/README_IMG/screen/여행지_선택.png)
+
+여행지 상세화면
+![상세](/README_IMG/screen/여행지_상세.png)
+
+### 나의 여행 계획
+
+목록
+![목록](/README_IMG/screen/여행계획_목록.png)
+
+상세보기
+| 지도 | 일정 |
+| --- | --- |
+| ![지도](/README_IMG/screen/여행계획_상세보기_1.png) | ![일정](/README_IMG/screen/여행계획_상세보기_2.png) |
+
+### 핫플레이스
+
+등록
+![등록](/README_IMG/screen/핫플레이스_등록.png)
+
+목록
+![목록](/README_IMG/screen/핫플레이스_목록.png)
+
+### 공지사항
+
+![작성](/README_IMG/screen/공지사항_작성.png)
+
+<br>
+
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 산출물
+
+### 화면 흐름도
+
+![화면흐름도](/README_IMG/화면흐름도.png)
 
 ### ERD
 
@@ -77,23 +128,27 @@
 
 ### Class Diagram
 
-| attraction (관광지) | noitce (공지사항) |
-| --- | --- |
+| attraction (관광지)                                           | noitce (공지사항)                                         |
+| ------------------------------------------------------------- | --------------------------------------------------------- |
 | ![attraction](/README_IMG/Class_Diagram/class_diagram_01.PNG) | ![notice](/README_IMG/Class_Diagram/class_diagram_03.PNG) |
 
-| hotplace (핫 플레이스) | plan (여행 계획) |
-| --- | --- |
-| ![notice](README_IMG/Class_Diagram/class_diagram_04.PNG) | ![plan](README_IMG/Class_Diagram/class_diagram_05.PNG) | 
+| hotplace (핫 플레이스)                                   | plan (여행 계획)                                       |
+| -------------------------------------------------------- | ------------------------------------------------------ |
+| ![notice](README_IMG/Class_Diagram/class_diagram_04.PNG) | ![plan](README_IMG/Class_Diagram/class_diagram_05.PNG) |
 
-| user (사용자) | etc (기타 설정 파일) |
-| --- | --- |
-| ![user](README_IMG/Class_Diagram/class_diagram_06.PNG) | ![etc](/README_IMG/Class_Diagram/class_diagram_02.PNG) | 
+| user (사용자)                                          | etc (기타 설정 파일)                                   |
+| ------------------------------------------------------ | ------------------------------------------------------ |
+| ![user](README_IMG/Class_Diagram/class_diagram_06.PNG) | ![etc](/README_IMG/Class_Diagram/class_diagram_02.PNG) |
+
+### 시스템 아키텍처
+
+![시스템 아키텍처](/README_IMG/시스템구조도.png)
 
 <br>
 
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 팀원
 
-| 연주원 | 진병욱 |
-| --- | --- |
+| 연주원                                                                                                                                                                                                                     | 진병욱                                                                                                                                                                                             |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Grinning%20Face%20with%20Smiling%20Eyes.png" alt="Grinning Face with Smiling Eyes" width="150" height="150" /> | <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Slightly%20Smiling%20Face.png" alt="Slightly Smiling Face" width="150" height="150" /> |
-| 팀장 <br>회원 관리 <br>핫플레이스 <br>최종 발표 | 팀원 <br>관광지 <br>여행 계획 <br>공지사항 |
+| 팀장 <br>회원 관리 <br>핫플레이스 <br>최종 발표                                                                                                                                                                            | 팀원 <br>관광지 <br>여행 계획 <br>공지사항                                                                                                                                                         |
