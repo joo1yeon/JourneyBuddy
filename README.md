@@ -6,6 +6,8 @@
 
 `2023.05.18.` - `2023.05.26.` (2주)
 
+<br>
+
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 프로젝트 개요
 
 - [공공데이터 포털](http://data.go.kr)의 오픈 API를 활용
@@ -89,7 +91,7 @@
 여행지 선택
 ![여행지](/README_IMG/screen/여행지_선택.png)
 
-여행지 상세화면
+여행지 상세화면 <br>
 ![상세](/README_IMG/screen/여행지_상세.png)
 
 ### 나의 여행 계획
