@@ -21,11 +21,11 @@
 
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 프로젝트 목표
 
-- 검색어를 기반으로 한 관광지 정보 도출 및 여행 계획, 핫 플레이스
-- 스프링 시큐리티를 활용하여 전반적인 로그인 세션 관리
-- 메인 공지사항을 이용한 공지사항 게시판
+- 검색어를 기반으로 한 관광지 정보 조회 및 여행 계획 기능
+- Spring Security를 활용한 전반적인 회원 관리
+- 공지사항 게시판
 - 파일 업/다운로드를 활용한 마이페이지
-- 카카오 API를 활용한 카카오 맵
+- 카카오 지도 API를 활용한 기능
 
 <br>
 
