@@ -84,20 +84,19 @@
 
 | 조회                                       | 수정                                            |
 | ------------------------------------------ | ----------------------------------------------- |
-| ![조회](/README_IMG/screen/마이페이지.png) | ![수정](/README_IMG/screen/마이페이지_수정.png) |
+| <img src="/README_IMG/screen/마이페이지.png" width="400" /> | <img src="/README_IMG/screen/마이페이지_수정.png" width="400" /> |
 
 ### 여행지
 
-여행지 선택
-![여행지](/README_IMG/screen/여행지_선택.png)
-
-여행지 상세화면 <br>
-![상세](/README_IMG/screen/여행지_상세.png)
+| 여행지 선택 | 여행지 상세화면 |
+| --- | --- |
+| <img src="/README_IMG/screen/여행지_선택.png" width="1600" /> | ![상세](/README_IMG/screen/여행지_상세.png) |
 
 ### 나의 여행 계획
 
-목록
-![목록](/README_IMG/screen/여행계획_목록.png)
+| 목록 |
+| --- |
+| <img src="/README_IMG/screen/여행계획_목록.png" width="800" /> |
 
 상세보기
 | 지도 | 일정 |
@@ -106,15 +105,15 @@
 
 ### 핫플레이스
 
-등록
-![등록](/README_IMG/screen/핫플레이스_등록.png)
-
-목록
-![목록](/README_IMG/screen/핫플레이스_목록.png)
+| 등록 | 목록 |
+| --- | --- |
+| <img src="/README_IMG/screen/핫플레이스_등록.png" width="1600" /> | ![목록](/README_IMG/screen/핫플레이스_목록.png) |
 
 ### 공지사항
 
-![작성](/README_IMG/screen/공지사항_작성.png)
+| 작성 |
+| --- |
+|<img src="/README_IMG/screen/공지사항_작성.png" width="800" /> |
 
 <br>
 
