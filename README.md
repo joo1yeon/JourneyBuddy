@@ -10,17 +10,17 @@
 
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 프로젝트 개요
 
-- [공공데이터 포털](http://data.go.kr)의 오픈 API를 활용
-- 한국관광공사의 [한국관광공사\_국문 관광정보 서비스\_GW](https://www.data.go.kr/data/15101578/openapi.do)를 데이터화 하여 DB로 관리
+- [공공데이터 포털](http://data.go.kr)의 오픈 API 활용
+- 한국관광공사의 [한국관광공사\_국문 관광정보 서비스\_GW](https://www.data.go.kr/data/15101578/openapi.do)를 DB로 관리
 - 해당 DB에서 관광지 데이터를 추출하여 필요한 데이터 표시
-- 관광지 검색 및 여행 계획, 핫 플레이스 공유 기능을 가진 여행 테마의 웹 사이트 제작
+- 관광지 검색 및 여행 계획, 핫 플레이스 공유 기능을 가진 여행 테마의 웹 서비스 구현
 
 <br>
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 프로젝트 목표
+## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 프로젝트 기능
 
-- 검색어를 기반으로 한 관광지 정보 조회 및 여행 계획 기능
-- Spring Security를 활용한 전반적인 회원 관리
+- 관광지 정보 조회 및 여행 계획 기능
+- Spring Security를 활용한 회원 관리
 - 공지사항 게시판
 - 파일 업/다운로드를 활용한 마이페이지
 - 카카오 지도 API를 활용한 기능
