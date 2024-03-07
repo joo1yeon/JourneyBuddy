@@ -8,7 +8,28 @@
 
 <br>
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 프로젝트 개요
+### 목차
+
+- [개요](#-개요)
+- [기능](#-기능)
+- [사용 기술](#-사용-기술)
+- [서비스 화면](#-서비스-화면)
+  * [회원 관리](#회원-관리)
+  * [마이페이지](#마이페이지)
+  * [여행지](#여행지)
+  * [나의 여행 계획](#나의-여행-계획)
+  * [핫플레이스](#핫플레이스)
+  * [공지사항](#공지사항)
+- [산출물](#-산출물)
+  * [화면 흐름도](#화면-흐름도)
+  * [ERD](#erd)
+  * [Class Diagram](#class-diagram)
+  * [시스템 아키텍처](#시스템-아키텍처)
+- [팀원 소개](#-팀원-소개)
+
+<br><br>
+
+## 📌 개요
 
 - [공공데이터 포털](http://data.go.kr)의 오픈 API 활용
 - 한국관광공사의 [한국관광공사\_국문 관광정보 서비스\_GW](https://www.data.go.kr/data/15101578/openapi.do)를 DB로 관리
@@ -17,7 +38,7 @@
 
 <br>
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 프로젝트 기능
+## 📌 기능
 
 - 관광지 정보 조회 및 여행 계획 기능
 - Spring Security를 활용한 회원 관리
@@ -27,7 +48,7 @@
 
 <br>
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 사용 기술
+## 📌 사용 기술
 
 ### Front-End
 
@@ -72,7 +93,7 @@
 
 <br>
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 서비스 화면
+## 📌 서비스 화면
 
 ### 회원 관리
 
@@ -117,7 +138,7 @@
 
 <br>
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 산출물
+## 📌 산출물
 
 ### 화면 흐름도
 
@@ -129,15 +150,15 @@
 
 ### Class Diagram
 
-| attraction (관광지)                                           | noitce (공지사항)                                         |
+| Attraction (관광지)                                           | Noitce (공지사항)                                         |
 | ------------------------------------------------------------- | --------------------------------------------------------- |
 | ![attraction](/README_IMG/Class_Diagram/class_diagram_01.PNG) | ![notice](/README_IMG/Class_Diagram/class_diagram_03.PNG) |
 
-| hotplace (핫 플레이스)                                   | plan (여행 계획)                                       |
+| Hotplace (핫 플레이스)                                   | Plan (여행 계획)                                       |
 | -------------------------------------------------------- | ------------------------------------------------------ |
 | ![notice](README_IMG/Class_Diagram/class_diagram_04.PNG) | ![plan](README_IMG/Class_Diagram/class_diagram_05.PNG) |
 
-| user (사용자)                                          | etc (기타 설정 파일)                                   |
+| User (사용자)                                          | Etc (기타 설정 파일)                                   |
 | ------------------------------------------------------ | ------------------------------------------------------ |
 | ![user](README_IMG/Class_Diagram/class_diagram_06.PNG) | ![etc](/README_IMG/Class_Diagram/class_diagram_02.PNG) |
 
@@ -147,7 +168,7 @@
 
 <br>
 
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pushpin.png" alt="Pushpin" width="25" height="25" /> 팀원
+## 📌 팀원 소개
 
 | 연주원                                                                                                                                                                                                                     | 진병욱                                                                                                                                                                                             |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
